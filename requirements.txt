@@ -1,1 +1,19 @@
+# Dependencias principales
+cmd2>=2.5.0
+psutil>=5.9.0
+tabulate>=0.9.0
+PyYAML>=6.0
 
+# Para manejo de logs y análisis
+regex>=2023.0
+datetime>=4.3
+
+# Para utilidades del sistema
+pathlib>=1.0.1
+
+# Para manejo de base de datos
+sqlite3>=3.38.0
+
+# Otras dependencias auxiliares
+typing_extensions>=4.5.0
+colorama>=0.4.6
