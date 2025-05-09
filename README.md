@@ -1,5 +1,8 @@
 # LazyOwnBT
 
+![image](https://github.com/user-attachments/assets/45898b81-52fd-4785-afe3-bd1bdfa51fec)
+
+
 LazyOwnBT es una herramienta de seguridad defensiva (Blue Team) diseñada para la detección de amenazas, análisis de logs, monitoreo de procesos y redes, verificación de integridad de archivos, endurecimiento del sistema, generación de informes y respuesta a incidentes en entornos Linux.
 
 Esta herramienta está pensada para ser utilizada por equipos de seguridad, analistas de SOC y profesionales de ciberseguridad que buscan automatizar tareas de monitoreo y protección en sistemas operativos basados en Linux.
