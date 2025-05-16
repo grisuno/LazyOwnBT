@@ -4,7 +4,6 @@ LazyOwn BlueTeam Framework
 Una herramienta monolítica de seguridad defensiva para detección de amenazas,
 respuesta a incidentes y endurecimiento de sistemas Linux.
 """
-
 import cmd2
 import json
 import psutil
@@ -13,6 +12,7 @@ import sys
 import re
 import datetime # Usar directamente, no from datetime import datetime
 import logging
+import threading
 import sqlite3
 import hashlib
 import socket
@@ -24,6 +24,9 @@ import tempfile
 import signal # No usado directamente aún, pero puede ser útil para manejo de procesos
 import pwd
 import grp
+import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from collections import defaultdict
 from typing import List, Dict, Optional, Tuple, Any, Union # Mantener para type hints
 from tabulate import tabulate
 from pathlib import Path
@@ -103,6 +106,8 @@ class Database:
                 os.makedirs(db_dir)
 
             self.conn = sqlite3.connect(self.db_path)
+            # Añade esta línea para que las filas se puedan acceder por nombre
+            self.conn.row_factory = sqlite3.Row
             self.cursor = self.conn.cursor()
 
             # Tabla de alertas
@@ -346,12 +351,11 @@ class SystemUtils:
     def get_process_details(pid: int) -> Optional[Dict]:
         try:
             proc = psutil.Process(pid)
-            return proc.as_dict(attrs=['pid', 'name', 'cmdline', 'username', 'status', 
-                                       'create_time', 'cpu_percent', 'memory_percent', 
-                                       'ppid', 'cwd', 'exe', 'open_files', 'connections'])
+            return proc.as_dict(attrs=['pid', 'name', 'cmdline', 'username', 'status',
+                                       'create_time', 'cpu_percent', 'memory_percent',
+                                       'ppid', 'cwd', 'exe', 'open_files']) # Elimina 'connections' de la lista
         except (psutil.NoSuchProcess, psutil.AccessDenied):
             return None
-
 
 class ProcessMonitor:
     """Monitor de procesos para detección de actividad sospechosa."""
@@ -368,7 +372,7 @@ class ProcessMonitor:
         suspicious_found = []
         logger.info("Iniciando escaneo de procesos...")
 
-        for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'username', 'status', 'create_time', 'connections', 'cpu_percent', 'memory_percent']):
+        for proc in psutil.process_iter(['pid', 'name', 'cmdline', 'username', 'status', 'create_time', 'cpu_percent', 'memory_percent']):
             try:
                 proc_info = proc.as_dict(attrs=['pid', 'name', 'cmdline', 'username',
                                                 'cpu_percent', 'memory_percent', 'create_time',
@@ -714,115 +718,992 @@ class FileIntegrityMonitor:
         return violations
 
 class LogAnalyzer:
-    """Analizador de logs del sistema."""
+    """Analizador avanzado de logs del sistema para equipos de seguridad azules."""
 
     def __init__(self, config: Dict, db: Database):
-        self.config = config
-        self.db = db
-        self.log_paths = list(set(config.get("log_paths", []))) # Asegurar unicidad
-        self.max_failed_logins_threshold = config.get("max_failed_logins", 5)
+        """Inicializa el analizador con configuración mejorada y validada"""
+        # Validar configuración mínima necesaria
+        if not isinstance(config, dict):
+            raise TypeError("La configuración debe ser un diccionario")
+        if not isinstance(db, Database):
+            raise TypeError("Se requiere una instancia válida de Database")
         
-        # Patrones mejorados y adicionales
-        self.patterns = {
-            "failed_login": re.compile(r"(?:failed\s+password|authentication\s+failure|invalid\s+user|failed\s+login)", re.IGNORECASE),
-            "successful_login": re.compile(r"(?:accepted\s+password|session\s+opened\s+for\s+user)", re.IGNORECASE),
-            "sudo_command": re.compile(r"sudo:\s*\S+\s*:\s*USER=\S+\s*;\s*COMMAND=(.+)", re.IGNORECASE),
-            "user_added": re.compile(r"(?:new\s+user|useradd|adduser).*name=(\S+)", re.IGNORECASE),
-            "user_deleted": re.compile(r"(?:delete\s+user|userdel).*name=(\S+)", re.IGNORECASE),
-            "group_added": re.compile(r"(?:new\s+group|groupadd).*name=(\S+)", re.IGNORECASE),
-            "ssh_key_added": re.compile(r"AuthorizedKeysFile\s+\S+\s+added\s+key\s+", re.IGNORECASE), # Más específico si los logs lo permiten
-            "permission_denied": re.compile(r"permission\s+denied", re.IGNORECASE),
-            "kernel_error": re.compile(r"kernel:.*(?:error|critical|panic)", re.IGNORECASE),
-            "segmentation_fault": re.compile(r"segmentation\s+fault", re.IGNORECASE),
+        self.config = self._sanitize_config(config)
+        self.db = db
+        
+        # Valores predeterminados seguros si no se proporcionan en config
+        self.log_paths = list(set(self.config.get("log_paths", [])))
+        self.max_failed_logins_threshold = max(3, self.config.get("max_failed_logins", 5))
+        self.scan_interval = max(10, self.config.get("scan_interval_seconds", 60))
+        self.max_log_lines = max(100, self.config.get("log_analyzer_max_lines", 5000))
+        self.max_threads = min(10, self.config.get("max_analyzer_threads", 4))
+        
+        # Estado del analizador para seguimiento persistente
+        self._initialize_state()
+        
+        # Configuración del detector de amenazas
+        self._setup_threat_detection_patterns()
+        
+        # Inicializar métricas de rendimiento
+        self.performance_metrics = {
+            "last_scan_duration": 0,
+            "total_events_processed": 0,
+            "alerts_generated": 0,
         }
-        # Para rastrear logins fallidos por IP o usuario
-        self.failed_login_tracker = {} # key: 'ip_address' or 'username', value: count
+        
+        logger.info(f"LogAnalyzer inicializado con {len(self.log_paths)} archivos de log configurados")
+
+    def _sanitize_config(self, config: Dict) -> Dict:
+        """Sanitiza y valida la configuración para prevenir inyecciones y valores maliciosos"""
+        sanitized = {}
+        
+        # Validar rutas de log
+        if "log_paths" in config and isinstance(config["log_paths"], list):
+            sanitized["log_paths"] = [
+                path for path in config["log_paths"] 
+                if isinstance(path, str) and self._is_safe_path(path)
+            ]
+        
+        # Copiar otros valores de configuración con valores predeterminados seguros
+        sanitized["max_failed_logins"] = max(3, config.get("max_failed_logins", 5))
+        sanitized["log_analyzer_max_lines"] = max(100, config.get("log_analyzer_max_lines", 5000))
+        sanitized["scan_interval_seconds"] = max(10, config.get("scan_interval_seconds", 60))
+        sanitized["max_analyzer_threads"] = min(10, config.get("max_analyzer_threads", 4))
+        
+        # Parámetros adicionales de seguridad
+        sanitized["alert_deduplication_window"] = config.get("alert_deduplication_window", 300)  # 5 min
+        sanitized["baseline_period_days"] = config.get("baseline_period_days", 7)
+        sanitized["enable_file_integrity_monitoring"] = config.get("enable_file_integrity_monitoring", True)
+        
+        return sanitized
+    
+    def _is_safe_path(self, path: str) -> bool:
+        """Valida que una ruta sea segura (previene directory traversal)"""
+        # Evitar rutas con caracteres sospechosos
+        if '..' in path or path.startswith('~') or '$(' in path or '`' in path:
+            logger.warning(f"Ruta de log potencialmente insegura rechazada: {path}")
+            return False
+            
+        # Verificar que la ruta existe y es un archivo regular
+        if os.path.exists(path) and not os.path.isfile(path):
+            logger.warning(f"Ruta de log no es un archivo regular: {path}")
+            return False
+            
+        return True
+
+    def _initialize_state(self) -> None:
+        """Inicializa el estado persistente del analizador"""
+        # Para rastrear la última posición leída en cada archivo
+        self.file_positions = {}
+        
+        # Para detectar ataques de fuerza bruta
+        self.failed_login_tracker = defaultdict(lambda: {"count": 0, "timestamps": []})
+        
+        # Para detectar anomalías y comportamientos sospechosos
+        self.baseline_metrics = {
+            "logins_per_hour": defaultdict(int),
+            "commands_per_user": defaultdict(lambda: defaultdict(int)),
+            "last_login_ip_by_user": {},
+        }
+        
+        # Para detección de anomalías en comportamiento del sistema
+        self.system_behavior_baseline = {
+            "service_restarts": defaultdict(int),
+            "kernel_events": defaultdict(int),
+        }
+        
+        # Para deduplicación de alertas
+        self.recent_alerts = {}
+        
+        # Para seguimiento de indicadores de compromiso (IOCs)
+        self.observed_iocs = set()
+        
+        # Hash de archivos monitoreados para integridad
+        self.file_hashes = {}
+
+    def _setup_threat_detection_patterns(self) -> None:
+        """Configura patrones avanzados para detección de amenazas con MITRE ATT&CK mappings"""
+        # Patrones básicos mejorados
+        self.patterns = {
+            # T1078 - Valid Accounts
+            "failed_login": {
+                "pattern": re.compile(r"(?:failed\s+password|authentication\s+failure|invalid\s+user|failed\s+login)", re.IGNORECASE),
+                "severity": "medium",
+                "mitre_tactics": ["Initial Access", "Persistence", "Privilege Escalation"],
+                "mitre_techniques": ["T1078"],
+            },
+            "successful_login": {
+                "pattern": re.compile(r"(?:accepted\s+password|session\s+opened\s+for\s+user)", re.IGNORECASE),
+                "severity": "info",
+                "mitre_tactics": ["Initial Access"],
+                "mitre_techniques": ["T1078"],
+            },
+            # T1169 - Sudo / T1548.003 - Sudo and Sudo Caching
+            "sudo_command": {
+                "pattern": re.compile(r"sudo:\s*\S+\s*:\s*USER=\S+\s*;\s*COMMAND=(.+)", re.IGNORECASE),
+                "severity": "medium",
+                "mitre_tactics": ["Privilege Escalation", "Defense Evasion"],
+                "mitre_techniques": ["T1548.003"],
+            },
+            # T1136 - Create Account
+            "user_added": {
+                "pattern": re.compile(r"(?:new\s+user|useradd|adduser).*name=(\S+)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Persistence", "Privilege Escalation"],
+                "mitre_techniques": ["T1136"],
+            },
+            # T1531 - Account Access Removal
+            "user_deleted": {
+                "pattern": re.compile(r"(?:delete\s+user|userdel).*name=(\S+)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Impact"],
+                "mitre_techniques": ["T1531"],
+            },
+            # T1136.001 - Create Account: Local Account
+            "group_added": {
+                "pattern": re.compile(r"(?:new\s+group|groupadd).*name=(\S+)", re.IGNORECASE),
+                "severity": "medium",
+                "mitre_tactics": ["Persistence"],
+                "mitre_techniques": ["T1136.001"],
+            },
+            # T1098 - Account Manipulation
+            "ssh_key_added": {
+                "pattern": re.compile(r"(?:authorized_keys|ssh-keygen|ssh-add|AuthorizedKeysFile).*(?:added|created|new)", re.IGNORECASE),
+                "severity": "high", 
+                "mitre_tactics": ["Persistence"],
+                "mitre_techniques": ["T1098"],
+            },
+            # T1222 - File and Directory Permissions Modification
+            "permission_denied": {
+                "pattern": re.compile(r"permission\s+denied", re.IGNORECASE),
+                "severity": "low",
+                "mitre_tactics": ["Defense Evasion"],
+                "mitre_techniques": ["T1222"],
+            },
+            # T1562 - Impair Defenses
+            "service_stopped": {
+                "pattern": re.compile(r"(?:systemctl\s+stop|service\s+\S+\s+stop|stopped|Stopping)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Defense Evasion"],
+                "mitre_techniques": ["T1562"],
+            },
+            # T1070 - Indicator Removal on Host
+            "log_cleared": {
+                "pattern": re.compile(r"(?:logrotate|truncate|>\s*/var/log|erased\s+logs)", re.IGNORECASE),
+                "severity": "critical",
+                "mitre_tactics": ["Defense Evasion"],
+                "mitre_techniques": ["T1070"],
+            },
+            # T1059 - Command and Scripting Interpreter
+            "suspicious_command": {
+                "pattern": re.compile(r"(?:nc\s+-|netcat|wget\s+http|curl\s+-o|python\s+-c|bash\s+-i|nmap|masscan|base64\s+[^-])", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Execution"],
+                "mitre_techniques": ["T1059"],
+            },
+            # T1082 - System Information Discovery
+            "system_discovery": {
+                "pattern": re.compile(r"(?:uname\s+-a|hostname|ifconfig|ip\s+a|ip\s+addr|whoami)", re.IGNORECASE),
+                "severity": "medium",
+                "mitre_tactics": ["Discovery"],
+                "mitre_techniques": ["T1082"],
+            },
+            # T1105 - Ingress Tool Transfer
+            "file_download": {
+                "pattern": re.compile(r"(?:wget|curl)\s+(?:https?|ftp)://", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Command and Control"],
+                "mitre_techniques": ["T1105"],
+            },
+            # T1046 - Network Service Scanning
+            "port_scan": {
+                "pattern": re.compile(r"(?:scan|nmap|masscan|portscan)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Discovery"],
+                "mitre_techniques": ["T1046"],
+            },
+            # Sistema y kernel
+            "kernel_error": {
+                "pattern": re.compile(r"kernel:.*(?:error|critical|panic)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Impact"],
+                "mitre_techniques": ["T1499"],
+            },
+            "segmentation_fault": {
+                "pattern": re.compile(r"segmentation\s+fault", re.IGNORECASE),
+                "severity": "medium",
+                "mitre_tactics": ["Impact"],
+                "mitre_techniques": ["T1499"],
+            },
+        }
+        
+        # Patrones avanzados para detección de equipos rojos en CTFs y juegos de emulación
+        self.redteam_patterns = {
+            # Herramientas comunes de Red Team
+            "offensive_tools": {
+                "pattern": re.compile(r"(?:metasploit|meterpreter|mimikatz|bloodhound|empire|powershell\s+empire|cobalt\s+strike|cobaltstrike|beacon|reverse\s+shell)", re.IGNORECASE),
+                "severity": "critical",
+                "mitre_tactics": ["Command and Control", "Execution"],
+                "mitre_techniques": ["T1219", "T1059"],
+            },
+            # Comandos de exfiltración 
+            "data_exfiltration": {
+                "pattern": re.compile(r"(?:scp\s+\S+@|\S+\.gz\s+|tar\s+cvf|zip\s+-r|7z\s+a|wget\s+--post-data|curl\s+--data)", re.IGNORECASE),
+                "severity": "critical",
+                "mitre_tactics": ["Exfiltration"],
+                "mitre_techniques": ["T1048"],
+            },
+            # Puertos de escucha inhabituales
+            "unusual_listening": {
+                "pattern": re.compile(r"(?:LISTEN|listening).*:(?:4444|443\d|666\d|8080|31337)", re.IGNORECASE),
+                "severity": "high",
+                "mitre_tactics": ["Command and Control"],
+                "mitre_techniques": ["T1571"],
+            },
+            # Webshells
+            "webshell": {
+                "pattern": re.compile(r"(?:eval\s*\(|system\s*\(|exec\s*\(|passthru\s*\(|shell_exec\s*\(|phpinfo\s*\(|base64_decode\s*\()", re.IGNORECASE),
+                "severity": "critical",
+                "mitre_tactics": ["Persistence", "Execution"],
+                "mitre_techniques": ["T1505.003"],
+            },
+            # Escalada de privilegios
+            "privilege_escalation": {
+                "pattern": re.compile(r"(?:chmod\s+[+]s|chown\s+root|setuid|setgid|privileged|CVE-\d+-\d+)", re.IGNORECASE),
+                "severity": "critical",
+                "mitre_tactics": ["Privilege Escalation"],
+                "mitre_techniques": ["T1548"],
+            },
+            # Limpieza de huellas (antiforensics)
+            "antiforensics": {
+                "pattern": re.compile(r"(?:shred\s+-z|wipe\s+|secure-delete|history\s+-c|unset\s+HISTFILE|export\s+HISTFILESIZE=0)", re.IGNORECASE),
+                "severity": "critical", 
+                "mitre_tactics": ["Defense Evasion"],
+                "mitre_techniques": ["T1070"],
+            },
+        }
+        
+        # Fusionar todos los patrones
+        self.all_patterns = {**self.patterns, **self.redteam_patterns}
+
+    def _calculate_file_hash(self, filename: str) -> str:
+        """Calcula el hash SHA-256 de un archivo de manera segura"""
+        try:
+            with open(filename, "rb") as f:
+                file_hash = hashlib.sha256()
+                # Leer en bloques para archivos grandes
+                for chunk in iter(lambda: f.read(4096), b""):
+                    file_hash.update(chunk)
+            return file_hash.hexdigest()
+        except Exception as e:
+            logger.error(f"Error al calcular el hash del archivo {filename}: {e}")
+            return ""
+
+    def _check_file_integrity(self, log_path: str) -> bool:
+        """Verifica la integridad del archivo de log basado en su hash"""
+        if not self.config.get("enable_file_integrity_monitoring", True):
+            return True
+            
+        current_hash = self._calculate_file_hash(log_path)
+        if not current_hash:
+            return False
+            
+        if log_path not in self.file_hashes:
+            # Primera vez que vemos este archivo
+            self.file_hashes[log_path] = current_hash
+            return True
+            
+        if self.file_hashes[log_path] != current_hash:
+            # El archivo ha cambiado
+            self.file_hashes[log_path] = current_hash
+            # Para logs, cambiar es normal, pero podríamos alertar ante cambios sospechosos
+            # Si fuera un binario del sistema, aquí alertaríamos
+            return True
+            
+        return True
+
+    def _extract_timestamp_from_log(self, line: str) -> Optional[datetime.datetime]:
+        """Extrae el timestamp de una línea de log usando varios formatos comunes"""
+        # Patrones de timestamp comunes en logs
+        timestamp_patterns = [
+            # May 15 23:48:37
+            r"([A-Z][a-z]{2}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})",
+            # 2023-05-15T23:48:37
+            r"(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:[+-]\d{2}:?\d{2})?)",
+            # 2023-05-15 23:48:37
+            r"(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})",
+            # 15/May/2023:23:48:37 +0000
+            r"(\d{2}/[A-Z][a-z]{2}/\d{4}:\d{2}:\d{2}:\d{2}\s+[+-]\d{4})",
+        ]
+        
+        for pattern in timestamp_patterns:
+            match = re.search(pattern, line)
+            if match:
+                timestamp_str = match.group(1)
+                try:
+                    # Intentar varios formatos de fecha
+                    for fmt in [
+                        "%b %d %H:%M:%S",
+                        "%Y-%m-%dT%H:%M:%S",
+                        "%Y-%m-%d %H:%M:%S",
+                        "%d/%b/%Y:%H:%M:%S %z",
+                    ]:
+                        try:
+                            return datetime.datetime.strptime(timestamp_str, fmt)
+                        except ValueError:
+                            continue
+                except Exception:
+                    pass
+        
+        return None
+
+    def _extract_ip_from_log(self, line: str) -> Optional[str]:
+        """Extrae una dirección IP de una línea de log"""
+        ip_pattern = re.compile(r"(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})")
+        match = ip_pattern.search(line)
+        if match:
+            return match.group(1)
+        return None
+
+    def _extract_username_from_log(self, line: str) -> Optional[str]:
+        """Extrae un nombre de usuario de una línea de log"""
+        username_patterns = [
+            r"user[=:\s]+(\S+)",
+            r"USER[=:\s]+(\S+)",
+            r"username[=:\s]+(\S+)",
+            r"login[=:\s]+(\S+)",
+        ]
+        
+        for pattern in username_patterns:
+            match = re.search(pattern, line, re.IGNORECASE)
+            if match:
+                return match.group(1)
+        return None
+
+    def _extract_command_from_log(self, line: str) -> Optional[str]:
+        """Extrae un comando ejecutado de una línea de log"""
+        command_patterns = [
+            r"COMMAND=(.+?)(?:$|;)",
+            r"executing\s+command[=:\s]+(.+?)(?:$|;)",
+            r"RUN\s+(.+?)(?:$|;)",
+        ]
+        
+        for pattern in command_patterns:
+            match = re.search(pattern, line, re.IGNORECASE)
+            if match:
+                return match.group(1).strip()
+        return None
+
+    def _is_alert_duplicated(self, alert_type: str, details_hash: str) -> bool:
+        """Verifica si una alerta ya fue generada recientemente para evitar duplicados"""
+        dedup_window = self.config.get("alert_deduplication_window", 300)  # 5 min por defecto
+        current_time = time.time()
+        
+        # Clave única basada en tipo de alerta y detalles
+        key = f"{alert_type}:{details_hash}"
+        
+        if key in self.recent_alerts:
+            last_time = self.recent_alerts[key]
+            if current_time - last_time < dedup_window:
+                return True
+        
+        # Actualizar timestamp para esta alerta
+        self.recent_alerts[key] = current_time
+        
+        # Limpiar alertas antiguas para evitar crecimiento de memoria
+        self.recent_alerts = {k: v for k, v in self.recent_alerts.items() 
+                             if current_time - v < dedup_window}
+        
+        return False
 
     def analyze_log_file(self, log_path: str, generate_alerts: bool = True) -> List[Dict]:
-        """Analiza un único archivo de log."""
+        """Analiza un único archivo de log con detección avanzada de amenazas."""
         findings = []
+        
         if not os.path.isfile(log_path):
-            logger.warning(f"Archivo de log no encontrado o no es un archivo: {log_path}")
+            logger.warning(f"Archivo de log no encontrado o no es un archivo regular: {log_path}")
+            return findings
+        
+        # Verificar integridad del archivo
+        if not self._check_file_integrity(log_path):
+            logger.error(f"Verificación de integridad fallida para {log_path}")
+            # Generar alerta de seguridad por posible manipulación
+            if generate_alerts:
+                Alert(
+                    alert_type="file_integrity_failure",
+                    details={"log_file": log_path, "reason": "Hash verification failed"},
+                    severity="critical",
+                    mitre_tactics=["Defense Evasion"],
+                    mitre_techniques=["T1070"]
+                ).save_to_db(self.db)
             return findings
         
         logger.info(f"Analizando log: {log_path}")
+        start_time = time.time()
+        
         try:
+            # Determinar desde qué posición comenzar a leer
+            start_position = self.file_positions.get(log_path, 0)
+            current_position = 0
+            
             with open(log_path, 'r', errors='ignore') as f:
-                # Considerar leer solo las N últimas líneas o desde la última posición leída (más complejo)
-                # Para este ejemplo, leemos las últimas N líneas para evitar procesar logs enormes cada vez.
-                # Esto es una simplificación; un HIDS real tendría un manejo de estado más sofisticado.
-                lines = f.readlines()[-self.config.get("log_analyzer_max_lines", 5000):] 
+                # Moverse a la última posición conocida si el archivo existe
+                if start_position > 0:
+                    try:
+                        f.seek(start_position)
+                    except:
+                        # Si hay error al posicionar, empezar desde el inicio
+                        f.seek(0)
+                        logger.warning(f"No se pudo posicionar en {start_position} para {log_path}, comenzando desde el inicio")
                 
-                for line_num, line_content in enumerate(lines):
+                # Si no hay nuevos datos desde la última lectura
+                if f.tell() == os.path.getsize(log_path):
+                    logger.debug(f"No hay nuevos datos en {log_path} desde la última lectura")
+                    return []
+                
+                # Leer líneas nuevas
+                new_lines = f.readlines()
+                current_position = f.tell()
+                
+                # Si hay demasiadas líneas nuevas, limitar procesamiento
+                if len(new_lines) > self.max_log_lines:
+                    logger.warning(f"Demasiadas líneas nuevas en {log_path}, limitando a las últimas {self.max_log_lines}")
+                    new_lines = new_lines[-self.max_log_lines:]
+                
+                # Actualizar la posición para la próxima lectura
+                self.file_positions[log_path] = current_position
+                
+                for line_num, line_content in enumerate(new_lines):
                     line_content = line_content.strip()
                     if not line_content:
                         continue
-
-                    timestamp_str = datetime.datetime.now().isoformat() # Usar timestamp actual si no se puede extraer del log
-
-                    for pattern_name, pattern_re in self.patterns.items():
+                    
+                    # Extraer metadata de la línea para enriquecer los hallazgos
+                    timestamp = self._extract_timestamp_from_log(line_content)
+                    timestamp_str = timestamp.isoformat() if timestamp else datetime.datetime.now().isoformat()
+                    ip_address = self._extract_ip_from_log(line_content)
+                    username = self._extract_username_from_log(line_content)
+                    command = self._extract_command_from_log(line_content)
+                    
+                    # Aplicar todos los patrones de detección
+                    for pattern_name, pattern_config in self.all_patterns.items():
+                        pattern_re = pattern_config["pattern"]
                         match = pattern_re.search(line_content)
+                        
                         if match:
+                            # Base de datos mínimos para el evento
                             event_details = {
                                 "log_file": log_path,
-                                "line_number": line_num + 1, # aproximado si se leen últimas N
+                                "line_number": line_num + 1, 
                                 "line_content": line_content,
                                 "pattern_name": pattern_name,
                                 "match_groups": match.groups() if match.groups() else None,
-                                "timestamp": timestamp_str # Idealmente, extraer del log
+                                "timestamp": timestamp_str,
+                                "ip_address": ip_address,
+                                "username": username,
+                                "command": command
                             }
+                            
+                            # Enriquecer hallazgo con contexto
+                            self._enrich_finding_with_context(event_details)
                             findings.append(event_details)
                             
-                            # Guardar evento en DB
+                            # Registrar el evento en la base de datos
                             event_id = self.db.insert(
                                 """INSERT INTO security_events 
-                                   (event_type, source, description, raw_data, timestamp) 
-                                   VALUES (?, ?, ?, ?, ?)""",
-                                (pattern_name, log_path, f"Detectado evento '{pattern_name}'", line_content, timestamp_str)
+                                   (event_type, source, description, raw_data, timestamp, 
+                                    ip_address, username, command) 
+                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                                (pattern_name, 
+                                 log_path, 
+                                 f"Detectado evento '{pattern_name}'", 
+                                 line_content, 
+                                 timestamp_str,
+                                 ip_address or "",
+                                 username or "",
+                                 command or "")
                             )
-                            if not event_id: logger.error(f"No se pudo guardar evento de log {pattern_name} en DB.")
-
-
-                            # Lógica de Alerta específica
+                            
+                            if not event_id: 
+                                logger.error(f"No se pudo guardar evento de log {pattern_name} en DB.")
+                            
+                            # Generar alertas según la configuración
                             if generate_alerts:
-                                severity = "medium" # Default
-                                if pattern_name == "failed_login":
-                                    severity = "medium"
-                                    # Intentar extraer IP o usuario para alerta de fuerza bruta
-                                    # Esta parte es muy dependiente del formato del log
-                                    ip_match = re.search(r"from\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})", line_content)
-                                    user_match = re.search(r"user\s+(\S+)", line_content, re.IGNORECASE)
-                                    target_key = None
-                                    if ip_match: target_key = ip_match.group(1)
-                                    elif user_match: target_key = user_match.group(1)
-
-                                    if target_key:
-                                        self.failed_login_tracker[target_key] = self.failed_login_tracker.get(target_key, 0) + 1
-                                        if self.failed_login_tracker[target_key] >= self.max_failed_logins_threshold:
-                                            Alert(
-                                                "potential_brute_force",
-                                                {"target": target_key, "count": self.failed_login_tracker[target_key], "log_line": line_content, "log_file": log_path},
-                                                "high"
-                                            ).save_to_db(self.db)
-                                            self.failed_login_tracker[target_key] = 0 # Resetear contador tras alerta
-                                elif pattern_name in ["user_added", "user_deleted", "kernel_error", "segmentation_fault"]:
-                                    severity = "high"
-                                elif pattern_name == "sudo_command":
-                                    severity = "low" # O 'info' dependiendo de la política
-
-                                Alert(
-                                    f"log_event_{pattern_name}",
-                                    event_details,
-                                    severity
-                                ).save_to_db(self.db)
+                                # Procesar lógica específica según el tipo de evento
+                                self._process_specific_event_logic(
+                                    pattern_name, 
+                                    pattern_config, 
+                                    event_details, 
+                                    line_content
+                                )
+                
+                # Actualizar métricas
+                self.performance_metrics["total_events_processed"] += len(findings)
+                
         except IOError as e:
             logger.error(f"Error al leer archivo de log {log_path}: {e}")
         except Exception as e:
             logger.error(f"Error inesperado analizando {log_path}: {e}")
             
-        logger.info(f"Análisis de {log_path} completado. {len(findings)} hallazgos.")
+        duration = time.time() - start_time
+        self.performance_metrics["last_scan_duration"] = duration
+        logger.info(f"Análisis de {log_path} completado en {duration:.2f}s. {len(findings)} hallazgos.")
+        
         return findings
 
+    def _enrich_finding_with_context(self, event_details: Dict) -> None:
+        """Enriquece un hallazgo con contexto adicional y correlación"""
+        # Añadir contexto temporal (hora del día, día de la semana)
+        if "timestamp" in event_details:
+            try:
+                ts = datetime.datetime.fromisoformat(event_details["timestamp"])
+                event_details["hour_of_day"] = ts.hour
+                event_details["day_of_week"] = ts.strftime("%A")
+                event_details["is_weekend"] = ts.weekday() >= 5
+                event_details["is_after_hours"] = ts.hour < 7 or ts.hour > 19
+            except:
+                pass
+        
+                    # Enriquecer con contexto de usuario si existe
+        if event_details.get("username"):
+            username = event_details["username"]
+            # Añadir información sobre actividad previa del usuario
+            event_details["previous_logins"] = self.baseline_metrics["logins_per_hour"].get(username, 0)
+            event_details["common_commands"] = list(self.baseline_metrics["commands_per_user"].get(username, {}).keys())[:5]
+            event_details["last_login_ip"] = self.baseline_metrics["last_login_ip_by_user"].get(username)
+            
+            # Detectar si es un nuevo usuario (no visto antes)
+            if username not in self.baseline_metrics["last_login_ip_by_user"]:
+                event_details["new_user"] = True
+            
+            # Detectar cambio de IP para este usuario
+            if (event_details.get("ip_address") and 
+                username in self.baseline_metrics["last_login_ip_by_user"] and
+                event_details["ip_address"] != self.baseline_metrics["last_login_ip_by_user"][username]):
+                event_details["ip_changed"] = True
+                event_details["previous_ip"] = self.baseline_metrics["last_login_ip_by_user"][username]
+        
+        # Verificar si la IP está en listas de IOCs conocidos
+        if event_details.get("ip_address") and event_details["ip_address"] in self.observed_iocs:
+            event_details["known_ioc"] = True
+            event_details["ioc_first_seen"] = self.observed_iocs[event_details["ip_address"]]
+            
+    def _process_specific_event_logic(self, pattern_name: str, pattern_config: Dict, 
+                                     event_details: Dict, line_content: str) -> None:
+        """Procesa lógica especializada según el tipo de evento detectado"""
+        severity = pattern_config.get("severity", "medium")
+        mitre_tactics = pattern_config.get("mitre_tactics", [])
+        mitre_techniques = pattern_config.get("mitre_techniques", [])
+        username = event_details.get("username")
+        ip_address = event_details.get("ip_address")
+        
+        # Calcular un hash de los detalles para deduplicación
+        details_hash = hashlib.md5(str(event_details).encode()).hexdigest()
+        
+        # Verificar deduplicación de alertas
+        if self._is_alert_duplicated(pattern_name, details_hash):
+            logger.debug(f"Alerta duplicada suprimida: {pattern_name}")
+            return
+            
+        # Lógica específica según el patrón detectado
+        if pattern_name == "failed_login":
+            # Identificar posibles ataques de fuerza bruta
+            target_key = username or ip_address
+            if not target_key:
+                return
+                
+            # Añadir evento a la lista de timestamps para este objetivo
+            now = datetime.datetime.now()
+            self.failed_login_tracker[target_key]["count"] += 1
+            self.failed_login_tracker[target_key]["timestamps"].append(now)
+            
+            # Conservar solo los últimos N minutos de intentos
+            recent_window = datetime.timedelta(minutes=15)
+            self.failed_login_tracker[target_key]["timestamps"] = [
+                ts for ts in self.failed_login_tracker[target_key]["timestamps"]
+                if now - ts < recent_window
+            ]
+            
+            recent_attempts = len(self.failed_login_tracker[target_key]["timestamps"])
+            
+            # Generar alerta si supera el umbral
+            if recent_attempts >= self.max_failed_logins_threshold:
+                alert = Alert(
+                    alert_type="brute_force_login_attempt",
+                    details={
+                        "target": target_key,
+                        "count": recent_attempts,
+                        "time_window_minutes": 15,
+                        "source_ips": list(set(self._extract_ip_from_log(line) for line in line_content if self._extract_ip_from_log(line)))
+                    },
+                    severity="high",
+                    mitre_tactics=["Credential Access", "Initial Access"],
+                    mitre_techniques=["T1110"],
+                    remediation_steps=[
+                        "Bloquear la IP de origen temporalmente",
+                        "Verificar la cuenta de usuario para cambios no autorizados",
+                        "Considerar implementar autenticación de dos factores"
+                    ]
+                )
+                alert.save_to_db(self.db)
+                self.performance_metrics["alerts_generated"] += 1
+                
+                # Resetear contador tras generar la alerta
+                self.failed_login_tracker[target_key]["count"] = 0
+                
+        elif pattern_name == "successful_login":
+            # Verificar si hubo intentos fallidos previos
+            if username and username in self.failed_login_tracker and self.failed_login_tracker[username]["count"] > 2:
+                # Posible caso de acceso después de varios intentos (password spray)
+                alert = Alert(
+                    alert_type="successful_login_after_failures",
+                    details={
+                        "username": username,
+                        "ip_address": ip_address,
+                        "previous_failures": self.failed_login_tracker[username]["count"]
+                    },
+                    severity="high",
+                    mitre_tactics=["Initial Access", "Credential Access"],
+                    mitre_techniques=["T1110.003", "T1078"]
+                )
+                alert.save_to_db(self.db)
+                self.performance_metrics["alerts_generated"] += 1
+            
+            # Actualizar línea base
+            if username:
+                hour = datetime.datetime.now().hour
+                self.baseline_metrics["logins_per_hour"][username] += 1
+                if ip_address:
+                    self.baseline_metrics["last_login_ip_by_user"][username] = ip_address
+                    
+                # Detectar logins fuera de horas habituales
+                user_usual_login_hours = self._get_usual_login_hours(username)
+                if user_usual_login_hours and hour not in user_usual_login_hours:
+                    alert = Alert(
+                        alert_type="unusual_login_time",
+                        details={
+                            "username": username,
+                            "login_hour": hour,
+                            "usual_hours": user_usual_login_hours
+                        },
+                        severity="medium",
+                        mitre_tactics=["Initial Access"],
+                        mitre_techniques=["T1078"]
+                    )
+                    alert.save_to_db(self.db)
+                    self.performance_metrics["alerts_generated"] += 1
+                    
+        elif pattern_name == "sudo_command" or pattern_name == "suspicious_command":
+            command = event_details.get("command", "")
+            if not command:
+                command = self._extract_command_from_log(line_content) or ""
+                
+            if username and command:
+                # Actualizar comandos usuales por usuario
+                self.baseline_metrics["commands_per_user"][username][command] += 1
+                
+                # Detectar comandos inusuales para este usuario
+                common_commands = self._get_common_commands_for_user(username)
+                if common_commands and command not in common_commands:
+                    alert = Alert(
+                        alert_type="unusual_command",
+                        details={
+                            "username": username,
+                            "command": command,
+                            "common_commands": common_commands
+                        },
+                        severity="medium",
+                        mitre_tactics=["Execution", "Discovery"],
+                        mitre_techniques=["T1059"]
+                    )
+                    alert.save_to_db(self.db)
+                    self.performance_metrics["alerts_generated"] += 1
+                    
+            # Detectar comandos de alto riesgo o relacionados con compromiso
+            high_risk_commands = [
+                "chmod +s", "nc -e", "bash -i", 
+                "wget http", "curl -o", 
+                "python -c", "perl -e", "ruby -e",
+                "eval", "base64 -d", "openssl enc -d"
+            ]
+            
+            for risky_cmd in high_risk_commands:
+                if risky_cmd in command.lower():
+                    alert = Alert(
+                        alert_type="high_risk_command",
+                        details={
+                            "username": username,
+                            "command": command,
+                            "matched_pattern": risky_cmd
+                        },
+                        severity="critical",
+                        mitre_tactics=["Execution", "Defense Evasion"],
+                        mitre_techniques=["T1059", "T1027"]
+                    )
+                    alert.save_to_db(self.db)
+                    self.performance_metrics["alerts_generated"] += 1
+                    break
+                    
+        elif pattern_name == "user_added":
+            # Alta severidad para nuevos usuarios
+            alert = Alert(
+                alert_type="new_user_created",
+                details={
+                    "username": self._extract_username_from_log(line_content) or "unknown",
+                    "creator": username or "unknown",
+                    "ip_address": ip_address
+                },
+                severity="high",
+                mitre_tactics=["Persistence", "Privilege Escalation"],
+                mitre_techniques=["T1136"],
+                remediation_steps=[
+                    "Verificar si la creación del usuario fue autorizada",
+                    "Revisar los permisos asignados al nuevo usuario",
+                    "Verificar el grupo al que fue añadido"
+                ]
+            )
+            alert.save_to_db(self.db)
+            self.performance_metrics["alerts_generated"] += 1
+            
+        elif pattern_name in self.redteam_patterns:
+            # Alertas específicas para patrones de equipo rojo
+            redteam_alert = Alert(
+                alert_type=f"redteam_activity_{pattern_name}",
+                details={
+                    "evidence": line_content,
+                    "username": username,
+                    "ip_address": ip_address,
+                    "command": event_details.get("command")
+                },
+                severity="critical",  # Equipos rojos siempre generan alerta crítica
+                mitre_tactics=mitre_tactics,
+                mitre_techniques=mitre_techniques,
+                remediation_steps=[
+                    "¡ALERTA! Posible presencia de equipo rojo detectada",
+                    "Aislar el sistema comprometido",
+                    "Documentar actividad para análisis posterior",
+                    "Iniciar contención si es un ejercicio real"
+                ]
+            )
+            redteam_alert.save_to_db(self.db)
+            self.performance_metrics["alerts_generated"] += 1
+            
+            # Registrar IOC para correlación futura
+            if ip_address:
+                self.observed_iocs[ip_address] = datetime.datetime.now().isoformat()
+        else:
+            # Alerta general para otros patrones
+            alert = Alert(
+                alert_type=f"security_event_{pattern_name}",
+                details=event_details,
+                severity=severity,
+                mitre_tactics=mitre_tactics,
+                mitre_techniques=mitre_techniques
+            )
+            alert.save_to_db(self.db)
+            self.performance_metrics["alerts_generated"] += 1
+
+    def _get_usual_login_hours(self, username: str) -> List[int]:
+        """Obtiene las horas usuales de login para un usuario basado en la línea base"""
+        # Esta función podría implementarse consultando la base de datos
+        # o manteniendo estadísticas en memoria
+        # Para simplificar, devolvemos un rango ficticio de 9-18 (horario laboral)
+        return list(range(9, 18))
+
+    def _get_common_commands_for_user(self, username: str) -> List[str]:
+        """Obtiene los comandos más comunes para un usuario"""
+        if username not in self.baseline_metrics["commands_per_user"]:
+            return []
+            
+        commands = self.baseline_metrics["commands_per_user"][username]
+        # Ordenar por frecuencia y tomar los 10 más comunes
+        return [cmd for cmd, _ in sorted(commands.items(), key=lambda x: x[1], reverse=True)[:10]]
+
+    def analyze_all_logs(self, generate_alerts: bool = True) -> Dict[str, List[Dict]]:
+        """Analiza todos los archivos de log configurados usando procesamiento paralelo."""
+        logger.info("Iniciando análisis de todos los logs configurados...")
+        start_time = time.time()
+        all_findings = {}
+        
+        # Usar ThreadPoolExecutor para procesamiento paralelo
+        with ThreadPoolExecutor(max_workers=min(len(self.log_paths), self.max_threads)) as executor:
+            # Preparar las tareas
+            future_to_log = {
+                executor.submit(self.analyze_log_file, log_path, generate_alerts): log_path
+                for log_path in self.log_paths if os.path.isfile(log_path)
+            }
+            
+            # Recoger resultados a medida que se completan
+            for future in as_completed(future_to_log):
+                log_path = future_to_log[future]
+                try:
+                    findings = future.result()
+                    all_findings[log_path] = findings
+                except Exception as e:
+                    logger.error(f"Error procesando {log_path}: {e}")
+                    all_findings[log_path] = []
+        
+        # Post-procesamiento: Correlación entre logs
+        if generate_alerts:
+            self._correlate_findings(all_findings)
+        
+        duration = time.time() - start_time
+        logger.info(f"Análisis de todos los logs completado en {duration:.2f}s. "
+                   f"Total hallazgos: {sum(len(findings) for findings in all_findings.values())}")
+        
+        return all_findings
+
+    def _correlate_findings(self, all_findings: Dict[str, List[Dict]]) -> None:
+        """Correlaciona hallazgos entre múltiples logs para detectar patrones complejos"""
+        # Extraer eventos por tipo para correlación
+        events_by_type = defaultdict(list)
+        events_by_user = defaultdict(list)
+        events_by_ip = defaultdict(list)
+        
+        # Agrupar eventos para correlación
+        for log_path, findings in all_findings.items():
+            for finding in findings:
+                event_type = finding.get("pattern_name", "unknown")
+                events_by_type[event_type].append(finding)
+                
+                if "username" in finding and finding["username"]:
+                    events_by_user[finding["username"]].append(finding)
+                    
+                if "ip_address" in finding and finding["ip_address"]:
+                    events_by_ip[finding["ip_address"]].append(finding)
+        
+        # Correlación 1: Detección de Privilege Escalation y Lateral Movement
+        # Buscar usuarios con login exitoso + comando sudo + nuevos usuarios creados
+        for username, events in events_by_user.items():
+            event_types = [e.get("pattern_name") for e in events]
+            
+            if ("successful_login" in event_types and 
+                ("sudo_command" in event_types or "user_added" in event_types)):
+                
+                alert = Alert(
+                    alert_type="privilege_escalation_sequence",
+                    details={
+                        "username": username,
+                        "event_sequence": event_types,
+                        "evidence": [e.get("line_content", "")[:100] for e in events][:5]
+                    },
+                    severity="high",
+                    mitre_tactics=["Privilege Escalation", "Persistence"],
+                    mitre_techniques=["T1078", "T1548"]
+                )
+                alert.save_to_db(self.db)
+        
+        # Correlación 2: Detección de Command and Control
+        # Buscar actividad inusual de red después de ejecución de comandos sospechosos
+        suspicious_ips = set()
+        for event in events_by_type.get("suspicious_command", []):
+            if "ip_address" in event:
+                suspicious_ips.add(event["ip_address"])
+                
+        for event in events_by_type.get("file_download", []):
+            if "ip_address" in event and event["ip_address"] in suspicious_ips:
+                alert = Alert(
+                    alert_type="potential_c2_activity",
+                    details={
+                        "ip_address": event["ip_address"],
+                        "commands": [e.get("command", "") for e in events_by_ip[event["ip_address"]] 
+                                    if "command" in e][:5],
+                        "evidence": event.get("line_content", "")
+                    },
+                    severity="critical",
+                    mitre_tactics=["Command and Control"],
+                    mitre_techniques=["T1105", "T1571"]
+                )
+                alert.save_to_db(self.db)
+        
+        # Correlación 3: Detección de actividad de reconocimiento seguida de explotación
+        recon_ips = set()
+        for event in events_by_type.get("system_discovery", []):
+            if "ip_address" in event:
+                recon_ips.add(event["ip_address"])
+                
+        for event in events_by_type.get("permission_denied", []):
+            if "ip_address" in event and event["ip_address"] in recon_ips:
+                alert = Alert(
+                    alert_type="reconnaissance_to_exploit",
+                    details={
+                        "ip_address": event["ip_address"],
+                        "recon_evidence": [e.get("line_content", "")[:100] 
+                                          for e in events_by_ip[event["ip_address"]] 
+                                          if e.get("pattern_name") == "system_discovery"][:3],
+                        "exploit_attempt": event.get("line_content", "")
+                    },
+                    severity="high",
+                    mitre_tactics=["Discovery", "Initial Access"],
+                    mitre_techniques=["T1082", "T1190"]
+                )
+                alert.save_to_db(self.db)
+
+    def get_performance_metrics(self) -> Dict[str, Any]:
+        """Devuelve métricas de rendimiento del analizador"""
+        return {
+            "last_scan_duration": f"{self.performance_metrics['last_scan_duration']:.2f}s",
+            "total_events_processed": self.performance_metrics["total_events_processed"],
+            "alerts_generated": self.performance_metrics["alerts_generated"],
+            "logs_analyzed": len(self.log_paths),
+            "patterns_monitored": len(self.all_patterns)
+        }
+
+    def reset_trackers(self) -> None:
+        """Reinicia los contadores y rastreadores de eventos"""
+        self.failed_login_tracker.clear()
+        # Mantener las líneas base pero limpiar los IOCs temporales
+        self.observed_iocs.clear()
+        # Reiniciar las alertas recientes para evitar supresión indebida
+        self.recent_alerts.clear()
+
+    def add_custom_pattern(self, name: str, pattern: str, severity: str = "medium", 
+                          mitre_tactics: List[str] = None, 
+                          mitre_techniques: List[str] = None) -> bool:
+        """Añade un patrón personalizado para detección"""
+        if not name or not pattern:
+            return False
+            
+        try:
+            compiled_pattern = re.compile(pattern, re.IGNORECASE)
+            self.all_patterns[name] = {
+                "pattern": compiled_pattern,
+                "severity": severity,
+                "mitre_tactics": mitre_tactics or [],
+                "mitre_techniques": mitre_techniques or []
+            }
+            logger.info(f"Patrón personalizado añadido: {name}")
+            return True
+        except re.error:
+            logger.error(f"Error compilando patrón personalizado: {pattern}")
+            return False
+
+    def export_findings_summary(self) -> Dict[str, Any]:
+        """Exporta un resumen de hallazgos para informes"""
+        # Esta función podría implementarse para generar informes
+        return {
+            "total_events": self.performance_metrics["total_events_processed"],
+            "total_alerts": self.performance_metrics["alerts_generated"],
+            "top_patterns": {},  # Podría poblarse consultando la BD
+            "redteam_indicators": len(self.observed_iocs),
+            "timestamp": datetime.datetime.now().isoformat()
+        }
+
+    def create_hunting_report(self) -> Dict[str, Any]:
+        """Genera un informe de hunting basado en los hallazgos"""
+        # Implementación base - podría expandirse con consultas a la BD
+        return {
+            "timestamp": datetime.datetime.now().isoformat(),
+            "suspicious_ips": list(self.observed_iocs.keys()),
+            "compromised_users": [],  # Requiere lógica adicional
+            "potential_redteam_activity": bool(self.observed_iocs),
+            "recommendations": [
+                "Revisar los logs originales de los sistemas con alertas críticas",
+                "Verificar la legitimidad de nuevos usuarios creados",
+                "Monitorear actividad de red hacia IPs sospechosas"
+            ]
+        }
+    
     def analyze(self) -> Dict[str, List]:
         findings = {pattern: [] for pattern in self.patterns}
         failed_logins = {}
@@ -886,18 +1767,56 @@ class LogAnalyzer:
                 )
                 alert.save_to_db(self.db)
         return findings
+    
+# Clase auxiliar para implementar un monitor en tiempo real
+class RealTimeLogMonitor:
+    """Monitor de logs en tiempo real que utiliza LogAnalyzer"""
+    
+    def __init__(self, config: Dict, db: Database):
+        """Inicializa el monitor con configuración"""
+        self.log_analyzer = LogAnalyzer(config, db)
+        self.scan_interval = max(5, config.get("scan_interval_seconds", 60))
+        self.running = False
+        self.last_scan_time = 0
+        
+    def start(self):
+        """Inicia el monitoreo en tiempo real"""
+        if self.running:
+            logger.warning("El monitor ya está en ejecución")
+            return
+            
+        self.running = True
+        logger.info(f"Iniciando monitoreo en tiempo real cada {self.scan_interval} segundos")
+        
+        try:
+            while self.running:
+                current_time = time.time()
+                if current_time - self.last_scan_time >= self.scan_interval:
+                    self.log_analyzer.analyze_all_logs()
+                    self.last_scan_time = current_time
+                    
+                # Dormir un tiempo corto para no consumir CPU innecesariamente
+                time.sleep(1)
+        except KeyboardInterrupt:
+            logger.info("Monitoreo detenido por el usuario")
+        except Exception as e:
+            logger.error(f"Error en el monitor de tiempo real: {e}")
+        finally:
+            self.running = False
+    
+    def stop(self):
+        """Detiene el monitoreo en tiempo real"""
+        self.running = False
+        logger.info("Solicitando detención del monitoreo en tiempo real")
 
-    def analyze_all_logs(self, generate_alerts: bool = True) -> Dict[str, List[Dict]]:
-        """Analiza todos los archivos de log configurados."""
-        logger.info("Iniciando análisis de todos los logs configurados...")
-        all_findings = {}
-        self.failed_login_tracker.clear() # Resetear para cada escaneo completo
-        
-        for log_path in self.log_paths:
-            all_findings[log_path] = self.analyze_log_file(log_path, generate_alerts)
-        
-        logger.info("Análisis de todos los logs completado.")
-        return all_findings
+    def get_status(self) -> Dict[str, Any]:
+        """Devuelve el estado actual del monitor"""
+        return {
+            "running": self.running,
+            "last_scan": datetime.datetime.fromtimestamp(self.last_scan_time).isoformat() if self.last_scan_time else "Nunca",
+            "scan_interval": f"{self.scan_interval} segundos",
+            "metrics": self.log_analyzer.get_performance_metrics()
+        }
 
 # --- Nuevos Módulos (Esqueletos) ---
 class SystemHardener:
@@ -1641,11 +2560,58 @@ class MemoryScanner:
 class LazyOwnApp(cmd2.Cmd):
     """Interfaz de línea de comandos para LazyOwn BlueTeam Framework."""
 
-    prompt = '(LazyOwn@BlueTeam) %  '
-    intro = cmd2.style("Bienvenido a LazyOwn BlueTeam Framework v" + __version__ + ". Escriba 'help' para ver los comandos.", bold=True)
+    intro = """
+    ╔══════════════════════════════════════════════════════════╗
+    ║              LazyOwn BLUE TEAM FRAMEWORK CLI             ║
+    ║              Análisis Forense y Monitoreo                ║
+    ╚══════════════════════════════════════════════════════════╝
+    
+    Escriba 'help' o '?' para ver la lista de comandos disponibles.
+    Escriba 'exit' para salir del programa.
+    """
+    prompt = "\033[1;34mBlueTeam>\033[0m "  # Azul para equipos azules
 
-    def __init__(self, config_path: Optional[str] = None):
-        super().__init__(allow_cli_args=False) # Deshabilitar argumentos de CLI para cmd2 por ahora
+    def __init__(self, config_file: str = "config.json"):
+        """Inicializa el CLI con configuración y componentes necesarios"""
+        super().__init__(allow_cli_args=False)
+        
+        self.debug = False
+        self.config = self._load_config(config_file)
+        
+        # Inicializar la base de datos
+        self.db = Database(self.config.get("database", {}).get("path", "blue_team.db"))
+        
+        # Inicializar el analizador de logs
+        self.log_analyzer = LogAnalyzer(self.config.get("log_analyzer", {}), self.db)
+        
+        # Estado del CLI
+        self.monitoring_active = False
+        self.monitor_thread = None
+        self.last_analyzed_files = []
+        self.current_context = None  # Para guardar contexto de comandos
+        
+        # Configurar historial de comandos persistente
+        self.history_file = os.path.expanduser("~/.blue_team_history")
+        
+        # Añadir espacios de categorías para comandos
+        self.categories = {
+            'Análisis de Logs': ['analyze', 'monitor', 'patterns', 'correlate'],
+            'Investigación': ['search', 'timeline', 'ioc', 'users', 'hosts'],
+            'Alertas': ['alerts', 'respond', 'triage', 'escalate'],
+            'Reportes': ['report', 'export', 'statistics'],
+            'Sistema': ['config', 'status', 'debug', 'help', 'exit']
+        }
+        
+        # Inicializar el filtro de alertas
+        self.alert_filters = {
+            'severity': None,
+            'from_date': None,
+            'to_date': None,
+            'username': None,
+            'ip': None,
+            'pattern': None
+        }
+        
 
         # Eliminar comandos integrados no deseados
         del cmd2.Cmd.do_alias
@@ -1654,26 +2620,31 @@ class LazyOwnApp(cmd2.Cmd):
         del cmd2.Cmd.do_run_pyscript
         del cmd2.Cmd.do_shell # Proporcionaremos uno propio más controlado si es necesario
         del cmd2.Cmd.do_edit
-        del cmd2.Cmd.do_set
+
         del cmd2.Cmd.do_shortcuts
         del cmd2.Cmd.do_history
 
 
-        self.config = self._load_config(config_path)
+        self.config = self._load_config(config_file)
         self.db = Database(self.config["database_path"])
 
         # Inicializar módulos principales
         self.process_monitor = ProcessMonitor(self.config, self.db)
         self.network_monitor = NetworkMonitor(self.config, self.db)
         self.fim = FileIntegrityMonitor(self.config, self.db)
-        self.log_analyzer = LogAnalyzer(self.config, self.db)
+        self.file_monitor = FileIntegrityMonitor(self.config, self.db)
         self.hardener = SystemHardener(self.config, self.db)
         self.responder = IncidentResponder(self.config, self.db)
         self.reporter = ReportGenerator(self.config, self.db)
-        self.file_monitor = FileIntegrityMonitor(self.config, self.db)
+        self.file_integrity_monitor = FileIntegrityMonitor(self.config, self.db)
         self.system_hardener = SystemHardener(self.config, self.db)
         self.memory_scanner = MemoryScanner(self.config, self.db)
         logger.info("LazyOwnApp inicializada.")
+        self.app = self
+  
+        self.db = self._initialize_database()
+        self.log_analyzer = LogAnalyzer(self.config, self.db)
+        self.monitor = RealTimeLogMonitor(self.config, self.db)
 
     def _load_config(self, config_file: Optional[str]) -> Dict:
         """Carga la configuración desde un archivo JSON o usa los defaults."""
@@ -1700,6 +2671,11 @@ class LazyOwnApp(cmd2.Cmd):
         os.makedirs(config.get("backup_dir", "./backups"), exist_ok=True)
         
         return config
+
+    def _initialize_database(self):
+        """Inicializa la conexión a la base de datos"""
+        # Esta es una implementación simulada
+        return Database("./lazyown.db")
 
     def postloop(self) -> None:
         """Acciones al salir de la aplicación."""
@@ -2092,7 +3068,7 @@ class LazyOwnApp(cmd2.Cmd):
              self.poutput(json.dumps(data_to_print, indent=4, default=str))
         else: # Para tabulate u otros objetos que se convierten bien a str
             self.poutput(str(data_to_print))
-    
+    @cmd2.with_category(reporting_category)
     def do_system_info(self, arg):
         """Display system information."""
         info = SystemUtils.get_system_info()
@@ -2367,6 +3343,586 @@ class LazyOwnApp(cmd2.Cmd):
         return response == confirm_keyword.lower() or (confirm_keyword == "si,estoyseguro" and response == "si,estoyseguro")
 
 
+
+    
+
+    
+ 
+
+    
+    def _load_config(self, config_file: str) -> Dict:
+        """Carga la configuración desde un archivo JSON"""
+        default_config = {
+            "database": {"path": "blue_team.db"},
+            "log_analyzer": {
+                "log_paths": ["/var/log/auth.log", "/var/log/syslog"],
+                "scan_interval_seconds": 60,
+                "max_failed_logins": 5,
+                "log_analyzer_max_lines": 5000,
+                "max_analyzer_threads": 4
+            },
+            "reporting": {
+                "output_dir": "./reports",
+                "formats": ["json", "html", "pdf"]
+            },
+            "integration": {
+                "enable_slack": False,
+                "enable_email": False
+            }
+        }
+        
+        try:
+            if os.path.exists(config_file):
+                with open(config_file, 'r') as f:
+                    loaded_config = json.load(f)
+                    # Fusionar con valores predeterminados
+                    for key, value in default_config.items():
+                        if key not in loaded_config:
+                            loaded_config[key] = value
+                        elif isinstance(value, dict):
+                            for sub_key, sub_value in value.items():
+                                if sub_key not in loaded_config[key]:
+                                    loaded_config[key][sub_key] = sub_value
+                    return loaded_config
+            else:
+                print(f"Archivo de configuración {config_file} no encontrado. Usando valores predeterminados.")
+                return default_config
+        except Exception as e:
+            print(f"Error cargando configuración: {e}")
+            return default_config
+    
+
+    ########################
+    # Comandos de análisis de logs
+    ########################
+    
+    def do_analyze(self, args):
+        """
+        Analiza archivos de log específicos o todos los configurados.
+        
+        Uso: analyze [opciones] [archivo1 archivo2 ...]
+        
+        Opciones:
+          -a, --all      Analiza todos los archivos de log configurados
+          -n, --no-alert No genera alertas durante el análisis
+          -v, --verbose  Muestra información detallada del análisis
+        
+        Ejemplos:
+          analyze -a                        # Analiza todos los logs configurados
+          analyze /var/log/auth.log         # Analiza solo auth.log
+          analyze -n /var/log/syslog        # Analiza syslog sin generar alertas
+        """
+        parser = argparse.ArgumentParser(prog="analyze")
+        parser.add_argument('-a', '--all', action='store_true', help='Analiza todos los archivos de log')
+        parser.add_argument('-n', '--no-alert', action='store_true', help='No genera alertas')
+        parser.add_argument('-v', '--verbose', action='store_true', help='Muestra información detallada')
+        parser.add_argument('files', nargs='*', help='Archivos de log a analizar')
+        
+        try:
+            parsed_args = parser.parse_args(args.arg_list)
+            
+            # Determinar qué archivos analizar
+            files_to_analyze = []
+            if parsed_args.all:
+                files_to_analyze = self.log_analyzer.log_paths
+                print(f"Analizando todos los logs configurados ({len(files_to_analyze)} archivos)")
+            elif parsed_args.files:
+                files_to_analyze = parsed_args.files
+                print(f"Analizando logs especificados ({len(files_to_analyze)} archivos)")
+            else:
+                print("Error: Debe especificar archivos o usar la opción --all")
+                return
+            
+            # Verificar que los archivos existen
+            valid_files = [f for f in files_to_analyze if os.path.isfile(f)]
+            if len(valid_files) < len(files_to_analyze):
+                print(f"Advertencia: {len(files_to_analyze) - len(valid_files)} archivos no encontrados")
+            
+            if not valid_files:
+                print("Error: No hay archivos válidos para analizar")
+                return
+            
+            # Realizar el análisis
+            start_time = time.time()
+            generate_alerts = not parsed_args.no_alert
+            
+            if len(valid_files) == 1:
+                # Analizar un solo archivo
+                findings = self.log_analyzer.analyze_log_file(valid_files[0], generate_alerts)
+                self._display_findings_summary(valid_files[0], findings, parsed_args.verbose)
+            else:
+                # Analizar múltiples archivos
+                all_findings = {}
+                for file in valid_files:
+                    findings = self.log_analyzer.analyze_log_file(file, generate_alerts)
+                    all_findings[file] = findings
+                    if parsed_args.verbose:
+                        self._display_findings_summary(file, findings, verbose=True)
+                
+                # Mostrar resumen general
+                total_findings = sum(len(findings) for findings in all_findings.values())
+                print(f"\nResumen del análisis:")
+                print(f"- Archivos analizados: {len(valid_files)}")
+                print(f"- Total de hallazgos: {total_findings}")
+                print(f"- Tiempo de análisis: {time.time() - start_time:.2f} segundos")
+                
+                if generate_alerts:
+                    alert_count = self.log_analyzer.performance_metrics["alerts_generated"]
+                    print(f"- Alertas generadas: {alert_count}")
+            
+            # Guardar los archivos analizados en el estado
+            self.last_analyzed_files = valid_files
+            
+        except SystemExit:
+            # Capturar la salida de argparse cuando hay error en parámetros
+            return
+        except Exception as e:
+            print(f"Error durante el análisis: {e}")
+    
+    def _display_findings_summary(self, file_path: str, findings: List[Dict], verbose: bool = False):
+        """Muestra un resumen de los hallazgos de un archivo"""
+        print(f"\nArchivo: {file_path}")
+        print(f"Hallazgos: {len(findings)}")
+        
+        if not findings:
+            print("No se encontraron eventos de interés")
+            return
+        
+        # Agrupar por tipo de patrón
+        patterns = defaultdict(int)
+        for finding in findings:
+            pattern = finding.get("pattern_name", "desconocido")
+            patterns[pattern] += 1
+        
+        # Mostrar resumen por patrón
+        print("\nResumen por patrón:")
+        for pattern, count in sorted(patterns.items(), key=lambda x: x[1], reverse=True):
+            severity = next((p["severity"] for p in self.log_analyzer.all_patterns.values() 
+                            if p.get("pattern_name") == pattern), "medium")
+            severity_color = self._get_severity_color(severity)
+            print(f"- {pattern}: {count} eventos ({severity_color}{severity}\033[0m)")
+        
+        # Si es verbose, mostrar algunos ejemplos de los hallazgos más importantes
+        if verbose and findings:
+            critical_findings = [f for f in findings 
+                               if f.get("pattern_name") in self.log_analyzer.all_patterns and 
+                               self.log_analyzer.all_patterns[f.get("pattern_name")].get("severity") in ["high", "critical"]]
+            
+            if critical_findings:
+                print("\nEjemplos de hallazgos importantes:")
+                for i, finding in enumerate(critical_findings[:5]):  # Mostrar hasta 5 ejemplos
+                    pattern = finding.get("pattern_name", "desconocido")
+                    line = finding.get("line_content", "")[:100] + "..." if len(finding.get("line_content", "")) > 100 else finding.get("line_content", "")
+                    print(f"{i+1}. [{pattern}] {line}")
+    
+    def _get_severity_color(self, severity: str) -> str:
+        """Devuelve el código de color ANSI para una severidad dada"""
+        colors = {
+            "critical": "\033[1;31m",  # Rojo brillante
+            "high": "\033[31m",        # Rojo
+            "medium": "\033[33m",      # Amarillo
+            "low": "\033[32m",         # Verde
+            "info": "\033[36m"         # Cian
+        }
+        return colors.get(severity.lower(), "\033[0m")  # Por defecto sin color
+    
+    def do_monitor(self, args):
+        """
+        Inicia o detiene el monitoreo en tiempo real de los logs.
+        
+        Uso: monitor [opciones]
+        
+        Opciones:
+          start         Inicia el monitoreo (por defecto)
+          stop          Detiene el monitoreo activo
+          status        Muestra el estado actual del monitoreo
+          -i INTERVAL   Intervalo de escaneo en segundos (default: configuración)
+        
+        Ejemplos:
+          monitor start          # Inicia el monitoreo
+          monitor start -i 30    # Inicia el monitoreo con intervalo de 30 segundos
+          monitor stop           # Detiene el monitoreo
+          monitor status         # Muestra el estado del monitoreo
+        """
+        parser = argparse.ArgumentParser(prog="monitor")
+        parser.add_argument('action', nargs='?', choices=['start', 'stop', 'status'], default='start',
+                           help='Acción a realizar con el monitoreo')
+        parser.add_argument('-i', '--interval', type=int, help='Intervalo de escaneo en segundos')
+        
+        try:
+            parsed_args = parser.parse_args(args.arg_list)
+            
+            if parsed_args.action == 'start':
+                if self.monitoring_active:
+                    print("El monitoreo ya está activo. Deténgalo primero con 'monitor stop'.")
+                    return
+                
+                # Configurar intervalo
+                interval = parsed_args.interval or self.log_analyzer.scan_interval
+                
+                # Iniciar monitoreo en un hilo separado
+                self.monitoring_active = True
+                self.monitor_thread = threading.Thread(
+                    target=self._monitoring_loop,
+                    args=(interval,),
+                    daemon=True
+                )
+                self.monitor_thread.start()
+                
+                print(f"Monitoreo iniciado con intervalo de {interval} segundos")
+                print("Los hallazgos y alertas se mostrarán en tiempo real")
+                print("Utilice 'monitor stop' para detener el monitoreo")
+                
+            elif parsed_args.action == 'stop':
+                if not self.monitoring_active:
+                    print("El monitoreo no está activo.")
+                    return
+                
+                self.monitoring_active = False
+                if self.monitor_thread:
+                    self.monitor_thread.join(timeout=2)
+                    self.monitor_thread = None
+                
+                print("Monitoreo detenido")
+                
+            elif parsed_args.action == 'status':
+                if self.monitoring_active:
+                    interval = parsed_args.interval or self.log_analyzer.scan_interval
+                    print(f"Monitoreo ACTIVO con intervalo de {interval} segundos")
+                    print(f"Archivos monitoreados: {len(self.log_analyzer.log_paths)}")
+                    metrics = self.log_analyzer.get_performance_metrics()
+                    print(f"Eventos procesados: {metrics['total_events_processed']}")
+                    print(f"Alertas generadas: {metrics['alerts_generated']}")
+                else:
+                    print("Monitoreo INACTIVO")
+        
+        except SystemExit:
+            return
+        except Exception as e:
+            print(f"Error en el comando de monitoreo: {e}")
+    
+    def _monitoring_loop(self, interval: int):
+        """Bucle de monitoreo que se ejecuta en un hilo separado"""
+        try:
+            while self.monitoring_active:
+                # Mostrar hora de escaneo
+                scan_time = datetime.datetime.now().strftime("%H:%M:%S")
+                print(f"\n[{scan_time}] Escaneando logs...")
+                
+                # Analizar todos los logs configurados
+                all_findings = self.log_analyzer.analyze_all_logs(generate_alerts=True)
+                
+                # Mostrar resumen de hallazgos
+                total_findings = sum(len(findings) for findings in all_findings.values())
+                if total_findings > 0:
+                    print(f"[{scan_time}] Nuevos hallazgos: {total_findings}")
+                    
+                    # Mostrar hallazgos críticos en tiempo real
+                    critical_findings = []
+                    for file_path, findings in all_findings.items():
+                        for finding in findings:
+                            pattern_name = finding.get("pattern_name")
+                            if pattern_name in self.log_analyzer.all_patterns:
+                                severity = self.log_analyzer.all_patterns[pattern_name].get("severity")
+                                if severity in ["critical", "high"]:
+                                    critical_findings.append((file_path, finding))
+                    
+                    if critical_findings:
+                        print("\n¡ALERTAS CRÍTICAS DETECTADAS!")
+                        for file_path, finding in critical_findings[:5]:  # Limitar a 5 para no saturar
+                            pattern = finding.get("pattern_name", "desconocido")
+                            severity = self.log_analyzer.all_patterns[pattern].get("severity", "medium")
+                            severity_color = self._get_severity_color(severity)
+                            print(f"- [{severity_color}{severity}\033[0m] {pattern}: {finding.get('line_content', '')[:80]}...")
+                        
+                        if len(critical_findings) > 5:
+                            print(f"... y {len(critical_findings) - 5} más. Use 'alerts list' para ver todas.")
+                
+                # Esperar hasta el próximo escaneo
+                for _ in range(interval):
+                    if not self.monitoring_active:
+                        break
+                    time.sleep(1)
+                    
+        except Exception as e:
+            print(f"Error en el bucle de monitoreo: {e}")
+            self.monitoring_active = False
+    
+    def do_patterns(self, args):
+        """
+        Gestiona los patrones de detección para el análisis de logs.
+        
+        Uso: patterns [opciones] [acción]
+        
+        Acciones:
+          list          Lista todos los patrones disponibles (predeterminado)
+          add           Añade un nuevo patrón personalizado
+          remove        Elimina un patrón personalizado
+          show <name>   Muestra detalles de un patrón específico
+        
+        Opciones:
+          -c, --category CATEGORY   Filtra por categoría (redteam, normal)
+          -s, --severity SEVERITY   Filtra por severidad (critical, high, medium, low, info)
+        
+        Ejemplos:
+          patterns list                   # Lista todos los patrones
+          patterns list -s critical       # Lista patrones de severidad crítica
+          patterns show failed_login      # Muestra detalles del patrón failed_login
+          patterns add                    # Inicia asistente para añadir un patrón
+          patterns remove                 # Inicia asistente para eliminar un patrón
+        """
+        parser = argparse.ArgumentParser(prog="patterns")
+        parser.add_argument('action', nargs='?', choices=['list', 'add', 'remove', 'show'], default='list',
+                           help='Acción a realizar con los patrones')
+        parser.add_argument('name', nargs='?', help='Nombre del patrón para mostrar/eliminar')
+        parser.add_argument('-c', '--category', choices=['redteam', 'normal'], help='Filtrar por categoría')
+        parser.add_argument('-s', '--severity', choices=['critical', 'high', 'medium', 'low', 'info'], 
+                           help='Filtrar por severidad')
+        
+        try:
+            parsed_args = parser.parse_args(args.arg_list)
+            
+            if parsed_args.action == 'list':
+                # Filtrar patrones según parámetros
+                filtered_patterns = {}
+                
+                if parsed_args.category == 'redteam':
+                    patterns_to_filter = self.log_analyzer.redteam_patterns
+                elif parsed_args.category == 'normal':
+                    patterns_to_filter = self.log_analyzer.patterns
+                else:
+                    patterns_to_filter = self.log_analyzer.all_patterns
+                
+                # Aplicar filtro de severidad si existe
+                if parsed_args.severity:
+                    filtered_patterns = {name: config for name, config in patterns_to_filter.items()
+                                      if config.get('severity') == parsed_args.severity}
+                else:
+                    filtered_patterns = patterns_to_filter
+                
+                # Mostrar patrones en formato tabular
+                pattern_data = []
+                for name, config in sorted(filtered_patterns.items()):
+                    severity = config.get('severity', 'medium')
+                    techniques = ', '.join(config.get('mitre_techniques', ['N/A']))
+                    tactics = ', '.join(config.get('mitre_tactics', ['N/A']))
+                    pattern_type = 'RedTeam' if name in self.log_analyzer.redteam_patterns else 'Normal'
+                    
+                    # Colorear severidad
+                    severity_colored = f"{self._get_severity_color(severity)}{severity}\033[0m"
+                    
+                    pattern_data.append([name, severity_colored, pattern_type, techniques, tactics])
+                
+                if pattern_data:
+                    headers = ['Nombre', 'Severidad', 'Tipo', 'Técnicas MITRE', 'Tácticas MITRE']
+                    print("\nPatrones de detección configurados:")
+                    print(tabulate(pattern_data, headers=headers, tablefmt='pretty'))
+                    print(f"Total: {len(pattern_data)} patrones")
+                else:
+                    print("No se encontraron patrones con los filtros especificados")
+            
+            elif parsed_args.action == 'show':
+                if not parsed_args.name:
+                    print("Error: Debe especificar el nombre del patrón a mostrar")
+                    return
+                
+                pattern_name = parsed_args.name
+                if pattern_name in self.log_analyzer.all_patterns:
+                    config = self.log_analyzer.all_patterns[pattern_name]
+                    pattern_type = 'RedTeam' if pattern_name in self.log_analyzer.redteam_patterns else 'Normal'
+                    
+                    print(f"\nDetalles del patrón: {pattern_name}")
+                    print(f"Tipo: {pattern_type}")
+                    print(f"Severidad: {self._get_severity_color(config.get('severity', 'medium'))}{config.get('severity', 'medium')}\033[0m")
+                    print(f"Expresión regular: {config['pattern'].pattern}")
+                    print(f"Tácticas MITRE: {', '.join(config.get('mitre_tactics', ['N/A']))}")
+                    print(f"Técnicas MITRE: {', '.join(config.get('mitre_techniques', ['N/A']))}")
+                else:
+                    print(f"Error: El patrón '{pattern_name}' no existe")
+            
+            elif parsed_args.action == 'add':
+                # Asistente para añadir patrón
+                print("\nAsistente para añadir un nuevo patrón de detección")
+                name = input("Nombre del patrón: ")
+                
+                if name in self.log_analyzer.all_patterns:
+                    print(f"Error: Ya existe un patrón con el nombre '{name}'")
+                    return
+                
+                pattern_regex = input("Expresión regular: ")
+                severity = input("Severidad (critical/high/medium/low/info) [medium]: ") or "medium"
+                
+                # Validar severidad
+                if severity.lower() not in ['critical', 'high', 'medium', 'low', 'info']:
+                    print(f"Severidad '{severity}' no válida. Usando 'medium' por defecto.")
+                    severity = "medium"
+                
+                mitre_tactics = input("Tácticas MITRE (separadas por comas): ").split(',')
+                mitre_tactics = [t.strip() for t in mitre_tactics if t.strip()]
+                
+                mitre_techniques = input("Técnicas MITRE (separadas por comas): ").split(',')
+                mitre_techniques = [t.strip() for t in mitre_techniques if t.strip()]
+                
+                # Añadir patrón
+                result = self.log_analyzer.add_custom_pattern(
+                    name, pattern_regex, severity, mitre_tactics, mitre_techniques
+                )
+                
+                if result:
+                    print(f"Patrón '{name}' añadido correctamente")
+                else:
+                    print(f"Error al añadir el patrón '{name}'")
+            
+            elif parsed_args.action == 'remove':
+                if parsed_args.name:
+                    pattern_name = parsed_args.name
+                else:
+                    # Mostrar lista para seleccionar
+                    pattern_names = list(self.log_analyzer.all_patterns.keys())
+                    for i, name in enumerate(pattern_names):
+                        print(f"{i+1}. {name}")
+                    
+                    selection = input("\nSeleccione el número del patrón a eliminar: ")
+                    try:
+                        index = int(selection) - 1
+                        if 0 <= index < len(pattern_names):
+                            pattern_name = pattern_names[index]
+                        else:
+                            print("Selección fuera de rango")
+                            return
+                    except ValueError:
+                        print("Entrada no válida")
+                        return
+                
+                # Verificar si es un patrón predefinido o personalizado
+                if pattern_name in self.log_analyzer.patterns or pattern_name in self.log_analyzer.redteam_patterns:
+                    confirm = input(f"'{pattern_name}' es un patrón predefinido. ¿Realmente desea eliminarlo? [s/N]: ").lower()
+                    if confirm != 's':
+                        print("Operación cancelada")
+                        return
+                
+                # Eliminar patrón
+                if pattern_name in self.log_analyzer.all_patterns:
+                    del self.log_analyzer.all_patterns[pattern_name]
+                    if pattern_name in self.log_analyzer.patterns:
+                        del self.log_analyzer.patterns[pattern_name]
+                    if pattern_name in self.log_analyzer.redteam_patterns:
+                        del self.log_analyzer.redteam_patterns[pattern_name]
+                    
+                    print(f"Patrón '{pattern_name}' eliminado correctamente")
+                else:
+                    print(f"Error: El patrón '{pattern_name}' no existe")
+        
+        except SystemExit:
+            return
+        except Exception as e:
+            print(f"Error en el comando de patrones: {e}")
+
+    
+    def do_analyze_logs(self, args):
+        """Analiza los archivos de log configurados"""
+        self.poutput("Analizando logs del sistema...")
+        findings = self.log_analyzer.analyze_all_logs()
+        
+        total = sum(len(f) for f in findings.values())
+        self.poutput(f"Análisis completado. {total} hallazgos encontrados.")
+        
+        # Mostrar resumen por tipo de patrón
+        summary = defaultdict(int)
+        for log_findings in findings.values():
+            for finding in log_findings:
+                pattern = finding.get("pattern_name", "unknown")
+                summary[pattern] += 1
+                
+        self.poutput("\nResumen por tipo de patrón:")
+        for pattern, count in sorted(summary.items(), key=lambda x: x[1], reverse=True):
+            severity = self.log_analyzer.all_patterns.get(pattern, {}).get("severity", "unknown")
+            self.poutput(f"  {pattern}: {count} eventos [{severity}]")
+    
+    def do_start_monitor(self, args):
+        """Inicia el monitoreo en tiempo real de logs"""
+        if not self.monitor.running:
+            # Iniciar en un thread separado
+            
+            monitor_thread = threading.Thread(target=self.monitor.start, daemon=True)
+            monitor_thread.start()
+            self.poutput(f"Monitor iniciado con intervalo de {self.monitor.scan_interval}s")
+        else:
+            self.poutput("El monitor ya está en ejecución")
+    
+    def do_stop_monitor(self, args):
+        """Detiene el monitoreo en tiempo real"""
+        if self.monitor.running:
+            self.monitor.stop()
+            self.poutput("Solicitando detención del monitor...")
+        else:
+            self.poutput("El monitor no está en ejecución")
+    
+    def do_monitor_status(self, args):
+        """Muestra el estado actual del monitor"""
+        status = self.monitor.get_status()
+        self.poutput(f"Estado: {'Activo' if status['running'] else 'Detenido'}")
+        self.poutput(f"Último escaneo: {status['last_scan']}")
+        self.poutput(f"Intervalo: {status['scan_interval']}")
+        self.poutput("\nMétricas de rendimiento:")
+        for key, value in status['metrics'].items():
+            self.poutput(f"  {key}: {value}")
+    
+    def do_add_pattern(self, args):
+        """Añade un patrón personalizado de detección"""
+        pattern_name = self.app.read_input("Nombre del patrón: ")
+        pattern_regex = self.app.read_input("Expresión regular: ")
+        severity = self.app.read_input("Severidad (low/medium/high/critical) [medium]: ") or "medium"
+        
+        if self.log_analyzer.add_custom_pattern(pattern_name, pattern_regex, severity):
+            self.poutput(f"Patrón '{pattern_name}' añadido correctamente")
+        else:
+            self.poutput("Error al añadir el patrón")
+    
+    def do_redteam_hunt(self, args):
+        """Realiza una búsqueda específica de actividad del equipo rojo"""
+        self.poutput("Iniciando búsqueda de actividad de equipo rojo...")
+        
+        # Analizar logs con los patrones específicos de equipo rojo
+        findings = self.log_analyzer.analyze_all_logs()
+        
+        # Filtrar solo hallazgos relacionados con equipo rojo
+        redteam_findings = []
+        for log_path, log_findings in findings.items():
+            for finding in log_findings:
+                pattern = finding.get("pattern_name", "")
+                if pattern in self.log_analyzer.redteam_patterns:
+                    redteam_findings.append(finding)
+        
+        if redteam_findings:
+            self.poutput(f"\n¡ALERTA! Se encontraron {len(redteam_findings)} indicios de actividad del equipo rojo:")
+            for i, finding in enumerate(redteam_findings[:10], 1):  # Mostrar los primeros 10
+                self.poutput(f"\n--- Hallazgo #{i} ---")
+                self.poutput(f"Tipo: {finding.get('pattern_name', 'desconocido')}")
+                self.poutput(f"Log: {finding.get('log_file', 'desconocido')}")
+                self.poutput(f"Línea: {finding.get('line_content', 'N/A')[:150]}...")
+                
+                if finding.get("ip_address"):
+                    self.poutput(f"IP: {finding['ip_address']}")
+                if finding.get("username"):
+                    self.poutput(f"Usuario: {finding['username']}")
+                
+            if len(redteam_findings) > 10:
+                self.poutput(f"\n... y {len(redteam_findings) - 10} hallazgos más.")
+                
+            # Generar reporte
+            report = self.log_analyzer.create_hunting_report()
+            self.poutput("\n=== REPORTE DE HUNTING ===")
+            self.poutput(f"Timestamp: {report['timestamp']}")
+            self.poutput(f"IPs Sospechosas: {', '.join(report['suspicious_ips']) if report['suspicious_ips'] else 'Ninguna'}")
+            self.poutput("\nRecomendaciones:")
+            for rec in report['recommendations']:
+                self.poutput(f"  - {rec}")
+        else:
+            self.poutput("No se encontraron indicios de actividad del equipo rojo.")
+    
+
+
 if __name__ == '__main__':
     # Para pruebas, se puede pasar una ruta de config
     # config_file_path = "config.json" 
@@ -2382,3 +3938,4 @@ if __name__ == '__main__':
 
     app = LazyOwnApp()
     sys.exit(app.cmdloop())
+
