@@ -1,0 +1,29 @@
+{
+    "log_paths": [
+        "/var/log/syslog",
+        "/var/log/auth.log",
+        "/var/log/secure", 
+        "/var/log/messages" 
+    ],
+    "alert_threshold": 3,
+    "output_dir": "./reports",
+    "database_path": "./lazyown.db",
+    "critical_files": [
+        "/etc/passwd",
+        "/etc/shadow",
+        "/etc/group",
+        "/etc/sudoers",
+        "/etc/ssh/sshd_config",
+        "/bin/login", 
+        "/usr/sbin/sshd" 
+    ],
+    "scan_interval": 60,  
+    "network_baseline": {}, 
+    "suspicious_ports": [23, 2323, 4444, 5555, 6666, 31337, 65535], 
+    "suspicious_processes": ["nc", "netcat", "ncat", "msfvenom", "meterpreter", "socat", "kworkerds"], 
+    "max_failed_logins": 5,
+    "quarantine_dir": "./quarantine",
+    "backup_dir": "./backups",
+    "enable_auto_response": false,
+    "threat_intel_ips_url": false 
+}
