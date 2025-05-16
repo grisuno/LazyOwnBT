@@ -1,0 +1,178 @@
+<head>
+    <title>Alertas - LazyOwn PurpleTeam</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+        <style>
+body {
+    font-family: 'Roboto', sans-serif; /* A more modern font */
+    background-color: #0d1117; /* Deeper dark background */
+    color: #f0f6fc; /* Softer light text */
+    padding-top: 30px;
+    line-height: 1.6;
+}
+
+.container {
+    background-color: #161b22; /* Slightly lighter dark background for container */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+    margin-bottom: 40px;
+}
+
+h1, h2, h3 {
+    color: #58a6ff; /* A more vibrant blue for headings */
+    margin-bottom: 25px;
+    border-bottom: 3px solid #21262d; /* More defined divider */
+    padding-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h3 {
+    font-size: 1.7em;
+    margin-top: 30px;
+}
+
+.row {
+    margin-bottom: 30px;
+}
+
+.col-md-4 {
+    padding: 20px;
+    background-color: #1c2128; /* Darker background for metric panels */
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.col-md-4:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.col-md-8 {
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+    color: #c9d1d9; /* Slightly lighter text for list items */
+    font-weight: 500;
+}
+
+ul li strong {
+    color: #8b949e; /* Emphasize metric names */
+}
+
+.table {
+    color: #f0f6fc;
+    border-collapse: collapse; /* Collapse borders for a cleaner look */
+    width: 100%;
+    margin-top: 15px;
+}
+
+.table thead th {
+    background-color: #21262d; /* Darker header for tables */
+    color: #c9d1d9;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #30363d;
+    font-weight: bold;
+}
+
+.table tbody tr {
+    background-color: #161b22;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #1c2128;
+}
+
+.table tbody tr:hover {
+    background-color: #30363d;
+}
+
+.table td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #21262d;
+}
+
+/* Animations are now on the container and metric panels */
+
+/* Modern touches */
+a {
+    color: #58a6ff; /* Vibrant blue for links */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #a7d9ff; /* Lighter blue on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-4, .col-md-8 {
+        margin-bottom: 30px;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    h3 {
+        font-size: 1.5em;
+    }
+    .container {
+        padding: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alertas</h1>
+        <a href="/" class="btn btn-secondary mb-3">Volver al Dashboard</a>
+        <table id="alertsTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tipo</th>
+                    <th>Detalles</th>
+                    <th>Severidad</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alert in alerts %}
+                <tr>
+                    <td>{{ alert.id }}</td>
+                    <td>{{ alert.type }}</td>
+                    <td>{{ alert.details | tojson }}</td>
+                    <td>{{ alert.severity }}</td>
+                    <td>{{ alert.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#alertsTable').DataTable();
+        });
+        if (!localStorage.getItem('jwt_token')) {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
