@@ -25,5 +25,11 @@
     "quarantine_dir": "./quarantine",
     "backup_dir": "./backups",
     "enable_auto_response": false,
-    "threat_intel_ips_url": false 
+    "threat_intel_ips_url": false,
+    "ai_detection": {
+        "enabled": true,
+        "threshold": 0.7,
+        "model_dir": "sessions/ai_model",
+        "auto_update": true
+    } 
 }
