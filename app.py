@@ -22,7 +22,9 @@ import subprocess
 import platform
 import time
 import shutil
-import joblib 
+import joblib
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
 import signal
 import pwd
 import grp
@@ -1530,7 +1532,7 @@ class LogAnalyzer:
                     username = self._extract_username_from_log(line_content)
                     command = self._extract_command_from_log(line_content)
                     
-                    # Lista temporal para eventos de esta línea
+                    # ✅ Lista temporal para eventos de esta línea (clave para evitar duplicados)
                     line_findings = []
                     
                     # === 1. Aplicar todos los patrones de detección (reglas) ===
@@ -1593,7 +1595,7 @@ class LogAnalyzer:
                         ai_result = self._analyze_command_with_ai(cmd, args)
                         ai_threshold = self.config.get("ai_detection", {}).get("threshold", 0.7)
                         
-                        # Si el modelo detecta un comando malicioso y no fue detectado por reglas
+                        # Si el modelo detecta un comando malicioso y supera el umbral
                         if ai_result["malicious"] and ai_result["score"] >= ai_threshold:
                             # Verificar si ya fue detectado por reglas (evitar duplicados)
                             is_rule_detected = any(
@@ -1601,7 +1603,9 @@ class LogAnalyzer:
                                     "dangerous_commands", 
                                     "c2_indicators", 
                                     "offensive_tools", 
-                                    "data_exfiltration"
+                                    "data_exfiltration",
+                                    "suspicious_command",
+                                    "sudo_command"
                                 ] 
                                 for finding in line_findings
                             )
@@ -1659,9 +1663,10 @@ class LogAnalyzer:
                                     )
                                     alert.save_to_db(self.db)
                                     self.performance_metrics["alerts_generated"] += 1
+                                    self.performance_metrics["ai_alerts"] += 1
                                     logger.info(f"🚨 IA detectó comando malicioso: {command} (score: {ai_result['score']:.3f})")
                     
-                    # Añadir todos los hallazgos de esta línea
+                    # ✅ Añadir todos los hallazgos de esta línea (reglas + IA)
                     findings.extend(line_findings)
             
             # Actualizar métricas
@@ -1677,6 +1682,7 @@ class LogAnalyzer:
         logger.info(f"Análisis de {log_path} completado en {duration:.2f}s. {len(findings)} hallazgos.")
         
         return findings
+    
     def _enrich_finding_with_context(self, event_details: Dict) -> None:
         """Enriquece un hallazgo con contexto adicional y correlación"""
         # Añadir contexto temporal (hora del día, día de la semana)
