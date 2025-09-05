@@ -22,11 +22,13 @@ import subprocess
 import platform
 import time
 import shutil
-import tempfile
-import signal # No usado directamente aún, pero puede ser útil para manejo de procesos
+import joblib 
+import signal
 import pwd
 import grp
+import csv
 import argparse
+from cmd2 import Fg, style
 from lupa import LuaRuntime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import defaultdict
@@ -1042,7 +1044,17 @@ class LogAnalyzer:
 
     def __init__(self, config: Dict, db: Database):
         """Inicializa el analizador con configuración mejorada y validada"""
-        # Validar configuración mínima necesaria
+
+        self.performance_metrics = {
+            "total_events_processed": 0,
+            "alerts_generated": 0,
+            "last_scan_duration": 0,
+            "alerts_generated": 0,
+            "ai_alerts": 0,
+            "ai_false_positives": 0,
+            "ai_false_negatives": 0
+        }
+    
         if not isinstance(config, dict):
             raise TypeError("La configuración debe ser un diccionario")
         if not isinstance(db, Database):
@@ -1060,7 +1072,17 @@ class LogAnalyzer:
         
         # Estado del analizador para seguimiento persistente
         self._initialize_state()
+        # Cargar configuración de IA
+        self.ai_enabled = config.get("ai_detection", {}).get("enabled", True)
+        self.ai_threshold = config.get("ai_detection", {}).get("threshold", 0.7)
         
+        # Cargar modelo de IA
+        self.ai_model = None
+        self.ai_vectorizer = None
+        if self.ai_enabled:
+            self._load_ai_model()
+        else:
+            logger.info("ℹ️ Detección con IA desactivada en configuración.")      
         # Configuración del detector de amenazas
         self._setup_threat_detection_patterns()
         
@@ -1256,7 +1278,10 @@ class LogAnalyzer:
                 "mitre_techniques": ["T1499"],
             },
         }
-        
+        # Inicializar métricas específicas de IA
+        self.performance_metrics["ai_alerts"] = 0
+        self.performance_metrics["ai_false_positives"] = 0
+        self.performance_metrics["ai_false_negatives"] = 0
         # Patrones avanzados para detección de equipos rojos en CTFs y juegos de emulación
         self.redteam_patterns = {
             # Herramientas comunes de Red Team
@@ -1505,13 +1530,15 @@ class LogAnalyzer:
                     username = self._extract_username_from_log(line_content)
                     command = self._extract_command_from_log(line_content)
                     
-                    # Aplicar todos los patrones de detección
+                    # Lista temporal para eventos de esta línea
+                    line_findings = []
+                    
+                    # === 1. Aplicar todos los patrones de detección (reglas) ===
                     for pattern_name, pattern_config in self.all_patterns.items():
                         pattern_re = pattern_config["pattern"]
                         match = pattern_re.search(line_content)
                         
                         if match:
-                            # Base de datos mínimos para el evento
                             event_details = {
                                 "log_file": log_path,
                                 "line_number": line_num + 1, 
@@ -1524,42 +1551,122 @@ class LogAnalyzer:
                                 "command": command
                             }
                             
-                            # Enriquecer hallazgo con contexto
                             self._enrich_finding_with_context(event_details)
-                            findings.append(event_details)
+                            line_findings.append(event_details)
                             
-                            # Registrar el evento en la base de datos
+                            # Registrar en DB
                             event_id = self.db.insert(
                                 """INSERT INTO security_events 
-                                   (event_type, source, description, raw_data, timestamp, 
+                                (event_type, source, description, raw_data, timestamp, 
                                     ip_address, username, command) 
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
                                 (pattern_name, 
-                                 log_path, 
-                                 f"Detectado evento '{pattern_name}'", 
-                                 line_content, 
-                                 timestamp_str,
-                                 ip_address or "",
-                                 username or "",
-                                 command or "")
+                                log_path, 
+                                f"Detectado evento '{pattern_name}'", 
+                                line_content, 
+                                timestamp_str,
+                                ip_address or "",
+                                username or "",
+                                command or "")
                             )
                             
                             if not event_id: 
                                 logger.error(f"No se pudo guardar evento de log {pattern_name} en DB.")
                             
-                            # Generar alertas según la configuración
+                            # Generar alertas
                             if generate_alerts:
-                                # Procesar lógica específica según el tipo de evento
                                 self._process_specific_event_logic(
                                     pattern_name, 
                                     pattern_config, 
                                     event_details, 
                                     line_content
                                 )
-                
-                # Actualizar métricas
-                self.performance_metrics["total_events_processed"] += len(findings)
-                
+                    
+                    # === 2. Aplicar detección con IA (solo si hay comando) ===
+                    if generate_alerts and self.ai_model and command:
+                        # Dividir comando y argumentos
+                        parts = command.split(" ", 1)
+                        cmd = parts[0]
+                        args = parts[1] if len(parts) > 1 else ""
+                        
+                        # Analizar con IA
+                        ai_result = self._analyze_command_with_ai(cmd, args)
+                        ai_threshold = self.config.get("ai_detection", {}).get("threshold", 0.7)
+                        
+                        # Si el modelo detecta un comando malicioso y no fue detectado por reglas
+                        if ai_result["malicious"] and ai_result["score"] >= ai_threshold:
+                            # Verificar si ya fue detectado por reglas (evitar duplicados)
+                            is_rule_detected = any(
+                                finding.get("pattern_name") in [
+                                    "dangerous_commands", 
+                                    "c2_indicators", 
+                                    "offensive_tools", 
+                                    "data_exfiltration"
+                                ] 
+                                for finding in line_findings
+                            )
+                            
+                            # Solo generar alerta si NO fue detectado por reglas
+                            if not is_rule_detected:
+                                ai_event_details = {
+                                    "log_file": log_path,
+                                    "line_number": line_num + 1,
+                                    "line_content": line_content,
+                                    "pattern_name": "ai_malicious_command",
+                                    "match_groups": None,
+                                    "timestamp": timestamp_str,
+                                    "ip_address": ip_address,
+                                    "username": username,
+                                    "command": command,
+                                    "ia_malicious_score": ai_result["score"],
+                                    "ia_prediccion": 1
+                                }
+                                
+                                self._enrich_finding_with_context(ai_event_details)
+                                line_findings.append(ai_event_details)
+                                
+                                # Guardar en DB
+                                event_id = self.db.insert(
+                                    """INSERT INTO security_events 
+                                    (event_type, source, description, raw_data, timestamp, 
+                                        ip_address, username, command) 
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
+                                    ("ai_malicious_command", 
+                                    log_path, 
+                                    f"Comando sospechoso detectado por IA (score: {ai_result['score']:.3f})", 
+                                    line_content, 
+                                    timestamp_str,
+                                    ip_address or "",
+                                    username or "",
+                                    command or "")
+                                )
+                                
+                                if event_id:
+                                    # Generar alerta
+                                    alert = Alert(
+                                        alert_type="ai_malicious_command",
+                                        details={
+                                            "command": command,
+                                            "ai_score": ai_result["score"],
+                                            "log_file": log_path,
+                                            "line_number": line_num + 1,
+                                            "ip_address": ip_address,
+                                            "username": username
+                                        },
+                                        severity="high" if ai_result["score"] > 0.9 else "medium",
+                                        mitre_tactics=["Execution", "Command and Control"],
+                                        mitre_techniques=["T1059", "T1071"]
+                                    )
+                                    alert.save_to_db(self.db)
+                                    self.performance_metrics["alerts_generated"] += 1
+                                    logger.info(f"🚨 IA detectó comando malicioso: {command} (score: {ai_result['score']:.3f})")
+                    
+                    # Añadir todos los hallazgos de esta línea
+                    findings.extend(line_findings)
+            
+            # Actualizar métricas
+            self.performance_metrics["total_events_processed"] += len(findings)
+            
         except IOError as e:
             logger.error(f"Error al leer archivo de log {log_path}: {e}")
         except Exception as e:
@@ -1570,7 +1677,6 @@ class LogAnalyzer:
         logger.info(f"Análisis de {log_path} completado en {duration:.2f}s. {len(findings)} hallazgos.")
         
         return findings
-
     def _enrich_finding_with_context(self, event_details: Dict) -> None:
         """Enriquece un hallazgo con contexto adicional y correlación"""
         # Añadir contexto temporal (hora del día, día de la semana)
@@ -1966,7 +2072,11 @@ class LogAnalyzer:
             "total_events_processed": self.performance_metrics["total_events_processed"],
             "alerts_generated": self.performance_metrics["alerts_generated"],
             "logs_analyzed": len(self.log_paths),
-            "patterns_monitored": len(self.all_patterns)
+            "patterns_monitored": len(self.all_patterns),
+            "ai_alerts": self.performance_metrics["ai_alerts"],
+            "ai_false_positives": self.performance_metrics["ai_false_positives"],
+            "ai_false_negatives": self.performance_metrics["ai_false_negatives"],
+            "ai_model_loaded": bool(self.ai_model)
         }
 
     def reset_trackers(self) -> None:
@@ -1998,6 +2108,14 @@ class LogAnalyzer:
             logger.error(f"Error compilando patrón personalizado: {pattern}")
             return False
 
+    def _count_rule_based_alerts(self) -> int:
+        """Cuenta las alertas generadas por reglas (no por IA)"""
+        rule_alerts = 0
+        for pattern in self.all_patterns:
+            if pattern not in ["ai_malicious_command"]:
+                rule_alerts += len(self.findings.get(pattern, []))
+        return rule_alerts
+
     def export_findings_summary(self) -> Dict[str, Any]:
         """Exporta un resumen de hallazgos para informes"""
         # Esta función podría implementarse para generar informes
@@ -2006,7 +2124,14 @@ class LogAnalyzer:
             "total_alerts": self.performance_metrics["alerts_generated"],
             "top_patterns": {},  # Podría poblarse consultando la BD
             "redteam_indicators": len(self.observed_iocs),
-            "timestamp": datetime.datetime.now().isoformat()
+            "timestamp": datetime.datetime.now().isoformat(),
+            "ai_detection": {
+                "total_ai_alerts": self.performance_metrics["ai_alerts"],
+                "false_positives": self.performance_metrics["ai_false_positives"],
+                "false_negatives": self.performance_metrics["ai_false_negatives"],
+                "model_loaded": bool(self.ai_model),
+                "new_findings": self.performance_metrics["ai_alerts"] - self._count_rule_based_alerts()
+            }
         }
 
     def create_hunting_report(self) -> Dict[str, Any]:
@@ -2087,7 +2212,98 @@ class LogAnalyzer:
                 )
                 alert.save_to_db(self.db)
         return findings
-    
+
+    def _load_ai_model(self):
+        """Carga el modelo de IA y el vectorizador si están disponibles."""
+        model_path = os.path.join("sessions", "ai_model", "malicious_command_model.pkl")
+        vectorizer_path = os.path.join("sessions", "ai_model", "tfidf_vectorizer.pkl")
+
+        try:
+            if os.path.exists(model_path) and os.path.exists(vectorizer_path):
+                self.ai_model = joblib.load(model_path)
+                self.ai_vectorizer = joblib.load(vectorizer_path)
+                logger.info(f"✅ Modelo de IA cargado correctamente desde: {model_path}")
+            else:
+                logger.warning(f"⚠ No se encontró el modelo de IA en {model_path} o {vectorizer_path}")
+                logger.warning("   Asegúrate de haber ejecutado LazyOwn RedTeam para generar el modelo.")
+        except Exception as e:
+            logger.error(f"❌ Error al cargar el modelo de IA: {e}")
+            logger.debug(f"Detalles del error: {str(e)}", exc_info=True)
+
+    def _analyze_command_with_ai(self, command: str, args: str = "") -> dict:
+        """
+        Usa el modelo de IA para evaluar si un comando es malicioso.
+        Retorna un dict con score y predicción.
+        """
+        if not self.ai_model or not self.ai_vectorizer:
+            return {"score": 0.0, "malicious": False, "enabled": False}
+        
+        try:
+            text = f"{command} {args}".strip()
+            if not text:
+                return {"score": 0.0, "malicious": False, "enabled": True}
+            
+            X_vec = self.ai_vectorizer.transform([text])
+            score = self.ai_model.predict_proba(X_vec)[0, 1]  # Probabilidad de clase positiva
+            is_malicious = self.ai_model.predict(X_vec)[0] == 1
+            
+            return {
+                "score": float(score),
+                "malicious": bool(is_malicious),
+                "enabled": True
+            }
+        except Exception as e:
+            logger.error(f"Error en predicción de IA para comando '{text}': {e}")
+            return {"score": 0.0, "malicious": False, "enabled": True}
+
+        def _process_ai_detection(self, event_details: dict, line_content: str, log_path: str, line_num: int) -> None:
+            """Procesa la detección de comandos maliciosos usando IA"""
+            if not self.ai_model or not self.config.get("ai_detection", {}).get("enabled", True):
+                return
+                
+            command = event_details.get("command", "")
+            if not command:
+                return
+                
+            # Dividir comando y argumentos
+            parts = command.split(" ", 1)
+            cmd = parts[0]
+            args = parts[1] if len(parts) > 1 else ""
+            
+            # Analizar con IA
+            ai_result = self._analyze_command_with_ai(cmd, args)
+            ai_threshold = self.config.get("ai_detection", {}).get("threshold", 0.7)
+            
+            # Si el modelo detecta un comando malicioso y supera el umbral
+            if ai_result["malicious"] and ai_result["score"] >= ai_threshold:
+                # Verificar si ya fue detectado por reglas para evitar duplicados
+                is_already_detected = any(
+                    pattern in self.redteam_patterns 
+                    for pattern in ["offensive_tools", "c2_indicators", "dangerous_commands"]
+                )
+                
+                alert = Alert(
+                    alert_type="ai_malicious_command",
+                    details={
+                        "command": command,
+                        "command_base": cmd,
+                        "args": args,
+                        "ai_score": ai_result["score"],
+                        "log_file": log_path,
+                        "line_number": line_num + 1,
+                        "ip_address": event_details.get("ip_address"),
+                        "username": event_details.get("username"),
+                        "source_log": log_path,
+                        "is_rule_detected": is_already_detected
+                    },
+                    severity="high" if ai_result["score"] > 0.9 else "medium",
+                    mitre_tactics=["Execution", "Command and Control"],
+                    mitre_techniques=["T1059", "T1071"]
+                )
+                alert.save_to_db(self.db)
+                self.performance_metrics["alerts_generated"] += 1
+                logger.info(f"🚨 IA detectó comando malicioso: {command} (score: {ai_result['score']:.3f})")    
+
 # Clase auxiliar para implementar un monitor en tiempo real
 class RealTimeLogMonitor:
     """Monitor de logs en tiempo real que utiliza LogAnalyzer"""
@@ -3513,6 +3729,163 @@ class LazyOwnApp(cmd2.Cmd):
                 self.read_input("")
         return stop
 
+
+    @cmd2.with_category(detection_category)
+    def do_ai_status(self, args):
+        """Muestra el estado del modelo de IA"""
+        if self.log_analyzer.ai_model:
+            self.poutput(cmd2.style("✅ Modelo de IA cargado correctamente", fg=Fg.GREEN))
+            self.poutput(f"Umbral de detección: {self.log_analyzer.ai_threshold}")
+            self.poutput(f"Alertas generadas por IA: {self.log_analyzer.performance_metrics.get('ai_alerts', 0)}")
+        else:
+            self.poutput(cmd2.style("❌ Modelo de IA no cargado", fg=Fg.RED))
+            self.poutput("Use 'ai load' para intentar cargar el modelo manualmente")
+
+    @cmd2.with_category(detection_category)
+    def do_ai_load(self, args):
+        """Intenta cargar manualmente el modelo de IA"""
+        try:
+            self.log_analyzer._load_ai_model()
+            if self.log_analyzer.ai_model:
+                self.poutput(cmd2.style("✅ Modelo de IA cargado correctamente", fg=Fg.GREEN))
+            else:
+                self.poutput(cmd2.style("❌ No se encontró el modelo de IA", fg=Fg.RED))
+        except Exception as e:
+            self.poutput(cmd2.style(f"❌ Error al cargar el modelo: {str(e)}", fg=Fg.RED))
+
+    @cmd2.with_category(detection_category)
+    def do_ai_test(self, args):
+        """Prueba un comando con el modelo de IA"""
+        if not self.log_analyzer.ai_model:
+            self.poutput(cmd2.style("❌ Modelo de IA no cargado. Use 'ai load' primero.", fg=Fg.RED))
+            return
+        
+        command = self.app.read_input("Comando a probar: ")
+        if not command:
+            return
+        
+        # Dividir comando y argumentos
+        parts = command.split(" ", 1)
+        cmd = parts[0]
+        args = parts[1] if len(parts) > 1 else ""
+        
+        # Analizar con IA
+        ai_result = self.log_analyzer._analyze_command_with_ai(cmd, args)
+        
+        self.poutput(f"\n🔹 Comando: {command}")
+        self.poutput(f"🔹 Score: {ai_result['score']:.3f}")
+        self.poutput(f"🔹 Malicioso: {'✅ Sí' if ai_result['malicious'] else '❌ No'}")
+        
+        if ai_result["malicious"]:
+            severity = "Alto" if ai_result["score"] > 0.9 else "Medio"
+            self.poutput(cmd2.style(f"🔹 Severidad estimada: {severity}", fg=Fg.YELLOW))
+
+    @cmd2.with_category(response_category)
+    def do_ai_feedback(self, args):
+        """Proporciona feedback sobre una detección de IA para mejorar el modelo"""
+        parser = cmd2.Cmd2ArgumentParser()
+        parser.add_argument('alert_id', type=int, help="ID de la alerta a evaluar")
+        parser.add_argument('--correct', action='store_true', help="La detección fue correcta")
+        parser.add_argument('--false-positive', action='store_true', help="Fue un falso positivo")
+        parser.add_argument('--false-negative', action='store_true', help="Fue un falso negativo")
+        
+        parsed_args = parser.parse_args(args)
+        
+        # Obtener la alerta
+        alert = self.db.get_alert_by_id(parsed_args.alert_id)
+        if not alert:
+            self.poutput(cmd2.style(f"❌ Alerta {parsed_args.alert_id} no encontrada", fg=Fg.RED))
+            return
+        
+        if not alert.get("details", {}).get("ai_score"):
+            self.poutput(cmd2.style("❌ Esta alerta no fue generada por el modelo de IA", fg=Fg.RED))
+            return
+        
+        # Procesar feedback
+        feedback_data = {
+            "command": alert["details"]["command"],
+            "args": alert["details"]["args"],
+            "is_malicious": False
+        }
+        
+        if parsed_args.correct:
+            feedback_data["is_malicious"] = True
+            self.poutput(cmd2.style("✅ Feedback registrado: detección correcta", fg=Fg.GREEN))
+        elif parsed_args.false_positive:
+            self.poutput(cmd2.style("✅ Feedback registrado: falso positivo", fg=Fg.YELLOW))
+        elif parsed_args.false_negative:
+            feedback_data["is_malicious"] = True
+            self.poutput(cmd2.style("✅ Feedback registrado: falso negativo", fg=Fg.YELLOW))
+        else:
+            self.poutput(cmd2.style("❌ Debe especificar el tipo de feedback", fg=Fg.RED))
+            return
+        
+        # Guardar feedback para reentrenamiento
+        feedback_file = os.path.join("sessions", "ai_model", "feedback.csv")
+        file_exists = os.path.isfile(feedback_file)
+        
+        with open(feedback_file, 'a', newline='') as f:
+            writer = csv.writer(f)
+            if not file_exists:
+                writer.writerow(['command', 'args', 'is_malicious'])
+            writer.writerow([
+                feedback_data["command"],
+                feedback_data["args"],
+                int(feedback_data["is_malicious"])
+            ])
+        
+        # Actualizar métricas
+        if parsed_args.false_positive:
+            self.log_analyzer.performance_metrics["ai_false_positives"] += 1
+        elif parsed_args.false_negative:
+            self.log_analyzer.performance_metrics["ai_false_negatives"] += 1
+
+    @cmd2.with_category(detection_category)
+    def do_ai_retrain(self, args):
+        """Reentrena el modelo de IA con nuevos datos de feedback"""
+        feedback_file = os.path.join("sessions", "ai_model", "feedback.csv")
+        
+        if not os.path.exists(feedback_file):
+            self.poutput(cmd2.style("❌ No hay datos de feedback para reentrenar", fg=Fg.RED))
+            return
+        
+        try:
+            self.poutput("🔄 Reentrenando modelo de IA con nuevos datos...")
+            
+            # Cargar datos existentes
+            df = pd.read_csv(feedback_file)
+            
+            # Crear dataset combinado
+            X = df['command'] + " " + df['args']
+            y = df['is_malicious']
+            
+            # Vectorización
+            vectorizer = TfidfVectorizer(
+                max_features=1000,
+                ngram_range=(1, 2),
+                lowercase=True,
+                token_pattern=r'(?u)\b\w+\b'
+            )
+            X_vec = vectorizer.fit_transform(X)
+            
+            # Entrenamiento
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
+            model.fit(X_vec, y)
+            
+            # Guardar modelo actualizado
+            joblib.dump(model, os.path.join("sessions", "ai_model", "malicious_command_model.pkl"))
+            joblib.dump(vectorizer, os.path.join("sessions", "ai_model", "tfidf_vectorizer.pkl"))
+            
+            # Recargar el modelo en el analizador
+            self.log_analyzer._load_ai_model()
+            
+            self.poutput(cmd2.style("✅ Modelo de IA reentrenado y actualizado correctamente", fg=Fg.GREEN))
+            self.poutput(f"   • Datos utilizados: {len(df)} ejemplos")
+            self.poutput(f"   • Comandos maliciosos: {y.sum()}")
+            self.poutput(f"   • Comandos normales: {len(y) - y.sum()}")
+            
+        except Exception as e:
+            self.poutput(cmd2.style(f"❌ Error al reentrenar el modelo: {str(e)}", fg=Fg.RED))
 
     @cmd2.with_category(sysinfo_category)
     def do_sysinfo(self, _: cmd2.Statement):
