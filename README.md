@@ -2,7 +2,33 @@
 
 ![image](https://github.com/user-attachments/assets/45898b81-52fd-4785-afe3-bd1bdfa51fec)
 
+```text
+skills/:                                                                                                           
+  ┌──────────────────┬────────────────────────────────────────────────────┐                                        
+  │     Archivo      │                    Descripción                     │                                        
+  ├──────────────────┼────────────────────────────────────────────────────┤
+  │ lazyownbt_mcp.py │ Servidor MCP principal (~680 líneas)               │                                        
+  ├──────────────────┼────────────────────────────────────────────────────┤
+  │ mcp_config.json  │ Config lista para copiar a ~/.claude/settings.json │                                        
+  └──────────────────┴────────────────────────────────────────────────────┘
+                                                                                                                                                                                                                                           
+  35 herramientas MCP expuestas, organizadas por categoría Blue Team:
 
+  - Ejecución: run_command, discover_commands, command_help                                                        
+  - Config: get_config, set_config                          
+  - Amenazas: proc_scan, net_scan, net_conns, net_baseline, memory_scan                                            
+  - Integridad (FIM): fim_baseline, fim_scan, add_critical_file                                                    
+  - Logs: log_analyze, monitor_start                                                                               
+  - Hardening: harden_audit_ssh, harden_system, check_security, audit_users                                        
+  - Respuesta a incidentes: block_ip, quarantine_file, kill_process                                                
+  - IA/ML: ai_status, ai_test, ai_feedback, ai_retrain      
+  - RAG/LLM: rag_query, rag_add, rag_status, rag_search                                                            
+  - Reportes: report_summary, report_processes, report_network, report_files, list_reports, read_report            
+  - BD/Alertas: list_alerts, list_events, db_stats                                                                 
+  - Patrones: list_patterns, add_suspicious_process, add_suspicious_port                                           
+  - Hunting: redteam_hunt, sysinfo
+                                                                                
+```
 LazyOwnBT es una herramienta de seguridad defensiva (Blue Team) diseñada para la detección de amenazas, análisis de logs, monitoreo de procesos y redes, verificación de integridad de archivos, endurecimiento del sistema, generación de informes y respuesta a incidentes en entornos Linux.
 
 Esta herramienta está pensada para ser utilizada por equipos de seguridad, analistas de SOC y profesionales de ciberseguridad que buscan automatizar tareas de monitoreo y protección en sistemas operativos basados en Linux.
