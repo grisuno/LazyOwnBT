@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "lazyownbt": {
+      "command": "/home/grisun0/LazyOwn/env/bin/python3",
+      "args": [
+        "/home/grisun0/LazyOwn/external/.exploit/LazyOwnBT/skills/lazyownbt_mcp.py"
+      ],
+      "env": {
+        "LAZYOWNBT_DIR": "/home/grisun0/LazyOwn/external/.exploit/LazyOwnBT"
+      }
+    }
+  }
+}
