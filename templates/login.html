@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login — LazyOwn PurpleTeam</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width:420px;">
+        <h1>Acceso</h1>
+        <form id="loginForm">
+            <div class="row">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="row">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <p id="error" class="error-msg"></p>
+    </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const err = document.getElementById('error');
+            err.textContent = '';
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            try {
+                const r = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password }),
+                });
+                if (!r.ok) {
+                    err.textContent = 'Credenciales inválidas';
+                    return;
+                }
+                const data = await r.json();
+                sessionStorage.setItem('jwt_token', data.access_token);
+                window.location.href = '/';
+            } catch (err2) {
+                err.textContent = err2.message;
+            }
+        });
+    </script>
+</body>
+</html>

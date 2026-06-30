@@ -30,8 +30,75 @@ import pwd
 import grp
 import csv
 import argparse
-from cmd2 import Fg, style
 from lupa import LuaRuntime
+
+
+# --- Shim de compatibilidad para cmd2 >= 3.5 ---
+# En cmd2 3.5+ la API de color cambió: `cmd2.style(text, fg=Fg.RED)` ya no
+# existe. La nueva API es `Style(color=Color.RED)`, que se concatena a un
+# string. Este shim expone la firma antigua (`cmd2.style(text, fg=...)`,
+# `cmd2.style(text, bold=True)`) usando la nueva implementación por debajo,
+# así NO hay que reescribir las 61 llamadas de abajo.
+try:
+    from cmd2.styles import Style, Color as _Cmd2Color
+except Exception:  # pragma: no cover — entornos sin cmd2.styles
+    _Cmd2Color = None  # type: ignore[assignment]
+
+
+class Fg:
+    """Color foreground (compat). Mapea al enum `cmd2.styles.Color`."""
+
+    DEFAULT = "default"
+    BLACK = "black"
+    RED = "red"
+    GREEN = "green"
+    YELLOW = "yellow"
+    BLUE = "blue"
+    MAGENTA = "magenta"
+    CYAN = "cyan"
+    WHITE = "white"
+
+
+_COLOR_MAP = {
+    Fg.DEFAULT: "default",
+    Fg.BLACK: "black",
+    Fg.RED: "red",
+    Fg.GREEN: "green",
+    Fg.YELLOW: "yellow",
+    Fg.BLUE: "blue",
+    Fg.MAGENTA: "magenta",
+    Fg.CYAN: "cyan",
+    Fg.WHITE: "white",
+}
+
+
+def style(text, fg=None, bold=False, **_ignored):
+    """Equivalente funcional de la antigua `cmd2.style(text, fg=..., bold=...)`.
+
+    Acepta los kwargs que el código de este archivo usa (`fg`, `bold`) y
+    devuelve el string ya coloreado. Si el runtime no tiene la nueva API
+    de estilos, devuelve el texto intacto.
+    """
+    if _Cmd2Color is None:
+        return str(text)
+    kwargs: dict = {}
+    if fg is not None:
+        color_name = _COLOR_MAP.get(fg, str(fg))
+        kwargs["color"] = getattr(_Cmd2Color, color_name.upper(), _Cmd2Color.DEFAULT)
+    if bold:
+        kwargs["bold"] = True
+    if not kwargs:
+        return str(text)
+    s = Style(**kwargs)
+    return f"{s}{text}{Style()}"
+
+
+# Inyecta el shim en el módulo `cmd2` para que las 61 llamadas del tipo
+# `cmd2.style(...)` que ya existen en el archivo sigan funcionando sin
+# tocarlas. Esto preserva compatibilidad con código escrito para
+# cmd2 < 3.5.
+cmd2.style = style
+cmd2.Fg = Fg
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from collections import defaultdict
 from typing import List, Dict, Optional, Tuple, Any, Union # Mantener para type hints

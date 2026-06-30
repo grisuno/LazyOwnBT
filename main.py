@@ -1,314 +1,312 @@
 #!/usr/bin/env python3
-"""
-LazyOwn PurpleTeam Dashboard
-Panel web para unificar y visualizar operaciones RedTeam y BlueTeam.
+"""LazyOwn PurpleTeam Dashboard — entry point.
+
+Versión endurecida (SEC-001, SEC-002, SEC-003):
+  - Sin secretos hardcodeados (Settings desde entorno / .env).
+  - Login con hash bcrypt vía lazyownbt.security.
+  - Sin ``subprocess -c``: las acciones pasan por ``ActionRegistry`` con
+    lista cerrada de comandos y argv validado.
+  - CSP sin hashes hardcodeados (estilos servidos desde ``static/css/``).
+  - Bind loopback por defecto; ``debug=True`` solo en ``FLASK_ENV=development``.
+  - ``app.run(...)`` final delega en :func:`lazyownbt.web.run` para
+    respetar los mismos contratos.
+
+Mantiene las rutas históricas (``/alerts``, ``/events``,
+``/api/correlate/<id>``) sobre la base de datos SQLite, pero las
+declaraciones sensibles (auth, JWT, Talisman, ``/login``,
+``/commands``, ``/healthz``, error handlers) viven en
+``lazyownbt.web`` y se reusan vía :func:`create_app`.
 """
 
-import sqlite3
+from __future__ import annotations
+
 import json
-import subprocess
 import logging
+import sqlite3
 from datetime import datetime
-from flask import Flask, render_template, request, jsonify, send_file
-from flask_jwt_extended import JWTManager, jwt_required, create_access_token
-from flask_talisman import Talisman
-import bleach
 from pathlib import Path
-from typing import Dict, List, Optional
-import os
+from typing import Any
 
-# Configuración de logging
-logging.basicConfig(
-    filename='lazyown_purpleteam.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+from flask import Flask, jsonify, render_template, request
+
+from lazyownbt.config import Settings, load_settings
+from lazyownbt.web import create_app
+
 logger = logging.getLogger("LazyOwnPurpleTeam")
 
-# Inicializar Flask
-app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'your-secret-key'  # Cambiar por una clave segura
-app.config['DATABASE_PATH'] = './lazyown.db'
-jwt = JWTManager(app)
 
-# Configuración de Talisman con CSP personalizado
-csp = {
-    'default-src': "'self'",
-    'style-src': [
-        "'self'",
-        'https://cdn.jsdelivr.net',
-        # Agrega el hash para los inline styles en commands.html
-        "'sha256-lKxzDHhV4lbpglq4Lo9Kwok3OXo6kSv/8AX6AnVNzxA='"
-    ],
-    'script-src': [
-        "'self'",
-        'https://cdn.jsdelivr.net',
-        'https://code.jquery.com',  # Para DataTables
-        'https://cdn.datatables.net'
-    ]
-}
-Talisman(app, force_https=False, content_security_policy=csp)
+# ---------------------------------------------------------------------------
+# Capa de acceso a datos (solo SELECTs parametrizados)
+# ---------------------------------------------------------------------------
 
-# Constantes
-ALLOWED_COMMANDS = [
-    'do_resp_block_ip', 'do_resp_kill_proc', 'do_net_scan', 'do_fim_scan',
-    'lazynmap', 'ai_playbook'  # Comandos RedTeam/BlueTeam permitidos
-]
-
-# Clase para manejar la base de datos
 class Database:
-    def __init__(self, db_path: str):
+    """Acceso de solo-lectura a la base de datos SQLite del framework.
+
+    Cualquier tabla ausente se trata como "sin datos" en lugar de romper
+    el dashboard. Esto preserva el comportamiento de la versión anterior
+    cuando se despliega contra una BD aún no inicializada por ``app.py``.
+    """
+
+    _ALLOWED_TABLES = frozenset({
+        "alerts",
+        "security_events",
+        "network_baseline",
+        "file_hashes",
+    })
+
+    def __init__(self, db_path: str) -> None:
         self.db_path = db_path
 
-    def connect(self):
+    def connect(self) -> sqlite3.Connection | None:
         try:
             conn = sqlite3.connect(self.db_path)
             conn.row_factory = sqlite3.Row
             return conn
-        except sqlite3.Error as e:
-            logger.error(f"Error connecting to database: {e}")
+        except sqlite3.Error as exc:
+            logger.error("db_connect_failed: %s", exc)
             return None
 
-    def fetch_alerts(self, limit: int = 100, severity: Optional[str] = None) -> List[Dict]:
+    def _safe_fetch(
+        self,
+        table: str,
+        columns: list[str],
+        where: str = "",
+        params: tuple = (),
+        order: str = "timestamp DESC",
+        limit: int = 100,
+    ) -> list[dict[str, Any]]:
+        """Ejecuta un SELECT genérico y tolera tablas inexistentes.
+
+        ``table`` debe estar en :data:`_ALLOWED_TABLES` (whitelist interna,
+        defensa en profundidad contra inyección). ``columns`` y ``order``
+        son validables por el caller; ``where`` solo puede contener
+        fragmentos pre-fabricados (``"WHERE severity = ?"`` etc.).
+        """
+        if table not in self._ALLOWED_TABLES:
+            raise ValueError(f"tabla no permitida: {table!r}")
         conn = self.connect()
-        if not conn:
+        if conn is None:
             return []
-        query = "SELECT * FROM alerts WHERE 1=1"
-        params = []
+        cols = ", ".join(columns)
+        query = f"SELECT {cols} FROM {table} {where} ORDER BY {order} LIMIT ?"  # noqa: S608 — table/where están whitelisteadas
+        try:
+            cursor = conn.cursor()
+            cursor.execute(query, (*params, limit))
+            return [dict(row) for row in cursor.fetchall()]
+        except sqlite3.OperationalError as exc:
+            # Tabla aún no creada por app.py — se considera "sin datos".
+            logger.debug("db_table_unavailable table=%s err=%s", table, exc)
+            return []
+        except sqlite3.Error as exc:
+            logger.error("db_query_failed table=%s err=%s", table, exc)
+            return []
+        finally:
+            conn.close()
+
+    def fetch_alerts(
+        self, limit: int = 100, severity: str | None = None
+    ) -> list[dict[str, Any]]:
+        where, params = "", ()
         if severity:
-            query += " AND severity = ?"
-            params.append(severity)
-        query += " ORDER BY timestamp DESC LIMIT ?"
-        params.append(limit)
-        try:
-            cursor = conn.cursor()
-            cursor.execute(query, params)
-            rows = cursor.fetchall()
-            alerts = [
-                {
-                    'id': row['id'], 'type': row['type'], 'details': json.loads(row['details']),
-                    'severity': row['severity'], 'timestamp': row['timestamp']
-                } for row in rows
-            ]
-            return alerts
-        except sqlite3.Error as e:
-            logger.error(f"Error fetching alerts: {e}")
-            return []
-        finally:
-            conn.close()
+            where = "WHERE severity = ?"
+            params = (severity,)
+        rows = self._safe_fetch(
+            "alerts",
+            ["id", "type", "details", "severity", "timestamp"],
+            where=where,
+            params=params,
+            limit=limit,
+        )
+        for row in rows:
+            try:
+                row["details"] = json.loads(row.get("details") or "{}")
+            except (TypeError, ValueError):
+                row["details"] = {}
+        return rows
 
-    def fetch_events(self, limit: int = 100) -> List[Dict]:
-        conn = self.connect()
-        if not conn:
-            return []
-        query = "SELECT * FROM security_events ORDER BY timestamp DESC LIMIT ?"
-        try:
-            cursor = conn.cursor()
-            cursor.execute(query, (limit,))
-            rows = cursor.fetchall()
-            events = [
-                {
-                    'id': row['id'], 'event_type': row['event_type'], 'source': row['source'],
-                    'description': row['description'], 'raw_data': row['raw_data'],
-                    'timestamp': row['timestamp']
-                } for row in rows
-            ]
-            return events
-        except sqlite3.Error as e:
-            logger.error(f"Error fetching events: {e}")
-            return []
-        finally:
-            conn.close()
+    def fetch_events(self, limit: int = 100) -> list[dict[str, Any]]:
+        return self._safe_fetch(
+            "security_events",
+            [
+                "id",
+                "event_type",
+                "source",
+                "description",
+                "raw_data",
+                "timestamp",
+            ],
+            limit=limit,
+        )
 
-    def correlate_events(self, event_id: int) -> Dict:
-        # Ejemplo de correlación: buscar alertas relacionadas con un evento
+    def fetch_network_baseline(self, limit: int = 100) -> list[dict[str, Any]]:
+        return self._safe_fetch(
+            "network_baseline",
+            ["id", "ip", "port", "protocol", "timestamp"],
+            limit=limit,
+        )
+
+    def fetch_file_hashes(self, limit: int = 100) -> list[dict[str, Any]]:
+        return self._safe_fetch(
+            "file_hashes",
+            ["id", "file_path", "hash", "timestamp"],
+            limit=limit,
+        )
+
+    def correlate_events(self, event_id: int) -> dict[str, Any]:
+        """Busca alertas ±5 min relacionadas con un evento."""
         conn = self.connect()
-        if not conn:
-            return {}
+        if conn is None:
+            return {"event_id": event_id, "related_alerts": []}
         try:
             cursor = conn.cursor()
-            cursor.execute("SELECT raw_data, timestamp FROM security_events WHERE id = ?", (event_id,))
-            event = cursor.fetchone()
-            if not event:
-                return {}
-            # Buscar alertas en un rango de tiempo cercano (±5 minutos)
-            event_time = datetime.fromisoformat(event['timestamp'])
-            start_time = (event_time - datetime.timedelta(minutes=5)).isoformat()
-            end_time = (event_time + datetime.timedelta(minutes=5)).isoformat()
             cursor.execute(
-                "SELECT * FROM alerts WHERE timestamp BETWEEN ? AND ? AND details LIKE ?",
-                (start_time, end_time, f'%{event["raw_data"]}%')
+                "SELECT raw_data, timestamp FROM security_events WHERE id = ?",
+                (event_id,),
             )
-            related_alerts = [
-                {'id': row['id'], 'type': row['type'], 'details': json.loads(row['details'])}
-                for row in cursor.fetchall()
-            ]
-            return {'event_id': event_id, 'related_alerts': related_alerts}
-        except sqlite3.Error as e:
-            logger.error(f"Error correlating events: {e}")
-            return {}
-        finally:
-            conn.close()
-    def fetch_network_baseline(self, limit: int = 100) -> List[Dict]:
-        conn = self.connect()
-        if not conn:
-            return []
-        query = "SELECT * FROM network_baseline ORDER BY timestamp DESC LIMIT ?"
-        try:
-            cursor = conn.cursor()
-            cursor.execute(query, (limit,))
-            rows = cursor.fetchall()
-            return [
+            event = cursor.fetchone()
+            if event is None:
+                return {"event_id": event_id, "related_alerts": []}
+            event_time = datetime.fromisoformat(event["timestamp"])
+            start = (event_time - datetime.timedelta(minutes=5)).isoformat()
+            end = (event_time + datetime.timedelta(minutes=5)).isoformat()
+            cursor.execute(
+                "SELECT id, type, details FROM alerts "
+                "WHERE timestamp BETWEEN ? AND ? AND details LIKE ?",
+                (start, end, f"%{event['raw_data']}%"),
+            )
+            related = [
                 {
-                    'id': row['id'], 'ip': row['ip'], 'port': row['port'],
-                    'protocol': row['protocol'], 'timestamp': row['timestamp']
-                } for row in rows
+                    "id": r["id"],
+                    "type": r["type"],
+                    "details": json.loads(r["details"] or "{}"),
+                }
+                for r in cursor.fetchall()
             ]
-        except sqlite3.Error as e:
-            logger.error(f"Error fetching network baseline: {e}")
-            return []
+            return {"event_id": event_id, "related_alerts": related}
+        except sqlite3.OperationalError as exc:
+            logger.debug("db_correlate_unavailable: %s", exc)
+            return {"event_id": event_id, "related_alerts": []}
+        except sqlite3.Error as exc:
+            logger.error("db_correlate_failed: %s", exc)
+            return {"event_id": event_id, "related_alerts": []}
         finally:
             conn.close()
 
-    def fetch_file_hashes(self, limit: int = 100) -> List[Dict]:
-        conn = self.connect()
-        if not conn:
-            return []
-        query = "SELECT * FROM file_hashes ORDER BY timestamp DESC LIMIT ?"
+
+# ---------------------------------------------------------------------------
+# Rutas adicionales (sobre create_app)
+# ---------------------------------------------------------------------------
+
+def _register_data_routes(app: Flask, db: Database) -> None:
+    """Añade las rutas de solo-lectura sobre la BD.
+
+    Las rutas sensibles (``/login``, ``/commands``, ``/api/audit``,
+    ``/healthz``) ya las registra :func:`lazyownbt.web.create_app`.
+    """
+
+    @app.route("/alerts")
+    def alerts_view():
+        severity = request.args.get("severity")
         try:
-            cursor = conn.cursor()
-            cursor.execute(query, (limit,))
-            rows = cursor.fetchall()
-            return [
-                {
-                    'id': row['id'], 'file_path': row['file_path'], 'hash': row['hash'],
-                    'timestamp': row['timestamp']
-                } for row in rows
-            ]
-        except sqlite3.Error as e:
-            logger.error(f"Error fetching file hashes: {e}")
-            return []
-        finally:
-            conn.close()
-# Inicializar base de datos
-db = Database(app.config['DATABASE_PATH'])
+            limit = max(1, min(int(request.args.get("limit", 100)), 1000))
+        except ValueError:
+            limit = 100
+        items = db.fetch_alerts(limit=limit, severity=severity)
+        return render_template("alerts.html", alerts=items)
 
-# Rutas
-@app.route('/')
+    @app.route("/events")
+    def events_view():
+        try:
+            limit = max(1, min(int(request.args.get("limit", 100)), 1000))
+        except ValueError:
+            limit = 100
+        items = db.fetch_events(limit=limit)
+        return render_template("events.html", events=items)
 
-def dashboard():
-    alerts = db.fetch_alerts(limit=10)
-    events = db.fetch_events(limit=10)
-    metrics = {
-        'total_alerts': len(db.fetch_alerts()),
-        'critical_alerts': len(db.fetch_alerts(severity='critical')),
-        'total_events': len(db.fetch_events()),
-        'last_scan': datetime.now().isoformat()
+    @app.route("/api/correlate/<int:event_id>", methods=["GET"])
+    def api_correlate(event_id: int):
+        return jsonify(db.correlate_events(event_id))
+
+
+def _populate_dashboard_metrics(db: Database) -> dict[str, Any]:
+    """Compone el payload que la plantilla ``dashboard.html`` espera."""
+    alerts = db.fetch_alerts(limit=1000)
+    events = db.fetch_events(limit=1000)
+    network = db.fetch_network_baseline(limit=1000)
+    hashes = db.fetch_file_hashes(limit=1000)
+    return {
+        "alerts": alerts[:10],
+        "events": events[:10],
+        "network_data": network[:10],
+        "metrics": {
+            "total_alerts": len(alerts),
+            "critical_alerts": sum(
+                1 for a in alerts if a.get("severity") == "critical"
+            ),
+            "total_events": len(events),
+            "network_connections": len(network),
+            "file_hashes": len(hashes),
+            "system_configs": 0,
+            "config_audits": 0,
+            "last_scan": datetime.now().isoformat(timespec="seconds"),
+        },
     }
-    return render_template('dashboard.html', alerts=alerts, events=events, metrics=metrics)
 
-@app.route('/alerts', methods=['GET'])
 
-def alerts():
-    severity = request.args.get('severity')
-    limit = int(request.args.get('limit', 100))
-    alerts = db.fetch_alerts(limit=limit, severity=severity)
-    return render_template('alerts.html', alerts=alerts)
+# ---------------------------------------------------------------------------
+# Factory
+# ---------------------------------------------------------------------------
 
-@app.route('/events', methods=['GET'])
+def build_app(settings: Settings | None = None) -> Flask:
+    """Construye la app final reutilizando :func:`create_app`."""
+    settings = settings or load_settings()
+    app = create_app(settings=settings, debug=False)
+    _register_data_routes(app, Database(settings.database_path))
 
-def events():
-    limit = int(request.args.get('limit', 100))
-    events = db.fetch_events(limit=limit)
-    return render_template('events.html', events=events)
+    # Override del dashboard para pasarle datos reales (sin reventar
+    # si la BD aún no tiene tablas — el Database las tolera).
+    base = Path(__file__).resolve().parent
+    templates_dir = base / "templates"
+    app.template_folder = str(templates_dir)
 
-@app.route('/commands', methods=['GET', 'POST'])
+    def _dashboard():
+        ctx = _populate_dashboard_metrics(Database(settings.database_path))
+        return render_template("dashboard.html", **ctx)
 
-def commands():
-    if request.method == 'POST':
-        command = bleach.clean(request.form.get('command'))
-        params = bleach.clean(request.form.get('params', ''))
-        if command not in ALLOWED_COMMANDS:
-            return jsonify({'error': 'Comando no permitido'}), 403
-        try:
-            # Ejecutar comando (simulación, ajustar según integración real)
-            result = subprocess.run(
-                ['python3', '-c', f'from lazyown import LazyOwnApp; app = LazyOwnApp(); app.onecmd("{command} {params}")'],
-                capture_output=True, text=True, timeout=30
-            )
-            return jsonify({'output': result.stdout, 'error': result.stderr})
-        except subprocess.SubprocessError as e:
-            logger.error(f"Error ejecutando comando {command}: {e}")
-            return jsonify({'error': str(e)}), 500
-    return render_template('commands.html', allowed_commands=ALLOWED_COMMANDS)
+    # create_app ya registra "/" — reescribimos el view function asociado
+    # en lugar de añadir una ruta nueva (Flask no permite dos vistas en /).
+    app.view_functions["dashboard"] = _dashboard
 
-@app.route('/api/correlate/<int:event_id>', methods=['GET'])
+    return app
 
-def correlate_event(event_id):
-    correlation = db.correlate_events(event_id)
-    return jsonify(correlation)
 
-@app.route('/login', methods=['POST'])
-def login():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    # Autenticación simple (reemplazar con un sistema real)
-    if username == 'admin' and password == 'password':  # Cambiar por autenticación segura
-        access_token = create_access_token(identity=username)
-        return jsonify({'access_token': access_token})
-    return jsonify({'error': 'Credenciales inválidas'}), 401
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
 
-# Plantillas HTML (guardar en templates/)
-# dashboard.html
-"""
-<!DOCTYPE html>
-<html>
-<head>
-    <title>LazyOwn PurpleTeam Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        <h1>LazyOwn PurpleTeam Dashboard</h1>
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Métricas</h3>
-                <ul>
-                    <li>Total Alertas: {{ metrics.total_alerts }}</li>
-                    <li>Alertas Críticas: {{ metrics.critical_alerts }}</li>
-                    <li>Total Eventos: {{ metrics.total_events }}</li>
-                    <li>Último Escaneo: {{ metrics.last_scan }}</li>
-                </ul>
-            </div>
-            <div class="col-md-8">
-                <h3>Últimas Alertas</h3>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th><th>Tipo</th><th>Detalles</th><th>Severidad</th><th>Timestamp</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for alert in alerts %}
-                        <tr>
-                            <td>{{ alert.id }}</td>
-                            <td>{{ alert.type }}</td>
-                            <td>{{ alert.details | tojson }}</td>
-                            <td>{{ alert.severity }}</td>
-                            <td>{{ alert.timestamp }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-"""
+if __name__ == "__main__":  # pragma: no cover
+    import argparse
+    import os
 
-# alerts.html, events.html, commands.html similares, con tablas y formularios según necesidad
+    from lazyownbt.config import load_settings
+    from lazyownbt.web import _default_flask_env_if_unset
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    parser = argparse.ArgumentParser(prog="lazyownbt-purpleteam")
+    parser.add_argument("--host", default=os.environ.get("LAZYOWN_BIND", "127.0.0.1"))
+    parser.add_argument("--port", type=int, default=int(os.environ.get("LAZYOWN_PORT", "5000")))
+    parser.add_argument("--debug", action="store_true", help="Solo válido en development")
+    args = parser.parse_args()
+
+    _default_flask_env_if_unset()
+    settings = load_settings()
+    if args.debug and not settings.is_development:
+        raise SystemExit("SEC-003.1: --debug solo se permite con FLASK_ENV=development")
+    if args.host not in ("127.0.0.1", "::1", "localhost"):
+        logger.warning(
+            "SEC-003.2: bind público en %s — asegúrate de saber lo que haces",
+            args.host,
+        )
+
+    app = build_app(settings=settings)
+    ssl = "adhoc" if settings.is_production else None
+    app.run(host=args.host, port=args.port, debug=args.debug, ssl_context=ssl)

@@ -1,0 +1,161 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazyownbt"
+version = "1.0.0"
+description = "LazyOwnBT — Blue Team defensive framework for Linux"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0" }
+authors = [{ name = "Gris Uno", email = "grisuno@example.com" }]
+
+# Runtime core: solo lo mínimo para que la librería exista.
+# Cada extra agrega un grupo de dependencias.
+dependencies = [
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+# CLI base (cmd2 + psutil + tabulate)
+cli = [
+    "cmd2>=2.4.0",
+    "psutil>=5.9.0",
+    "tabulate>=0.9.0",
+]
+# Dashboard web Flask
+web = [
+    "Flask>=3.0.0",
+    "flask-jwt-extended>=4.6.0",
+    "flask-talisman>=1.1.0",
+    "bleach>=6.1.0",
+    "bcrypt>=4.1.0",
+]
+# Detección IA (TF-IDF + sklearn)
+ai = [
+    "scikit-learn>=1.3.0",
+    "joblib>=1.3.0",
+    "pandas>=2.0.0",
+]
+# RAG con ChromaDB + LangChain
+rag = [
+    "langchain>=0.1.0",
+    "langchain-community>=0.0.20",
+    "langchain-chroma>=0.0.5",
+    "langchain-ollama>=0.0.1",
+    "langchain-text-splitters>=0.0.1",
+    "chromadb>=0.4.0",
+    "ollama>=0.1.0",
+    "PyMuPDF>=1.23.0",
+]
+# Monitoreo de integridad de archivos
+fim = [
+    "watchdog>=3.0.0",
+    "cachetools>=5.3.0",
+]
+# Utilidades varias
+utils = [
+    "rich>=13.0.0",
+    "PyYAML>=6.0",
+    "lupa>=2.0.0",
+    "requests>=2.31.0",
+]
+# Todo-en-uno (lo que necesita un despliegue completo)
+all = [
+    "lazyownbt[cli,web,ai,rag,fim,utils]",
+]
+# Dependencias de desarrollo
+dev = [
+    "lazyownbt[all]",
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+    "pytest-bdd>=8.0.0",
+    "hypothesis>=6.90.0",
+    "ruff>=0.4.0",
+    "mypy>=1.8.0",
+    "types-Flask",
+    "types-Flask-JWT-Extended",
+]
+
+[tool.setuptools.packages.find]
+include = ["lazyownbt*"]
+exclude = ["tests*", "specs*", "docs*"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+bdd_features_base_dir = "tests/features"
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "--showlocals",
+    "--tb=short",
+]
+markers = [
+    "slow: marca tests lentos (>5s)",
+    "integration: marca tests de integración (red, fs, subprocesos)",
+    "security: tests derivados de contratos SEC-*",
+    "config: tests derivados de contratos CFG-*",
+    "ops: tests derivados del contrato OPS-*",
+]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning:bleach.*",
+    "ignore::DeprecationWarning:flask_talisman.*",
+    "ignore::DeprecationWarning:gherkin.*",
+    "ignore::DeprecationWarning",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["lazyownbt"]
+omit = ["tests/*", "*/__init__.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 70
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["sessions/", "reports/", "backups/", "quarantine/"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "S",   # flake8-bandit (seguridad)
+    "RUF", # reglas ruff
+]
+ignore = [
+    "E501",  # line length (lo maneja el formatter)
+    "S101",  # uso de assert en tests
+    "S110",  # try/except pass
+    "S104",  # bind 0.0.0.0 (lo permitimos solo con flag explícito)
+    "S301",  # pickle (lo usamos en joblib)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S", "B011"]
+"skills/**/*.py" = ["S", "B", "E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+ignore_missing_imports = true
+exclude = ["sessions/", "reports/", "backups/", "quarantine/"]
