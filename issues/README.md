@@ -5,8 +5,8 @@
 | Metric | Value |
 |--------|-------|
 | ⭐ Stars | 9 |
-| 📥 Clones (last 14 days) | 7 |
-| 🟢 Open Issues | 0 |
+| 📥 Clones (last 14 days) | 57 |
+| 🟢 Open Issues | 1 |
 | 📋 Total Issues | 0 |
 | 🛡 Dependabot Open Alerts | 0 |
 | 🔍 CodeScan Open Alerts | 4 |
@@ -14,9 +14,9 @@
 ## Issues
 
 ## Code Scanning Alerts
+- [CodeScan #6](./codescan/alert_6.md) - js/functionality-from-untrusted-source (warning) - open
+- [CodeScan #5](./codescan/alert_5.md) - py/stack-trace-exposure (error) - open
 - [CodeScan #4](./codescan/alert_4.md) - py/overly-large-range (warning) - open
 - [CodeScan #3](./codescan/alert_3.md) - py/weak-sensitive-data-hashing (warning) - open
-- [CodeScan #2](./codescan/alert_2.md) - py/flask-debug (error) - open
-- [CodeScan #1](./codescan/alert_1.md) - py/stack-trace-exposure (error) - open
 
 Total issues downloaded: 0
