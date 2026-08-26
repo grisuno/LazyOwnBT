@@ -33,6 +33,60 @@ LazyOwnBT es una herramienta de seguridad defensiva (Blue Team) diseñada para l
 
 Esta herramienta está pensada para ser utilizada por equipos de seguridad, analistas de SOC y profesionales de ciberseguridad que buscan automatizar tareas de monitoreo y protección en sistemas operativos basados en Linux.
 
+## Motor de Detección Sigma
+
+LazyOwnBT incluye un motor de detección basado en reglas Sigma para análisis de comandos y logs del sistema.
+
+### Reglas Sigma incluidas
+
+| ID | Título | Categoría | Nivel |
+|----|--------|-----------|-------|
+| LAZYOWN-001 | Mimikatz Credential Dump | credential_access | critical |
+| LAZYOWN-002 | Reverse Shell Pattern | execution | critical |
+| LAZYOWN-003 | Privilege Escalation via Sudo | privilege_escalation | high |
+| LAZYOWN-004 | Nmap Scan Detected | discovery | medium |
+| LAZYOWN-005 | Webshell Execution | execution | critical |
+| LAZYOWN-006 | Process Injection | defense_evasion | high |
+| LAZYOWN-007 | /etc/shadow Access | credential_access | critical |
+| LAZYOWN-008 | Cron Persistence | persistence | high |
+| LAZYOWN-009 | Lateral Movement SMB | lateral_movement | high |
+| LAZYOWN-010 | Data Exfiltration | exfiltration | high |
+
+### Uso del motor de detección
+
+```python
+from lazyownbt.detection import get_engine
+
+engine = get_engine("lazyown.db")
+
+# Detectar comandos peligrosos
+alerts = engine.check_command("mimikatz", "sekurlsa::logonpasswords")
+# Returns: [Alert(rule_id="LAZYOWN-001", level="critical")]
+
+# Verificar logs de auditd
+alerts = engine.check_audit_log(since_minutes=5)
+
+# Obtener estadísticas
+stats = engine.get_stats(since_minutes=60)
+# Returns: {"total": 5, "critical": 2, "high": 2, "medium": 1}
+```
+
+### Agregar reglas Sigma personalizadas
+
+Crea un archivo JSON en `sigma_rules/`:
+
+```json
+{
+  "title": "Mi Regla Custom",
+  "id": "CUSTOM-001",
+  "level": "high",
+  "category": "execution",
+  "condition": "command|contains: 'mi_comando_sospechoso'"
+}
+```
+
+Luego registra la regla en `detection.py` en la lista `_SIGMA_RULES`.
+
 📌 Características Principales
 🛡️ Integración de Inteligencia Artificial en LazyOwn BlueTeam
 Hemos transformado LazyOwn BlueTeam en una plataforma defensiva avanzada con capacidad de detección inteligente, aprovechando el modelo de IA entrenado por LazyOwn RedTeam. Esta integración cierra el ciclo entre ofensa y defensa, permitiendo que el conocimiento del atacante (Red Team) sea usado directamente para fortalecer la detección del defensor (Blue Team).
