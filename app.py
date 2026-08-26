@@ -125,6 +125,10 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.markdown import Markdown
 
+# Suppress langchain-community deprecation warning (sunset notice, still functional)
+import warnings
+warnings.filterwarnings("ignore", message=".*langchain-community.*", category=DeprecationWarning)
+
 # RAG imports
 from langchain_community.document_loaders import PyMuPDFLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -2293,8 +2297,10 @@ class LogAnalyzer:
 
         try:
             if os.path.exists(model_path) and os.path.exists(vectorizer_path):
-                self.ai_model = joblib.load(model_path)
-                self.ai_vectorizer = joblib.load(vectorizer_path)
+                with warnings.catch_warnings():
+                    warnings.filterwarnings("ignore", message=".*Trying to unpickle.*", category=Warning)
+                    self.ai_model = joblib.load(model_path)
+                    self.ai_vectorizer = joblib.load(vectorizer_path)
                 logger.info(f"✅ Modelo de IA cargado correctamente desde: {model_path}")
             else:
                 logger.warning(f"⚠ No se encontró el modelo de IA en {model_path} o {vectorizer_path}")
