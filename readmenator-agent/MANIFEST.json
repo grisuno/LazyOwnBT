@@ -1,0 +1,26 @@
+{
+  "tool": "readmenator",
+  "generated_at": "2026-09-17T04:08:10Z",
+  "project_root": "/tmp/push_LazyOwnBT_20260917_010128",
+  "files": 24,
+  "symbols": 419,
+  "imports": 3634,
+  "resolved_imports": 30,
+  "security_findings": 0,
+  "languages": {
+    "py": 20,
+    "sh": 1,
+    "js": 3
+  },
+  "entrypoints": [
+    "main.py"
+  ],
+  "start_here": "INDEX.md",
+  "workflow": [
+    "ls *.md readmenator-*/  # orient: docs first, ignore build noise",
+    "grep -n '<keyword>' INDEX.md",
+    "cat KB_<subsystem>.md",
+    "grep -n '<file>' ARCHITECTURE.md SYMBOLS.md"
+  ],
+  "regenerate": "readmenator . --rebuild"
+}
