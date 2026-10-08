@@ -1,0 +1,2546 @@
+{
+  "concepts": [
+    {
+      "name": "para",
+      "files": [
+        "app.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "static/js/table-filter.js",
+        "tests/conftest.py",
+        "tests/test_command_execution.py",
+        "tests/test_command_execution_bdd.py",
+        "tests/test_configuration.py",
+        "tests/test_configuration_bdd.py",
+        "tests/test_production.py",
+        "tests/test_production_bdd.py",
+        "tests/test_secrets_bdd.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 41,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "lazyownbt",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/config.py",
+        "lazyownbt/detection.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py"
+      ],
+      "mentions": 25,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "sec",
+      "files": [
+        "lazyownbt/actions.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/config.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_command_execution.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 30,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "contrato",
+      "files": [
+        "lazyownbt/actions.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/config.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "tests/test_command_execution.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 10,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "una",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 28,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "app",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/conftest.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 23,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "env",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 22,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "audit",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/detection.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 18,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "debe",
+      "files": [
+        "lazyownbt/audit.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_command_execution.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "que",
+      "files": [
+        "app.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "command",
+      "files": [
+        "app.py",
+        "lazyownbt/detection.py",
+        "lazyownbt/web.py",
+        "skills/lazyownbt_mcp.py",
+        "static/js/commands.js",
+        "tests/test_command_execution.py",
+        "tests/test_command_execution_bdd.py"
+      ],
+      "mentions": 34,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "los",
+      "files": [
+        "app.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_configuration.py",
+        "tests/test_secrets_bdd.py"
+      ],
+      "mentions": 34,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "con",
+      "files": [
+        "app.py",
+        "lazyownbt/config.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 23,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "config",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/config.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/conftest.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 22,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "lazy",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "static/js/auth.js",
+        "static/js/commands.js",
+        "static/js/table-filter.js"
+      ],
+      "mentions": 17,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "own",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "static/js/auth.js",
+        "static/js/commands.js",
+        "static/js/table-filter.js"
+      ],
+      "mentions": 14,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "acciones",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "main.py"
+      ],
+      "mentions": 11,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "cli",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/web.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/conftest.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "load",
+      "files": [
+        "app.py",
+        "lazyownbt/config.py",
+        "lazyownbt/detection.py",
+        "lazyownbt/web.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/conftest.py"
+      ],
+      "mentions": 18,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "jwt",
+      "files": [
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 15,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "desde",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_secrets_bdd.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "hash",
+      "files": [
+        "app.py",
+        "lazyownbt/config.py",
+        "lazyownbt/security.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "security",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 10,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "default",
+      "files": [
+        "app.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/conftest.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "error",
+      "files": [
+        "lazyownbt/actions.py",
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "comandos",
+      "files": [
+        "app.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "static/js/commands.js",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 8,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "handler",
+      "files": [
+        "app.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 7,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "team",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/detection.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py"
+      ],
+      "mentions": 7,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "del",
+      "files": [
+        "app.py",
+        "main.py",
+        "tests/test_command_execution.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 23,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "bdd",
+      "files": [
+        "tests/conftest.py",
+        "tests/test_command_execution_bdd.py",
+        "tests/test_configuration_bdd.py",
+        "tests/test_production_bdd.py",
+        "tests/test_secrets_bdd.py"
+      ],
+      "mentions": 19,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "configuraci",
+      "files": [
+        "app.py",
+        "lazyownbt/__init__.py",
+        "lazyownbt/config.py",
+        "tests/conftest.py",
+        "tests/test_configuration.py"
+      ],
+      "mentions": 18,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "por",
+      "files": [
+        "app.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "main.py"
+      ],
+      "mentions": 17,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "filter",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/security.py",
+        "static/js/table-filter.js",
+        "tests/conftest.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 14,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "debug",
+      "files": [
+        "app.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "flask",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "alerts",
+      "files": [
+        "app.py",
+        "lazyownbt/detection.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "static/js/table-filter.js"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "commands",
+      "files": [
+        "app.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "static/js/commands.js"
+      ],
+      "mentions": 9,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "action",
+      "files": [
+        "app.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/handlers.py",
+        "main.py",
+        "tests/conftest.py"
+      ],
+      "mentions": 8,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "web",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 8,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "digo",
+      "files": [
+        "app.py",
+        "lazyownbt/handlers.py",
+        "tests/test_configuration.py",
+        "tests/test_production.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 7,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "como",
+      "files": [
+        "lazyownbt/config.py",
+        "main.py",
+        "tests/conftest.py",
+        "tests/test_command_execution.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 6,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "csp",
+      "files": [
+        "lazyownbt/web.py",
+        "main.py",
+        "static/js/table-filter.js",
+        "tests/conftest.py",
+        "tests/test_production.py"
+      ],
+      "mentions": 6,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "secretos",
+      "files": [
+        "lazyownbt/__init__.py",
+        "lazyownbt/security.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 6,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "segura",
+      "files": [
+        "app.py",
+        "lazyownbt/actions.py",
+        "lazyownbt/handlers.py",
+        "lazyownbt/web.py",
+        "tests/test_command_execution.py"
+      ],
+      "mentions": 6,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "feature",
+      "files": [
+        "tests/conftest.py",
+        "tests/test_command_execution_bdd.py",
+        "tests/test_configuration_bdd.py",
+        "tests/test_production_bdd.py",
+        "tests/test_secrets_bdd.py"
+      ],
+      "mentions": 5,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "log",
+      "files": [
+        "app.py",
+        "lazyownbt/audit.py",
+        "lazyownbt/detection.py",
+        "tests/conftest.py"
+      ],
+      "mentions": 28,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "file",
+      "files": [
+        "app.py",
+        "main.py",
+        "skills/lazyownbt_mcp.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 26,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "secret",
+      "files": [
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "tests/conftest.py",
+        "tests/test_security.py"
+      ],
+      "mentions": 15,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "production",
+      "files": [
+        "lazyownbt/config.py",
+        "lazyownbt/web.py",
+        "tests/test_production.py",
+        "tests/test_production_bdd.py"
+      ],
+      "mentions": 12,
+      "confidence": "EXTRACTED"
+    },
+    {
+      "name": "login",
+      "files": [
+        "app.py",
+        "lazyownbt/web.py",
+        "main.py",
+        "tests/conftest.py"
+      ],
+      "mentions": 11,
+      "confidence": "EXTRACTED"
+    }
+  ],
+  "relations": [
+    {
+      "source": "para",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 1.0,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.94,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.94,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.88,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.88,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "app",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "jwt",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.82,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "app",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "app",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "con",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "jwt",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "jwt",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "que",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "sec",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.76,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "audit",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "con",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "con",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "contrato",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "csp",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "debug",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "error",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "flask",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "los",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "que",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "que",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "sec",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.71,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "audit",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "audit",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "cli",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "contrato",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "csp",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "csp",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "debug",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "debug",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "default",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "error",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "error",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "flask",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "flask",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "handler",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py"
+      ]
+    },
+    {
+      "source": "los",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "los",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "con",
+      "verb": "depends_on",
+      "strength": 0.65,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "cli",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "cli",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "default",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "default",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "con",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "handler",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "handler",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "login",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "desde",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "env",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "jwt",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "production",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "secret",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "una",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "secret",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "una",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "web",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.59,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "app",
+      "target": "con",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "app",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "comandos",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "como",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "como",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "como",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "con",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "con",
+      "target": "una",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "con",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "debe",
+      "target": "una",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "desde",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "hash",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "jwt",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "load",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "production",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "env",
+      "target": "secret",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "jwt",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "jwt",
+      "target": "una",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "login",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "login",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "hash",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "para",
+      "target": "que",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "que",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "que",
+      "target": "una",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/web.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py"
+      ]
+    },
+    {
+      "source": "sec",
+      "target": "error",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_command_execution.py->lazyownbt/actions.py",
+        "tests/test_command_execution.py->lazyownbt/web.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py"
+      ]
+    },
+    {
+      "source": "secret",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "secret",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/config.py",
+        "tests/conftest.py->lazyownbt/security.py",
+        "tests/conftest.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "secretos",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "security",
+      "target": "lazyownbt",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/handlers.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "una",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "una",
+      "target": "sec",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/handlers.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_security.py->lazyownbt/config.py",
+        "tests/test_security.py->lazyownbt/security.py"
+      ]
+    },
+    {
+      "source": "web",
+      "target": "contrato",
+      "verb": "depends_on",
+      "strength": 0.53,
+      "confidence": "INFERRED",
+      "evidence": [
+        "lazyownbt/web.py->lazyownbt/actions.py",
+        "lazyownbt/web.py->lazyownbt/audit.py",
+        "lazyownbt/web.py->lazyownbt/config.py",
+        "lazyownbt/web.py->lazyownbt/security.py",
+        "main.py->lazyownbt/config.py",
+        "main.py->lazyownbt/web.py",
+        "tests/test_configuration.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/config.py",
+        "tests/test_production.py->lazyownbt/web.py"
+      ]
+    }
+  ],
+  "dialectic": [
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `action` pulls 5 files with 4 shared (Jaccard 0.50); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `app` pulls 8 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `audit` pulls 8 files with 5 shared (Jaccard 0.50); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `comandos` pulls 6 files with 4 shared (Jaccard 0.44); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `commands` pulls 5 files with 3 shared (Jaccard 0.33); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `con` pulls 7 files with 4 shared (Jaccard 0.40); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `debe` pulls 8 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `debug` pulls 5 files with 3 shared (Jaccard 0.33); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `default` pulls 6 files with 3 shared (Jaccard 0.30); Synthesis: should they merge, split by layer, or keep `bridges` explicit?",
+    "Thesis: `acciones` centralizes 7 files; Antithesis: `desde` pulls 6 files with 4 shared (Jaccard 0.44); Synthesis: should they merge, split by layer, or keep `bridges` explicit?"
+  ]
+}
