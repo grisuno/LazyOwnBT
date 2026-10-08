@@ -1,0 +1,120 @@
+# Concepts
+
+Nouns map atomically to file sets (EXTRACTED); verbs aggregate structural edges (INFERRED).
+
+- `para` | files=13 | mentions=41 | `app.py`, `lazyownbt/web.py`, `main.py`, `static/js/table-filter.js`, `tests/conftest.py`, `tests/test_command_execution.py`, `tests/test_command_execution_bdd.py`, `tests/test_configuration.py`, `tests/test_configuration_bdd.py`, `tests/test_production.py`
+- `lazyownbt` | files=10 | mentions=25 | `lazyownbt/__init__.py`, `lazyownbt/actions.py`, `lazyownbt/audit.py`, `lazyownbt/config.py`, `lazyownbt/detection.py`, `lazyownbt/handlers.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `skills/lazyownbt_mcp.py`
+- `sec` | files=9 | mentions=30 | `lazyownbt/actions.py`, `lazyownbt/audit.py`, `lazyownbt/config.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `tests/test_command_execution.py`, `tests/test_production.py`, `tests/test_security.py`
+- `contrato` | files=9 | mentions=10 | `lazyownbt/actions.py`, `lazyownbt/audit.py`, `lazyownbt/config.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `tests/test_command_execution.py`, `tests/test_configuration.py`, `tests/test_production.py`, `tests/test_security.py`
+- `una` | files=8 | mentions=28 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/actions.py`, `lazyownbt/handlers.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `tests/test_security.py`
+- `app` | files=8 | mentions=23 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/web.py`, `main.py`, `skills/lazyownbt_mcp.py`, `tests/conftest.py`, `tests/test_production.py`, `tests/test_security.py`
+- `env` | files=8 | mentions=22 | `lazyownbt/__init__.py`, `lazyownbt/config.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_configuration.py`, `tests/test_production.py`, `tests/test_security.py`
+- `audit` | files=8 | mentions=18 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/audit.py`, `lazyownbt/detection.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`
+- `debe` | files=8 | mentions=12 | `lazyownbt/audit.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `main.py`, `tests/test_command_execution.py`, `tests/test_configuration.py`, `tests/test_production.py`, `tests/test_security.py`
+- `que` | files=8 | mentions=12 | `app.py`, `lazyownbt/audit.py`, `lazyownbt/handlers.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`
+- `command` | files=7 | mentions=34 | `app.py`, `lazyownbt/detection.py`, `lazyownbt/web.py`, `skills/lazyownbt_mcp.py`, `static/js/commands.js`, `tests/test_command_execution.py`, `tests/test_command_execution_bdd.py`
+- `los` | files=7 | mentions=34 | `app.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_configuration.py`, `tests/test_secrets_bdd.py`
+- `con` | files=7 | mentions=23 | `app.py`, `lazyownbt/config.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`
+- `config` | files=7 | mentions=22 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/config.py`, `skills/lazyownbt_mcp.py`, `tests/conftest.py`, `tests/test_configuration.py`, `tests/test_production.py`
+- `lazy` | files=7 | mentions=17 | `app.py`, `lazyownbt/__init__.py`, `main.py`, `skills/lazyownbt_mcp.py`, `static/js/auth.js`, `static/js/commands.js`, `static/js/table-filter.js`
+- `own` | files=7 | mentions=14 | `app.py`, `lazyownbt/__init__.py`, `main.py`, `skills/lazyownbt_mcp.py`, `static/js/auth.js`, `static/js/commands.js`, `static/js/table-filter.js`
+- `acciones` | files=7 | mentions=11 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/actions.py`, `lazyownbt/audit.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `main.py`
+- `cli` | files=7 | mentions=9 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/web.py`, `skills/lazyownbt_mcp.py`, `tests/conftest.py`, `tests/test_configuration.py`, `tests/test_production.py`
+- `load` | files=6 | mentions=18 | `app.py`, `lazyownbt/config.py`, `lazyownbt/detection.py`, `lazyownbt/web.py`, `skills/lazyownbt_mcp.py`, `tests/conftest.py`
+- `jwt` | files=6 | mentions=15 | `lazyownbt/config.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`, `tests/test_security.py`
+- `desde` | files=6 | mentions=12 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/config.py`, `lazyownbt/web.py`, `main.py`, `tests/test_secrets_bdd.py`
+- `hash` | files=6 | mentions=12 | `app.py`, `lazyownbt/config.py`, `lazyownbt/security.py`, `main.py`, `tests/conftest.py`, `tests/test_production.py`
+- `security` | files=6 | mentions=10 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `tests/test_security.py`
+- `default` | files=6 | mentions=9 | `app.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `skills/lazyownbt_mcp.py`, `tests/conftest.py`, `tests/test_production.py`
+- `error` | files=6 | mentions=9 | `lazyownbt/actions.py`, `lazyownbt/config.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`
+- `comandos` | files=6 | mentions=8 | `app.py`, `lazyownbt/actions.py`, `lazyownbt/web.py`, `main.py`, `static/js/commands.js`, `tests/test_command_execution.py`
+- `handler` | files=6 | mentions=7 | `app.py`, `lazyownbt/actions.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `tests/conftest.py`, `tests/test_command_execution.py`
+- `team` | files=6 | mentions=7 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/detection.py`, `lazyownbt/web.py`, `main.py`, `skills/lazyownbt_mcp.py`
+- `del` | files=5 | mentions=23 | `app.py`, `main.py`, `tests/test_command_execution.py`, `tests/test_configuration.py`, `tests/test_production.py`
+- `bdd` | files=5 | mentions=19 | `tests/conftest.py`, `tests/test_command_execution_bdd.py`, `tests/test_configuration_bdd.py`, `tests/test_production_bdd.py`, `tests/test_secrets_bdd.py`
+- `configuraci` | files=5 | mentions=18 | `app.py`, `lazyownbt/__init__.py`, `lazyownbt/config.py`, `tests/conftest.py`, `tests/test_configuration.py`
+- `por` | files=5 | mentions=17 | `app.py`, `lazyownbt/audit.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `main.py`
+- `filter` | files=5 | mentions=14 | `lazyownbt/__init__.py`, `lazyownbt/security.py`, `static/js/table-filter.js`, `tests/conftest.py`, `tests/test_security.py`
+- `debug` | files=5 | mentions=12 | `app.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_production.py`
+- `flask` | files=5 | mentions=12 | `lazyownbt/__init__.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`, `tests/test_production.py`
+- `alerts` | files=5 | mentions=9 | `app.py`, `lazyownbt/detection.py`, `main.py`, `skills/lazyownbt_mcp.py`, `static/js/table-filter.js`
+- `commands` | files=5 | mentions=9 | `app.py`, `lazyownbt/web.py`, `main.py`, `skills/lazyownbt_mcp.py`, `static/js/commands.js`
+- `action` | files=5 | mentions=8 | `app.py`, `lazyownbt/actions.py`, `lazyownbt/handlers.py`, `main.py`, `tests/conftest.py`
+- `web` | files=5 | mentions=8 | `lazyownbt/__init__.py`, `lazyownbt/web.py`, `main.py`, `tests/test_configuration.py`, `tests/test_production.py`
+- `digo` | files=5 | mentions=7 | `app.py`, `lazyownbt/handlers.py`, `tests/test_configuration.py`, `tests/test_production.py`, `tests/test_security.py`
+- `como` | files=5 | mentions=6 | `lazyownbt/config.py`, `main.py`, `tests/conftest.py`, `tests/test_command_execution.py`, `tests/test_security.py`
+- `csp` | files=5 | mentions=6 | `lazyownbt/web.py`, `main.py`, `static/js/table-filter.js`, `tests/conftest.py`, `tests/test_production.py`
+- `secretos` | files=5 | mentions=6 | `lazyownbt/__init__.py`, `lazyownbt/security.py`, `lazyownbt/web.py`, `main.py`, `tests/test_security.py`
+- `segura` | files=5 | mentions=6 | `app.py`, `lazyownbt/actions.py`, `lazyownbt/handlers.py`, `lazyownbt/web.py`, `tests/test_command_execution.py`
+- `feature` | files=5 | mentions=5 | `tests/conftest.py`, `tests/test_command_execution_bdd.py`, `tests/test_configuration_bdd.py`, `tests/test_production_bdd.py`, `tests/test_secrets_bdd.py`
+- `log` | files=4 | mentions=28 | `app.py`, `lazyownbt/audit.py`, `lazyownbt/detection.py`, `tests/conftest.py`
+- `file` | files=4 | mentions=26 | `app.py`, `main.py`, `skills/lazyownbt_mcp.py`, `tests/test_security.py`
+- `secret` | files=4 | mentions=15 | `lazyownbt/config.py`, `lazyownbt/web.py`, `tests/conftest.py`, `tests/test_security.py`
+- `production` | files=4 | mentions=12 | `lazyownbt/config.py`, `lazyownbt/web.py`, `tests/test_production.py`, `tests/test_production_bdd.py`
+- `login` | files=4 | mentions=11 | `app.py`, `lazyownbt/web.py`, `main.py`, `tests/conftest.py`
+
+## Verb Edges
+
+- `para` --depends_on--> `lazyownbt` (strength 1.00)
+- `para` --depends_on--> `contrato` (strength 0.94)
+- `para` --depends_on--> `sec` (strength 0.94)
+- `debe` --depends_on--> `lazyownbt` (strength 0.88)
+- `env` --depends_on--> `lazyownbt` (strength 0.88)
+- `app` --depends_on--> `lazyownbt` (strength 0.82)
+- `debe` --depends_on--> `contrato` (strength 0.82)
+- `debe` --depends_on--> `sec` (strength 0.82)
+- `env` --depends_on--> `contrato` (strength 0.82)
+- `env` --depends_on--> `sec` (strength 0.82)
+- `jwt` --depends_on--> `lazyownbt` (strength 0.82)
+- `app` --depends_on--> `contrato` (strength 0.76)
+- `app` --depends_on--> `sec` (strength 0.76)
+- `con` --depends_on--> `lazyownbt` (strength 0.76)
+- `jwt` --depends_on--> `contrato` (strength 0.76)
+- `jwt` --depends_on--> `sec` (strength 0.76)
+- `que` --depends_on--> `lazyownbt` (strength 0.76)
+- `sec` --depends_on--> `lazyownbt` (strength 0.76)
+- `audit` --depends_on--> `lazyownbt` (strength 0.71)
+- `con` --depends_on--> `contrato` (strength 0.71)
+- `con` --depends_on--> `sec` (strength 0.71)
+- `contrato` --depends_on--> `lazyownbt` (strength 0.71)
+- `csp` --depends_on--> `lazyownbt` (strength 0.71)
+- `debug` --depends_on--> `lazyownbt` (strength 0.71)
+- `error` --depends_on--> `lazyownbt` (strength 0.71)
+- `flask` --depends_on--> `lazyownbt` (strength 0.71)
+- `los` --depends_on--> `lazyownbt` (strength 0.71)
+- `para` --depends_on--> `error` (strength 0.71)
+- `que` --depends_on--> `contrato` (strength 0.71)
+- `que` --depends_on--> `sec` (strength 0.71)
+- `sec` --depends_on--> `contrato` (strength 0.71)
+- `audit` --depends_on--> `contrato` (strength 0.65)
+- `audit` --depends_on--> `sec` (strength 0.65)
+- `cli` --depends_on--> `lazyownbt` (strength 0.65)
+- `contrato` --depends_on--> `sec` (strength 0.65)
+- `csp` --depends_on--> `contrato` (strength 0.65)
+- `csp` --depends_on--> `sec` (strength 0.65)
+- `debe` --depends_on--> `error` (strength 0.65)
+- `debug` --depends_on--> `contrato` (strength 0.65)
+- `debug` --depends_on--> `sec` (strength 0.65)
+- `default` --depends_on--> `lazyownbt` (strength 0.65)
+- `error` --depends_on--> `contrato` (strength 0.65)
+- `error` --depends_on--> `sec` (strength 0.65)
+- `flask` --depends_on--> `contrato` (strength 0.65)
+- `flask` --depends_on--> `sec` (strength 0.65)
+- `handler` --depends_on--> `lazyownbt` (strength 0.65)
+- `los` --depends_on--> `contrato` (strength 0.65)
+- `los` --depends_on--> `sec` (strength 0.65)
+- `para` --depends_on--> `con` (strength 0.65)
+- `cli` --depends_on--> `contrato` (strength 0.59)
+
+## Dialectic
+
+- Thesis: `acciones` centralizes 7 files; Antithesis: `action` pulls 5 files with 4 shared (Jaccard 0.50); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `app` pulls 8 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `audit` pulls 8 files with 5 shared (Jaccard 0.50); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `comandos` pulls 6 files with 4 shared (Jaccard 0.44); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `commands` pulls 5 files with 3 shared (Jaccard 0.33); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `con` pulls 7 files with 4 shared (Jaccard 0.40); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `debe` pulls 8 files with 4 shared (Jaccard 0.36); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `debug` pulls 5 files with 3 shared (Jaccard 0.33); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `default` pulls 6 files with 3 shared (Jaccard 0.30); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
+- Thesis: `acciones` centralizes 7 files; Antithesis: `desde` pulls 6 files with 4 shared (Jaccard 0.44); Synthesis: should they merge, split by layer, or keep `bridges` explicit?
