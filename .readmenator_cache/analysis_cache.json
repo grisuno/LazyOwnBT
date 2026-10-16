@@ -1,0 +1,151 @@
+{
+  "analysis_v2": {
+    "god_nodes": [
+      [
+        "lazyownbt/web.py",
+        19.5
+      ],
+      [
+        "app.py",
+        19.3
+      ],
+      [
+        "tests/conftest.py",
+        13.7
+      ],
+      [
+        "lazyownbt/config.py",
+        12.8
+      ],
+      [
+        "lazyownbt/actions.py",
+        7.0
+      ],
+      [
+        "lazyownbt/security.py",
+        6.6
+      ],
+      [
+        "main.py",
+        5.6
+      ],
+      [
+        "tests/test_command_execution.py",
+        5.4
+      ],
+      [
+        "tests/test_security.py",
+        5.3
+      ],
+      [
+        "lazyownbt/handlers.py",
+        4.8
+      ]
+    ],
+    "communities": [
+      {
+        "id": 0,
+        "label": "lazyownbt: web",
+        "file_ids": [
+          "lazyownbt/actions.py",
+          "tests/test_command_execution.py",
+          "lazyownbt/handlers.py",
+          "lazyownbt/web.py",
+          "lazyownbt/audit.py"
+        ],
+        "cohesion": 0.5454545454545454,
+        "size": 5
+      },
+      {
+        "id": 1,
+        "label": "lazyownbt: main",
+        "file_ids": [
+          "lazyownbt/config.py",
+          "main.py",
+          "tests/test_production.py",
+          "tests/test_configuration.py"
+        ],
+        "cohesion": 0.375,
+        "size": 4
+      },
+      {
+        "id": 2,
+        "label": "lazyownbt: security",
+        "file_ids": [
+          "tests/conftest.py",
+          "lazyownbt/security.py",
+          "tests/test_security.py"
+        ],
+        "cohesion": 0.3333333333333333,
+        "size": 3
+      }
+    ],
+    "surprising_connections": [
+      [
+        "lazyownbt/actions.py",
+        "tests/test_configuration.py",
+        3,
+        "{0, 1}"
+      ],
+      [
+        "lazyownbt/actions.py",
+        "tests/test_security.py",
+        3,
+        "{0, 1, 2}"
+      ],
+      [
+        "lazyownbt/audit.py",
+        "tests/test_configuration.py",
+        3,
+        "{0, 1}"
+      ],
+      [
+        "lazyownbt/audit.py",
+        "tests/test_security.py",
+        3,
+        "{0, 1, 2}"
+      ],
+      [
+        "lazyownbt/handlers.py",
+        "tests/test_configuration.py",
+        3,
+        "{0, 1}"
+      ]
+    ],
+    "suggested_questions": [
+      "What does web.py depend on, and what depends on it? (9 connections)",
+      "What does app.py depend on, and what depends on it? (0 connections)",
+      "What does conftest.py depend on, and what depends on it? (3 connections)",
+      "How are the 5 files in 'lazyownbt: web' related to each other?",
+      "Why are actions.py and test_configuration.py connected through 3 hops across 2 communities?"
+    ]
+  },
+  "layers": {
+    "app.py": "utility",
+    "install.sh": "utility",
+    "lazyownbt/__init__.py": "utility",
+    "lazyownbt/actions.py": "presentation",
+    "lazyownbt/audit.py": "utility",
+    "lazyownbt/config.py": "infrastructure",
+    "lazyownbt/handlers.py": "presentation",
+    "lazyownbt/security.py": "utility",
+    "lazyownbt/web.py": "presentation",
+    "main.py": "presentation",
+    "skills/lazyownbt_mcp.py": "utility",
+    "static/js/auth.js": "utility",
+    "static/js/commands.js": "utility",
+    "static/js/table-filter.js": "utility",
+    "tests/conftest.py": "testing",
+    "tests/test_command_execution.py": "testing",
+    "tests/test_command_execution_bdd.py": "testing",
+    "tests/test_configuration.py": "testing",
+    "tests/test_configuration_bdd.py": "testing",
+    "tests/test_production.py": "testing",
+    "tests/test_production_bdd.py": "testing",
+    "tests/test_secrets_bdd.py": "testing",
+    "tests/test_security.py": "testing"
+  },
+  "security": {
+    "findings": []
+  }
+}

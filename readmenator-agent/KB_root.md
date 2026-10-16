@@ -1,0 +1,227 @@
+# Subsystem: root
+
+## app.py
+- Doc: LazyOwn BlueTeam Framework Una herramienta monolítica de seguridad defensiva para detección de...
+- Layer: utility
+- Language: py
+- Symbols:
+  - `Fg` (class, line 48) `class Fg`
+  - `style` (function, line 75) `def style(text, fg, bold)`
+  - `replace_command_placeholders` (function, line 205) `def replace_command_placeholders(command, params)`
+  - `FgColor` (class, line 228) `class FgColor`
+  - `Cyan` (class, line 231) `class Cyan(FgColor)`
+  - `Red` (class, line 234) `class Red(FgColor)`
+  - `sanitize_content` (function, line 237) `def sanitize_content(text)`
+  - `RAGManager` (class, line 249) `class RAGManager`
+  - `Database` (class, line 455) `class Database`
+  - `Alert` (class, line 605) `class Alert`
+  - `SystemUtils` (class, line 639) `class SystemUtils`
+  - `ProcessMonitor` (class, line 751) `class ProcessMonitor`
+  - `NetworkMonitor` (class, line 849) `class NetworkMonitor`
+  - `FileIntegrityMonitor` (class, line 993) `class FileIntegrityMonitor`
+  - `LogAnalyzer` (class, line 1111) `class LogAnalyzer`
+  - `RealTimeLogMonitor` (class, line 2381) `class RealTimeLogMonitor`
+  - `SystemHardener` (class, line 2431) `class SystemHardener`
+  - `IncidentResponder` (class, line 2910) `class IncidentResponder`
+  - `ReportGenerator` (class, line 3006) `class ReportGenerator`
+  - `MemoryScanner` (class, line 3076) `class MemoryScanner`
+  - `LazySentinelHandler` (class, line 3168) `class LazySentinelHandler(FileSystemEventHandler)`
+  - `LazySentinel` (class, line 3206) `class LazySentinel`
+  - `LazyOwnApp` (class, line 3453) `class LazyOwnApp(Cmd)`
+  - `replace_match` (function, line 223) `def replace_match(match)`
+  - `__init__` (method, line 252) `def __init__(self, model_name, cache_size)`
+  - `initialize_cache_table` (method, line 265) `def initialize_cache_table(self)`
+  - `get_cache_key` (method, line 278) `def get_cache_key(self, content)`
+  - `load_existing_vectorstore` (method, line 282) `def load_existing_vectorstore(self)`
+  - `ollama_llm` (method, line 296) `def ollama_llm(self, question, context)`
+  - `process_file_to_rag` (method, line 311) `def process_file_to_rag(self, file_path)`
+  - `query_rag` (method, line 370) `def query_rag(self, question)`
+  - `invalidate_cache` (method, line 410) `def invalidate_cache(self, file_path)`
+  - `get_knowledge_base_stats` (method, line 429) `def get_knowledge_base_stats(self)`
+  - `__init__` (method, line 458) `def __init__(self, db_path)`
+  - `initialize` (method, line 464) `def initialize(self)`
+  - `execute` (method, line 550) `def execute(self, query, params)`
+  - `insert` (method, line 560) `def insert(self, query, params)`
+  - `close` (method, line 571) `def close(self)`
+  - `execute` (method, line 578) `def execute(self, query, params)`
+  - `insert` (method, line 588) `def insert(self, query, params)`
+  - `close` (method, line 599) `def close(self)`
+  - `__init__` (method, line 610) `def __init__(self, alert_type, details, severity)`
+  - `to_dict` (method, line 616) `def to_dict(self)`
+  - `save_to_db` (method, line 625) `def save_to_db(self, db)`
+  - `run_command` (method, line 643) `def run_command(command, shell)`
+  - `get_file_hash` (method, line 673) `def get_file_hash(filepath)`
+  - `get_system_info` (method, line 690) `def get_system_info()`
+  - `backup_file` (method, line 721) `def backup_file(filepath, backup_dir)`
+  - `get_process_details` (method, line 742) `def get_process_details(pid)`
+  - `__init__` (method, line 754) `def __init__(self, config, db)`
+  - `scan` (method, line 761) `def scan(self, generate_alerts)`
+  - `__init__` (method, line 852) `def __init__(self, config, db)`
+  - `_load_baseline` (method, line 858) `def _load_baseline(self)`
+  - `create_baseline` (method, line 874) `def create_baseline(self)`
+  - `scan` (method, line 920) `def scan(self, generate_alerts)`
+  - `__init__` (method, line 996) `def __init__(self, config, db)`
+  - `initialize_baseline` (method, line 1001) `def initialize_baseline(self, files_to_baseline)`
+  - `scan` (method, line 1044) `def scan(self, generate_alerts)`
+  - `__init__` (method, line 1114) `def __init__(self, config, db)`
+  - `_sanitize_config` (method, line 1167) `def _sanitize_config(self, config)`
+  - `_is_safe_path` (method, line 1191) `def _is_safe_path(self, path)`
+  - `_initialize_state` (method, line 1205) `def _initialize_state(self)`
+  - `_setup_threat_detection_patterns` (method, line 1235) `def _setup_threat_detection_patterns(self)`
+  - `_calculate_file_hash` (method, line 1403) `def _calculate_file_hash(self, filename)`
+  - `_check_file_integrity` (method, line 1416) `def _check_file_integrity(self, log_path)`
+  - `_extract_timestamp_from_log` (method, line 1439) `def _extract_timestamp_from_log(self, line)`
+  - `_extract_ip_from_log` (method, line 1474) `def _extract_ip_from_log(self, line)`
+  - `_extract_username_from_log` (method, line 1482) `def _extract_username_from_log(self, line)`
+  - `_extract_command_from_log` (method, line 1497) `def _extract_command_from_log(self, line)`
+  - `_is_alert_duplicated` (method, line 1511) `def _is_alert_duplicated(self, alert_type, details_hash)`
+  - `analyze_log_file` (method, line 1533) `def analyze_log_file(self, log_path, generate_alerts)`
+  - `_enrich_finding_with_context` (method, line 1753) `def _enrich_finding_with_context(self, event_details)`
+  - `_process_specific_event_logic` (method, line 1790) `def _process_specific_event_logic(self, pattern_name, pattern_config, event_details, line_content)`
+  - `_get_usual_login_hours` (method, line 2005) `def _get_usual_login_hours(self, username)`
+  - `_get_common_commands_for_user` (method, line 2012) `def _get_common_commands_for_user(self, username)`
+  - `analyze_all_logs` (method, line 2021) `def analyze_all_logs(self, generate_alerts)`
+  - `_correlate_findings` (method, line 2055) `def _correlate_findings(self, all_findings)`
+  - `get_performance_metrics` (method, line 2141) `def get_performance_metrics(self)`
+  - `reset_trackers` (method, line 2155) `def reset_trackers(self)`
+  - `add_custom_pattern` (method, line 2163) `def add_custom_pattern(self, name, pattern, severity, mitre_tactics, mitre_techniques)`
+  - `_count_rule_based_alerts` (method, line 2184) `def _count_rule_based_alerts(self)`
+  - `export_findings_summary` (method, line 2192) `def export_findings_summary(self)`
+  - `create_hunting_report` (method, line 2210) `def create_hunting_report(self)`
+  - `analyze` (method, line 2225) `def analyze(self)`
+  - `_load_ai_model` (method, line 2289) `def _load_ai_model(self)`
+  - `_analyze_command_with_ai` (method, line 2306) `def _analyze_command_with_ai(self, command, args)`
+  - `__init__` (method, line 2384) `def __init__(self, config, db)`
+  - `start` (method, line 2391) `def start(self)`
+  - `stop` (method, line 2416) `def stop(self)`
+  - `get_status` (method, line 2421) `def get_status(self)`
+  - `__init__` (method, line 2433) `def __init__(self, config, db)`
+  - `check_system_security` (method, line 2438) `def check_system_security(self)`
+  - `apply_hardening` (method, line 2637) `def apply_hardening(self, backup)`
+  - `audit_ssh_config` (method, line 2791) `def audit_ssh_config(self, generate_alerts)`
+  - `check_suid_sgid_files` (method, line 2874) `def check_suid_sgid_files(self)`
+  - `__init__` (method, line 2912) `def __init__(self, config, db)`
+  - `quarantine_file` (method, line 2918) `def quarantine_file(self, filepath)`
+  - `block_ip` (method, line 2945) `def block_ip(self, ip_address, interface)`
+  - `kill_process` (method, line 2985) `def kill_process(self, pid, signal_to_send)`
+  - `__init__` (method, line 3008) `def __init__(self, config, db)`
+  - `generate_summary_report` (method, line 3014) `def generate_summary_report(self, filename)`
+  - `__init__` (method, line 3077) `def __init__(self, config, db)`
+  - `scan_process_memory` (method, line 3088) `def scan_process_memory(self, pid)`
+  - `scan_system` (method, line 3154) `def scan_system(self, max_processes)`
+  - `__init__` (method, line 3169) `def __init__(self, lazysentinel)`
+  - `is_text_file` (method, line 3172) `def is_text_file(self, file_path)`
+  - `on_created` (method, line 3183) `def on_created(self, event)`
+  - `on_modified` (method, line 3195) `def on_modified(self, event)`
+  - `__init__` (method, line 3207) `def __init__(self, app, popup_queue, watch_dir, excluded_files, min_file_size)`
+  - `chunk_text` (method, line 3228) `def chunk_text(self, text, chunk_size)`
+  - `select_relevant_chunk` (method, line 3231) `def select_relevant_chunk(self, file_content, chunks)`
+  - `parse_deepseek_response` (method, line 3245) `def parse_deepseek_response(self, response_text)`
+  - `show_popup` (method, line 3275) `def show_popup(self, file_name, relevant_info, commands, details)`
+  - `process_file` (method, line 3298) `def process_file(self, file_path)`
+  - `stop` (method, line 3447) `def stop(self)`
+  - `__init__` (method, line 3467) `def __init__(self, config_file)`
+  - `_load_config` (method, line 3560) `def _load_config(self, config_file)`
+  - `_initialize_database` (method, line 3586) `def _initialize_database(self)`
+  - `list_files_in_directory` (method, line 3591) `def list_files_in_directory(self, directory)`
+  - `_register_lua_command` (method, line 3598) `def _register_lua_command(self, command_name, lua_function)`
+  - `load_plugins` (method, line 3624) `def load_plugins(self)`
+  - `load_yaml_plugins` (method, line 3654) `def load_yaml_plugins(self)`
+  - `register_yaml_plugin` (method, line 3677) `def register_yaml_plugin(self, plugin_data)`
+  - `postloop` (method, line 3740) `def postloop(self)`
+  - `postcmd` (method, line 3748) `def postcmd(self, stop, line)`
+  - `do_ai_status` (method, line 3807) `def do_ai_status(self, args)`
+  - `do_ai_load` (method, line 3818) `def do_ai_load(self, args)`
+  - `do_ai_test` (method, line 3830) `def do_ai_test(self, args)`
+  - `do_ai_feedback` (method, line 3857) `def do_ai_feedback(self, args)`
+  - `do_ai_retrain` (method, line 3917) `def do_ai_retrain(self, args)`
+  - `do_sysinfo` (method, line 3964) `def do_sysinfo(self, _)`
+  - `do_proc_scan` (method, line 3991) `def do_proc_scan(self, _)`
+  - `do_proc_details` (method, line 4014) `def do_proc_details(self, args)`
+  - `do_net_baseline` (method, line 4043) `def do_net_baseline(self, _)`
+  - `do_net_scan` (method, line 4052) `def do_net_scan(self, _)`
+  - `do_net_conns` (method, line 4081) `def do_net_conns(self, args)`
+  - `do_fim_baseline` (method, line 4147) `def do_fim_baseline(self, args)`
+  - `do_fim_scan` (method, line 4160) `def do_fim_scan(self, _)`
+  - `do_log_analyze` (method, line 4184) `def do_log_analyze(self, args)`
+  - `do_harden_audit_ssh` (method, line 4221) `def do_harden_audit_ssh(self, _)`
+  - `do_resp_quarantine_file` (method, line 4241) `def do_resp_quarantine_file(self, args)`
+  - `do_resp_block_ip` (method, line 4257) `def do_resp_block_ip(self, args)`
+  - `do_resp_kill_proc` (method, line 4290) `def do_resp_kill_proc(self, args)`
+  - `do_report_summary` (method, line 4306) `def do_report_summary(self, args)`
+  - `do_show_config` (method, line 4317) `def do_show_config(self, _)`
+  - `print_रात` (method, line 4325) `def print_रात(self, data_to_print)`
+  - `do_system_info` (method, line 4337) `def do_system_info(self, arg)`
+  - `do_scan_processes` (method, line 4342) `def do_scan_processes(self, arg)`
+  - `do_scan_network` (method, line 4354) `def do_scan_network(self, arg)`
+  - `do_create_network_baseline` (method, line 4366) `def do_create_network_baseline(self, arg)`
+  - `do_check_file_integrity` (method, line 4371) `def do_check_file_integrity(self, arg)`
+  - `do_init_file_baseline` (method, line 4383) `def do_init_file_baseline(self, arg)`
+  - `do_analyze_logs` (method, line 4388) `def do_analyze_logs(self, arg)`
+  - `do_check_security` (method, line 4400) `def do_check_security(self, arg)`
+  - `do_harden_system` (method, line 4412) `def do_harden_system(self, arg)`
+  - `do_scan_memory` (method, line 4424) `def do_scan_memory(self, arg)`
+  - `do_block_ip` (method, line 4438) `def do_block_ip(self, arg)`
+  - `do_kill_process` (method, line 4458) `def do_kill_process(self, arg)`
+  - `do_quit` (method, line 4479) `def do_quit(self, arg)`
+  - `do_debug` (method, line 4484) `def do_debug(self, arg)`
+  - `do_rag_query` (method, line 4492) `def do_rag_query(self, arg)`
+  - `do_rag_add` (method, line 4502) `def do_rag_add(self, arg)`
+  - `do_rag_status` (method, line 4520) `def do_rag_status(self, arg)`
+  - `do_rag_toggle` (method, line 4529) `def do_rag_toggle(self, arg)`
+  - `do_rag_bulk_add` (method, line 4535) `def do_rag_bulk_add(self, arg)`
+  - `do_rag_search` (method, line 4558) `def do_rag_search(self, arg)`
+  - `complete_rag_add` (method, line 4585) `def complete_rag_add(self, text, line, begidx, endidx)`
+  - `complete_rag_bulk_add` (method, line 4593) `def complete_rag_bulk_add(self, text, line, begidx, endidx)`
+  - `do_quarantine_file` (method, line 4601) `def do_quarantine_file(self, arg)`
+  - `do_audit_users` (method, line 4627) `def do_audit_users(self, arg)`
+  - `do_processes` (method, line 4658) `def do_processes(self, arg)`
+  - `do_network` (method, line 4669) `def do_network(self, arg)`
+  - `do_files` (method, line 4681) `def do_files(self, arg)`
+  - `do_logs` (method, line 4693) `def do_logs(self, arg)`
+  - `do_memory` (method, line 4701) `def do_memory(self, arg)`
+  - `do_hardening` (method, line 4710) `def do_hardening(self, arg)`
+  - `confirm_action` (method, line 4727) `def confirm_action(self, prompt_message, confirm_keyword)`
+  - `_load_config` (method, line 4740) `def _load_config(self, config_file)`
+  - `do_analyze` (method, line 4786) `def do_analyze(self, args)`
+  - `_display_findings_summary` (method, line 4869) `def _display_findings_summary(self, file_path, findings, verbose)`
+  - `_get_severity_color` (method, line 4905) `def _get_severity_color(self, severity)`
+  - `do_monitor` (method, line 4916) `def do_monitor(self, args)`
+  - `_monitoring_loop` (method, line 4991) `def _monitoring_loop(self, interval)`
+  - `do_patterns` (method, line 5038) `def do_patterns(self, args)`
+  - `do_analyze_logs` (method, line 5209) `def do_analyze_logs(self, args)`
+  - `do_start_monitor` (method, line 5229) `def do_start_monitor(self, args)`
+  - `do_stop_monitor` (method, line 5240) `def do_stop_monitor(self, args)`
+  - `do_monitor_status` (method, line 5248) `def do_monitor_status(self, args)`
+  - `do_add_pattern` (method, line 5258) `def do_add_pattern(self, args)`
+  - `do_redteam_hunt` (method, line 5269) `def do_redteam_hunt(self, args)`
+  - `_process_ai_detection` (function, line 2332) `def _process_ai_detection(self, event_details, line_content, log_path, line_num)`
+  - `wrapper` (function, line 3601) `def wrapper(arg)`
+  - `wrapper_yaml` (function, line 3691) `def wrapper_yaml(arg)`
+
+## install.sh
+- Layer: utility
+- Language: sh
+
+## main.py
+- Doc: LazyOwn PurpleTeam Dashboard — entry point.
+- Layer: presentation
+- Language: py
+- Symbols:
+  - `Database` (class, line 42) `class Database`
+  - `_register_data_routes` (function, line 200) `def _register_data_routes(app, db)`
+  - `_populate_dashboard_metrics` (function, line 231) `def _populate_dashboard_metrics(db)`
+  - `build_app` (function, line 260) `def build_app(settings)`
+  - `__init__` (method, line 57) `def __init__(self, db_path)`
+  - `connect` (method, line 60) `def connect(self)`
+  - `_safe_fetch` (method, line 69) `def _safe_fetch(self, table, columns, where, params, order, limit)`
+  - `fetch_alerts` (method, line 106) `def fetch_alerts(self, limit, severity)`
+  - `fetch_events` (method, line 127) `def fetch_events(self, limit)`
+  - `fetch_network_baseline` (method, line 141) `def fetch_network_baseline(self, limit)`
+  - `fetch_file_hashes` (method, line 148) `def fetch_file_hashes(self, limit)`
+  - `correlate_events` (method, line 155) `def correlate_events(self, event_id)`
+  - `alerts_view` (function, line 208) `def alerts_view()`
+  - `events_view` (function, line 218) `def events_view()`
+  - `api_correlate` (function, line 227) `def api_correlate(event_id)`
+  - `_dashboard` (function, line 272) `def _dashboard()`
+- Depends on: `lazyownbt/config.py`, `lazyownbt/web.py`

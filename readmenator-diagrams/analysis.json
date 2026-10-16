@@ -1,0 +1,4400 @@
+{
+ "metadata": {
+  "generated_at": "2026-10-16T19:33:39.680425+00:00",
+  "source_tree_hash": "21c47183b1c7235f1e10217d9801f359c4ad03c4f6f1aabc74e05ad15aba8a04",
+  "repo_name": "LazyOwnBT",
+  "depth_level": 1,
+  "depth_cap": 3,
+  "file_coverage_summary": {
+   "total_files": 23,
+   "analyzed": 23,
+   "not_analyzed": 0,
+   "not_analyzed_by_reason": {}
+  },
+  "tree_spec": {}
+ },
+ "description": "Static architecture map of 23 files (js, py, sh) in 3 components: lazyownbt: web, lazyownbt: main, lazyownbt: security. Structure is extracted statically without LLM calls; component prose may be enriched locally.",
+ "files": {
+  "app.py": {
+   "language": "py",
+   "symbols": 193
+  },
+  "install.sh": {
+   "language": "sh",
+   "symbols": 0
+  },
+  "lazyownbt/__init__.py": {
+   "language": "py",
+   "symbols": 0
+  },
+  "lazyownbt/actions.py": {
+   "language": "py",
+   "symbols": 10
+  },
+  "lazyownbt/audit.py": {
+   "language": "py",
+   "symbols": 8
+  },
+  "lazyownbt/config.py": {
+   "language": "py",
+   "symbols": 8
+  },
+  "lazyownbt/handlers.py": {
+   "language": "py",
+   "symbols": 8
+  },
+  "lazyownbt/security.py": {
+   "language": "py",
+   "symbols": 6
+  },
+  "lazyownbt/web.py": {
+   "language": "py",
+   "symbols": 15
+  },
+  "main.py": {
+   "language": "py",
+   "symbols": 16
+  },
+  "skills/lazyownbt_mcp.py": {
+   "language": "py",
+   "symbols": 13
+  },
+  "static/js/auth.js": {
+   "language": "js",
+   "symbols": 6
+  },
+  "static/js/commands.js": {
+   "language": "js",
+   "symbols": 3
+  },
+  "static/js/table-filter.js": {
+   "language": "js",
+   "symbols": 2
+  },
+  "tests/conftest.py": {
+   "language": "py",
+   "symbols": 77
+  },
+  "tests/test_command_execution.py": {
+   "language": "py",
+   "symbols": 14
+  },
+  "tests/test_command_execution_bdd.py": {
+   "language": "py",
+   "symbols": 0
+  },
+  "tests/test_configuration.py": {
+   "language": "py",
+   "symbols": 7
+  },
+  "tests/test_configuration_bdd.py": {
+   "language": "py",
+   "symbols": 0
+  },
+  "tests/test_production.py": {
+   "language": "py",
+   "symbols": 8
+  },
+  "tests/test_production_bdd.py": {
+   "language": "py",
+   "symbols": 0
+  },
+  "tests/test_secrets_bdd.py": {
+   "language": "py",
+   "symbols": 0
+  },
+  "tests/test_security.py": {
+   "language": "py",
+   "symbols": 13
+  }
+ },
+ "methods_index": {
+  "app.py|app.py::Fg": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::Fg",
+   "start_line": 48,
+   "end_line": 74,
+   "type": "CLASS",
+   "content_hash": "12dd60cef445df9e"
+  },
+  "app.py|app.py::style": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::style",
+   "start_line": 75,
+   "end_line": 204,
+   "type": "FUNCTION",
+   "content_hash": "43c719f7f99706c5"
+  },
+  "app.py|app.py::replace_command_placeholders": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::replace_command_placeholders",
+   "start_line": 205,
+   "end_line": 222,
+   "type": "FUNCTION",
+   "content_hash": "44255b053836006e"
+  },
+  "app.py|app.py::replace_match": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::replace_match",
+   "start_line": 223,
+   "end_line": 227,
+   "type": "FUNCTION",
+   "content_hash": "5b6b06900cb90cd7"
+  },
+  "app.py|app.py::FgColor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::FgColor",
+   "start_line": 228,
+   "end_line": 230,
+   "type": "CLASS",
+   "content_hash": "596897aaef271ea4"
+  },
+  "app.py|app.py::Cyan": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::Cyan",
+   "start_line": 231,
+   "end_line": 233,
+   "type": "CLASS",
+   "content_hash": "10c695c21381aa98"
+  },
+  "app.py|app.py::Red": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::Red",
+   "start_line": 234,
+   "end_line": 236,
+   "type": "CLASS",
+   "content_hash": "57bf78fd461aa4e6"
+  },
+  "app.py|app.py::sanitize_content": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::sanitize_content",
+   "start_line": 237,
+   "end_line": 248,
+   "type": "FUNCTION",
+   "content_hash": "7d75ed60d3528216"
+  },
+  "app.py|app.py::RAGManager": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::RAGManager",
+   "start_line": 249,
+   "end_line": 251,
+   "type": "CLASS",
+   "content_hash": "d10b52aef1049658"
+  },
+  "app.py|app.py::__init__": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::__init__",
+   "start_line": 3467,
+   "end_line": 3559,
+   "type": "FUNCTION",
+   "content_hash": "986c8e878c6ff44b"
+  },
+  "app.py|app.py::initialize_cache_table": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::initialize_cache_table",
+   "start_line": 265,
+   "end_line": 277,
+   "type": "FUNCTION",
+   "content_hash": "56b3e5129c758459"
+  },
+  "app.py|app.py::get_cache_key": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_cache_key",
+   "start_line": 278,
+   "end_line": 281,
+   "type": "FUNCTION",
+   "content_hash": "89d65778e91da2e1"
+  },
+  "app.py|app.py::load_existing_vectorstore": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::load_existing_vectorstore",
+   "start_line": 282,
+   "end_line": 295,
+   "type": "FUNCTION",
+   "content_hash": "efb6d6dc46122cd3"
+  },
+  "app.py|app.py::ollama_llm": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::ollama_llm",
+   "start_line": 296,
+   "end_line": 310,
+   "type": "FUNCTION",
+   "content_hash": "ff7758e6311b4105"
+  },
+  "app.py|app.py::process_file_to_rag": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::process_file_to_rag",
+   "start_line": 311,
+   "end_line": 369,
+   "type": "FUNCTION",
+   "content_hash": "fe2fcf5e00e48956"
+  },
+  "app.py|app.py::query_rag": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::query_rag",
+   "start_line": 370,
+   "end_line": 409,
+   "type": "FUNCTION",
+   "content_hash": "8f3c665cad4e5a61"
+  },
+  "app.py|app.py::invalidate_cache": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::invalidate_cache",
+   "start_line": 410,
+   "end_line": 428,
+   "type": "FUNCTION",
+   "content_hash": "60627935943040a7"
+  },
+  "app.py|app.py::get_knowledge_base_stats": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_knowledge_base_stats",
+   "start_line": 429,
+   "end_line": 454,
+   "type": "FUNCTION",
+   "content_hash": "8cab6fd46602b0b3"
+  },
+  "app.py|app.py::Database": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::Database",
+   "start_line": 455,
+   "end_line": 457,
+   "type": "CLASS",
+   "content_hash": "bbe18a4469878dcf"
+  },
+  "app.py|app.py::initialize": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::initialize",
+   "start_line": 464,
+   "end_line": 549,
+   "type": "FUNCTION",
+   "content_hash": "6501c4c08bfa0c63"
+  },
+  "app.py|app.py::execute": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::execute",
+   "start_line": 578,
+   "end_line": 587,
+   "type": "FUNCTION",
+   "content_hash": "98be3cfea9a9c8d8"
+  },
+  "app.py|app.py::insert": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::insert",
+   "start_line": 588,
+   "end_line": 598,
+   "type": "FUNCTION",
+   "content_hash": "0a04bc5f409f92f4"
+  },
+  "app.py|app.py::close": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::close",
+   "start_line": 599,
+   "end_line": 604,
+   "type": "FUNCTION",
+   "content_hash": "b445779f71f20c37"
+  },
+  "app.py|app.py::Alert": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::Alert",
+   "start_line": 605,
+   "end_line": 609,
+   "type": "CLASS",
+   "content_hash": "1290b939b711c928"
+  },
+  "app.py|app.py::to_dict": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::to_dict",
+   "start_line": 616,
+   "end_line": 624,
+   "type": "FUNCTION",
+   "content_hash": "4b787ec59db64a1c"
+  },
+  "app.py|app.py::save_to_db": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::save_to_db",
+   "start_line": 625,
+   "end_line": 638,
+   "type": "FUNCTION",
+   "content_hash": "15e95599f021d7af"
+  },
+  "app.py|app.py::SystemUtils": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::SystemUtils",
+   "start_line": 639,
+   "end_line": 642,
+   "type": "CLASS",
+   "content_hash": "aeeaba198f7f6c54"
+  },
+  "app.py|app.py::run_command": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::run_command",
+   "start_line": 643,
+   "end_line": 672,
+   "type": "FUNCTION",
+   "content_hash": "349fc39e81a963c4"
+  },
+  "app.py|app.py::get_file_hash": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_file_hash",
+   "start_line": 673,
+   "end_line": 689,
+   "type": "FUNCTION",
+   "content_hash": "57018678b7360a10"
+  },
+  "app.py|app.py::get_system_info": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_system_info",
+   "start_line": 690,
+   "end_line": 720,
+   "type": "FUNCTION",
+   "content_hash": "25c900d558cd562f"
+  },
+  "app.py|app.py::backup_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::backup_file",
+   "start_line": 721,
+   "end_line": 741,
+   "type": "FUNCTION",
+   "content_hash": "6261dc0ce551fd2d"
+  },
+  "app.py|app.py::get_process_details": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_process_details",
+   "start_line": 742,
+   "end_line": 750,
+   "type": "FUNCTION",
+   "content_hash": "dcbf0a9749248c5f"
+  },
+  "app.py|app.py::ProcessMonitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::ProcessMonitor",
+   "start_line": 751,
+   "end_line": 753,
+   "type": "CLASS",
+   "content_hash": "17da9c777e73326d"
+  },
+  "app.py|app.py::scan": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::scan",
+   "start_line": 1044,
+   "end_line": 1110,
+   "type": "FUNCTION",
+   "content_hash": "42218cb6600553c3"
+  },
+  "app.py|app.py::NetworkMonitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::NetworkMonitor",
+   "start_line": 849,
+   "end_line": 851,
+   "type": "CLASS",
+   "content_hash": "58d1a7d54b05853f"
+  },
+  "app.py|app.py::_load_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_load_baseline",
+   "start_line": 858,
+   "end_line": 873,
+   "type": "FUNCTION",
+   "content_hash": "04964077bf3c5b17"
+  },
+  "app.py|app.py::create_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::create_baseline",
+   "start_line": 874,
+   "end_line": 919,
+   "type": "FUNCTION",
+   "content_hash": "50091fa0cd1c8b65"
+  },
+  "app.py|app.py::FileIntegrityMonitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::FileIntegrityMonitor",
+   "start_line": 993,
+   "end_line": 995,
+   "type": "CLASS",
+   "content_hash": "fbd80120dde79884"
+  },
+  "app.py|app.py::initialize_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::initialize_baseline",
+   "start_line": 1001,
+   "end_line": 1043,
+   "type": "FUNCTION",
+   "content_hash": "a7f563002dc5aece"
+  },
+  "app.py|app.py::LogAnalyzer": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::LogAnalyzer",
+   "start_line": 1111,
+   "end_line": 1113,
+   "type": "CLASS",
+   "content_hash": "538f593ff5fb80c1"
+  },
+  "app.py|app.py::_sanitize_config": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_sanitize_config",
+   "start_line": 1167,
+   "end_line": 1190,
+   "type": "FUNCTION",
+   "content_hash": "b0a675a6ebc16d82"
+  },
+  "app.py|app.py::_is_safe_path": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_is_safe_path",
+   "start_line": 1191,
+   "end_line": 1204,
+   "type": "FUNCTION",
+   "content_hash": "4e729bdd70ffe6eb"
+  },
+  "app.py|app.py::_initialize_state": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_initialize_state",
+   "start_line": 1205,
+   "end_line": 1234,
+   "type": "FUNCTION",
+   "content_hash": "f6e1a31713dda14a"
+  },
+  "app.py|app.py::_setup_threat_detection_patterns": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_setup_threat_detection_patterns",
+   "start_line": 1235,
+   "end_line": 1402,
+   "type": "FUNCTION",
+   "content_hash": "ec51bc5913e92107"
+  },
+  "app.py|app.py::_calculate_file_hash": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_calculate_file_hash",
+   "start_line": 1403,
+   "end_line": 1415,
+   "type": "FUNCTION",
+   "content_hash": "d2c8521fa6a56679"
+  },
+  "app.py|app.py::_check_file_integrity": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_check_file_integrity",
+   "start_line": 1416,
+   "end_line": 1438,
+   "type": "FUNCTION",
+   "content_hash": "0d23826caa9a976d"
+  },
+  "app.py|app.py::_extract_timestamp_from_log": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_extract_timestamp_from_log",
+   "start_line": 1439,
+   "end_line": 1473,
+   "type": "FUNCTION",
+   "content_hash": "ed52bee4d1680ec7"
+  },
+  "app.py|app.py::_extract_ip_from_log": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_extract_ip_from_log",
+   "start_line": 1474,
+   "end_line": 1481,
+   "type": "FUNCTION",
+   "content_hash": "d34c3459e32b69c5"
+  },
+  "app.py|app.py::_extract_username_from_log": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_extract_username_from_log",
+   "start_line": 1482,
+   "end_line": 1496,
+   "type": "FUNCTION",
+   "content_hash": "c0a40c62fa8380b8"
+  },
+  "app.py|app.py::_extract_command_from_log": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_extract_command_from_log",
+   "start_line": 1497,
+   "end_line": 1510,
+   "type": "FUNCTION",
+   "content_hash": "8082bde41d8bd972"
+  },
+  "app.py|app.py::_is_alert_duplicated": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_is_alert_duplicated",
+   "start_line": 1511,
+   "end_line": 1532,
+   "type": "FUNCTION",
+   "content_hash": "2ebf24000c9153e6"
+  },
+  "app.py|app.py::analyze_log_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::analyze_log_file",
+   "start_line": 1533,
+   "end_line": 1752,
+   "type": "FUNCTION",
+   "content_hash": "fb919193c0ab1592"
+  },
+  "app.py|app.py::_enrich_finding_with_context": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_enrich_finding_with_context",
+   "start_line": 1753,
+   "end_line": 1789,
+   "type": "FUNCTION",
+   "content_hash": "b4a6c070dab73fd9"
+  },
+  "app.py|app.py::_process_specific_event_logic": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_process_specific_event_logic",
+   "start_line": 1790,
+   "end_line": 2004,
+   "type": "FUNCTION",
+   "content_hash": "ce7cb5f9ed819fa6"
+  },
+  "app.py|app.py::_get_usual_login_hours": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_get_usual_login_hours",
+   "start_line": 2005,
+   "end_line": 2011,
+   "type": "FUNCTION",
+   "content_hash": "14493ce6bb1772d0"
+  },
+  "app.py|app.py::_get_common_commands_for_user": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_get_common_commands_for_user",
+   "start_line": 2012,
+   "end_line": 2020,
+   "type": "FUNCTION",
+   "content_hash": "deb6cc64e556aeeb"
+  },
+  "app.py|app.py::analyze_all_logs": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::analyze_all_logs",
+   "start_line": 2021,
+   "end_line": 2054,
+   "type": "FUNCTION",
+   "content_hash": "13561eed31d2bd1f"
+  },
+  "app.py|app.py::_correlate_findings": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_correlate_findings",
+   "start_line": 2055,
+   "end_line": 2140,
+   "type": "FUNCTION",
+   "content_hash": "eb2ee0a5b35bb4e4"
+  },
+  "app.py|app.py::get_performance_metrics": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_performance_metrics",
+   "start_line": 2141,
+   "end_line": 2154,
+   "type": "FUNCTION",
+   "content_hash": "1cf4db63b713a3ee"
+  },
+  "app.py|app.py::reset_trackers": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::reset_trackers",
+   "start_line": 2155,
+   "end_line": 2162,
+   "type": "FUNCTION",
+   "content_hash": "0844ed4780ed1c71"
+  },
+  "app.py|app.py::add_custom_pattern": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::add_custom_pattern",
+   "start_line": 2163,
+   "end_line": 2183,
+   "type": "FUNCTION",
+   "content_hash": "5e3fbe364cd3ee66"
+  },
+  "app.py|app.py::_count_rule_based_alerts": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_count_rule_based_alerts",
+   "start_line": 2184,
+   "end_line": 2191,
+   "type": "FUNCTION",
+   "content_hash": "bfcbf14ddc239d84"
+  },
+  "app.py|app.py::export_findings_summary": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::export_findings_summary",
+   "start_line": 2192,
+   "end_line": 2209,
+   "type": "FUNCTION",
+   "content_hash": "5dc9e35be9c57011"
+  },
+  "app.py|app.py::create_hunting_report": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::create_hunting_report",
+   "start_line": 2210,
+   "end_line": 2224,
+   "type": "FUNCTION",
+   "content_hash": "cd0f238974116b10"
+  },
+  "app.py|app.py::analyze": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::analyze",
+   "start_line": 2225,
+   "end_line": 2288,
+   "type": "FUNCTION",
+   "content_hash": "0ca22b6139b1b2ed"
+  },
+  "app.py|app.py::_load_ai_model": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_load_ai_model",
+   "start_line": 2289,
+   "end_line": 2305,
+   "type": "FUNCTION",
+   "content_hash": "224d293523b2c5e0"
+  },
+  "app.py|app.py::_analyze_command_with_ai": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_analyze_command_with_ai",
+   "start_line": 2306,
+   "end_line": 2331,
+   "type": "FUNCTION",
+   "content_hash": "9ac375043ff9a336"
+  },
+  "app.py|app.py::_process_ai_detection": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_process_ai_detection",
+   "start_line": 2332,
+   "end_line": 2380,
+   "type": "FUNCTION",
+   "content_hash": "1ee05b14f2c4f53f"
+  },
+  "app.py|app.py::RealTimeLogMonitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::RealTimeLogMonitor",
+   "start_line": 2381,
+   "end_line": 2383,
+   "type": "CLASS",
+   "content_hash": "d8ad6ece129b0937"
+  },
+  "app.py|app.py::start": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::start",
+   "start_line": 2391,
+   "end_line": 2415,
+   "type": "FUNCTION",
+   "content_hash": "0a1895c4207ad350"
+  },
+  "app.py|app.py::stop": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::stop",
+   "start_line": 3447,
+   "end_line": 3452,
+   "type": "FUNCTION",
+   "content_hash": "ce503b201e95d0b6"
+  },
+  "app.py|app.py::get_status": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::get_status",
+   "start_line": 2421,
+   "end_line": 2430,
+   "type": "FUNCTION",
+   "content_hash": "044a32a79f16343f"
+  },
+  "app.py|app.py::SystemHardener": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::SystemHardener",
+   "start_line": 2431,
+   "end_line": 2432,
+   "type": "CLASS",
+   "content_hash": "f3481ec7d57b351c"
+  },
+  "app.py|app.py::check_system_security": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::check_system_security",
+   "start_line": 2438,
+   "end_line": 2636,
+   "type": "FUNCTION",
+   "content_hash": "3bb0021bcbd26d5a"
+  },
+  "app.py|app.py::apply_hardening": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::apply_hardening",
+   "start_line": 2637,
+   "end_line": 2790,
+   "type": "FUNCTION",
+   "content_hash": "78ffd52825b6e3ce"
+  },
+  "app.py|app.py::audit_ssh_config": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::audit_ssh_config",
+   "start_line": 2791,
+   "end_line": 2873,
+   "type": "FUNCTION",
+   "content_hash": "ebb2a56fbf49f1e4"
+  },
+  "app.py|app.py::check_suid_sgid_files": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::check_suid_sgid_files",
+   "start_line": 2874,
+   "end_line": 2909,
+   "type": "FUNCTION",
+   "content_hash": "bbba3a9096992845"
+  },
+  "app.py|app.py::IncidentResponder": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::IncidentResponder",
+   "start_line": 2910,
+   "end_line": 2911,
+   "type": "CLASS",
+   "content_hash": "f686233cc0e4edb2"
+  },
+  "app.py|app.py::quarantine_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::quarantine_file",
+   "start_line": 2918,
+   "end_line": 2944,
+   "type": "FUNCTION",
+   "content_hash": "3c70dcce7abb8afe"
+  },
+  "app.py|app.py::block_ip": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::block_ip",
+   "start_line": 2945,
+   "end_line": 2984,
+   "type": "FUNCTION",
+   "content_hash": "11de520d267e4fef"
+  },
+  "app.py|app.py::kill_process": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::kill_process",
+   "start_line": 2985,
+   "end_line": 3005,
+   "type": "FUNCTION",
+   "content_hash": "db8d15b3ea302221"
+  },
+  "app.py|app.py::ReportGenerator": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::ReportGenerator",
+   "start_line": 3006,
+   "end_line": 3007,
+   "type": "CLASS",
+   "content_hash": "5835cefe73f64629"
+  },
+  "app.py|app.py::generate_summary_report": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::generate_summary_report",
+   "start_line": 3014,
+   "end_line": 3075,
+   "type": "FUNCTION",
+   "content_hash": "c7ff8f2006062e3c"
+  },
+  "app.py|app.py::MemoryScanner": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::MemoryScanner",
+   "start_line": 3076,
+   "end_line": 3076,
+   "type": "CLASS",
+   "content_hash": "0125eb973299259c"
+  },
+  "app.py|app.py::scan_process_memory": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::scan_process_memory",
+   "start_line": 3088,
+   "end_line": 3153,
+   "type": "FUNCTION",
+   "content_hash": "3e0cd2037ea4318b"
+  },
+  "app.py|app.py::scan_system": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::scan_system",
+   "start_line": 3154,
+   "end_line": 3167,
+   "type": "FUNCTION",
+   "content_hash": "6d2abfdfec3e8d63"
+  },
+  "app.py|app.py::LazySentinelHandler": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::LazySentinelHandler",
+   "start_line": 3168,
+   "end_line": 3168,
+   "type": "CLASS",
+   "content_hash": "b5d354a40d0d0615"
+  },
+  "app.py|app.py::is_text_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::is_text_file",
+   "start_line": 3172,
+   "end_line": 3182,
+   "type": "FUNCTION",
+   "content_hash": "14d60edc43f02e24"
+  },
+  "app.py|app.py::on_created": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::on_created",
+   "start_line": 3183,
+   "end_line": 3194,
+   "type": "FUNCTION",
+   "content_hash": "db1803206cd8a1e9"
+  },
+  "app.py|app.py::on_modified": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::on_modified",
+   "start_line": 3195,
+   "end_line": 3205,
+   "type": "FUNCTION",
+   "content_hash": "e66729fb6893ceb2"
+  },
+  "app.py|app.py::LazySentinel": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::LazySentinel",
+   "start_line": 3206,
+   "end_line": 3206,
+   "type": "CLASS",
+   "content_hash": "5ac4d19fdc59dc73"
+  },
+  "app.py|app.py::chunk_text": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::chunk_text",
+   "start_line": 3228,
+   "end_line": 3230,
+   "type": "FUNCTION",
+   "content_hash": "bb17f74f11eadf76"
+  },
+  "app.py|app.py::select_relevant_chunk": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::select_relevant_chunk",
+   "start_line": 3231,
+   "end_line": 3244,
+   "type": "FUNCTION",
+   "content_hash": "9a26826b919b40a8"
+  },
+  "app.py|app.py::parse_deepseek_response": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::parse_deepseek_response",
+   "start_line": 3245,
+   "end_line": 3274,
+   "type": "FUNCTION",
+   "content_hash": "f296a257d29c0059"
+  },
+  "app.py|app.py::show_popup": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::show_popup",
+   "start_line": 3275,
+   "end_line": 3297,
+   "type": "FUNCTION",
+   "content_hash": "9fe2a15c7dff1b24"
+  },
+  "app.py|app.py::process_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::process_file",
+   "start_line": 3298,
+   "end_line": 3446,
+   "type": "FUNCTION",
+   "content_hash": "d0fcebefe7e4a676"
+  },
+  "app.py|app.py::LazyOwnApp": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::LazyOwnApp",
+   "start_line": 3453,
+   "end_line": 3466,
+   "type": "CLASS",
+   "content_hash": "b737599a79af8626"
+  },
+  "app.py|app.py::_load_config": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_load_config",
+   "start_line": 4740,
+   "end_line": 4785,
+   "type": "FUNCTION",
+   "content_hash": "6dee172e4d51ba20"
+  },
+  "app.py|app.py::_initialize_database": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_initialize_database",
+   "start_line": 3586,
+   "end_line": 3590,
+   "type": "FUNCTION",
+   "content_hash": "0b1b1a86f6d28f65"
+  },
+  "app.py|app.py::list_files_in_directory": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::list_files_in_directory",
+   "start_line": 3591,
+   "end_line": 3597,
+   "type": "FUNCTION",
+   "content_hash": "d42e11340400f34d"
+  },
+  "app.py|app.py::_register_lua_command": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_register_lua_command",
+   "start_line": 3598,
+   "end_line": 3600,
+   "type": "FUNCTION",
+   "content_hash": "b5b3c7a9cc2a7880"
+  },
+  "app.py|app.py::wrapper": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::wrapper",
+   "start_line": 3601,
+   "end_line": 3623,
+   "type": "FUNCTION",
+   "content_hash": "e8b210d7f8f82341"
+  },
+  "app.py|app.py::load_plugins": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::load_plugins",
+   "start_line": 3624,
+   "end_line": 3653,
+   "type": "FUNCTION",
+   "content_hash": "365c7a3307c70f42"
+  },
+  "app.py|app.py::load_yaml_plugins": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::load_yaml_plugins",
+   "start_line": 3654,
+   "end_line": 3676,
+   "type": "FUNCTION",
+   "content_hash": "2a1b376c3f43dd80"
+  },
+  "app.py|app.py::register_yaml_plugin": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::register_yaml_plugin",
+   "start_line": 3677,
+   "end_line": 3690,
+   "type": "FUNCTION",
+   "content_hash": "0520ba2725383ef3"
+  },
+  "app.py|app.py::wrapper_yaml": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::wrapper_yaml",
+   "start_line": 3691,
+   "end_line": 3739,
+   "type": "FUNCTION",
+   "content_hash": "e3afa17b9e392f3f"
+  },
+  "app.py|app.py::postloop": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::postloop",
+   "start_line": 3740,
+   "end_line": 3747,
+   "type": "FUNCTION",
+   "content_hash": "6ec6b8939e841f3e"
+  },
+  "app.py|app.py::postcmd": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::postcmd",
+   "start_line": 3748,
+   "end_line": 3806,
+   "type": "FUNCTION",
+   "content_hash": "7b79f1c8bee7e08a"
+  },
+  "app.py|app.py::do_ai_status": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_ai_status",
+   "start_line": 3807,
+   "end_line": 3817,
+   "type": "FUNCTION",
+   "content_hash": "3aebd86fac4b1817"
+  },
+  "app.py|app.py::do_ai_load": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_ai_load",
+   "start_line": 3818,
+   "end_line": 3829,
+   "type": "FUNCTION",
+   "content_hash": "0fb56a56c67af151"
+  },
+  "app.py|app.py::do_ai_test": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_ai_test",
+   "start_line": 3830,
+   "end_line": 3856,
+   "type": "FUNCTION",
+   "content_hash": "9983cc57bddf8a03"
+  },
+  "app.py|app.py::do_ai_feedback": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_ai_feedback",
+   "start_line": 3857,
+   "end_line": 3916,
+   "type": "FUNCTION",
+   "content_hash": "64f1236a32676cbe"
+  },
+  "app.py|app.py::do_ai_retrain": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_ai_retrain",
+   "start_line": 3917,
+   "end_line": 3963,
+   "type": "FUNCTION",
+   "content_hash": "3f2a5bb44f70325b"
+  },
+  "app.py|app.py::do_sysinfo": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_sysinfo",
+   "start_line": 3964,
+   "end_line": 3990,
+   "type": "FUNCTION",
+   "content_hash": "890760f7d6faef85"
+  },
+  "app.py|app.py::do_proc_scan": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_proc_scan",
+   "start_line": 3991,
+   "end_line": 4013,
+   "type": "FUNCTION",
+   "content_hash": "840539277796cdfd"
+  },
+  "app.py|app.py::do_proc_details": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_proc_details",
+   "start_line": 4014,
+   "end_line": 4042,
+   "type": "FUNCTION",
+   "content_hash": "fd3513dc21253f4f"
+  },
+  "app.py|app.py::do_net_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_net_baseline",
+   "start_line": 4043,
+   "end_line": 4051,
+   "type": "FUNCTION",
+   "content_hash": "ccd8feafe764231b"
+  },
+  "app.py|app.py::do_net_scan": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_net_scan",
+   "start_line": 4052,
+   "end_line": 4080,
+   "type": "FUNCTION",
+   "content_hash": "3be06f4bbfaf6be3"
+  },
+  "app.py|app.py::do_net_conns": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_net_conns",
+   "start_line": 4081,
+   "end_line": 4146,
+   "type": "FUNCTION",
+   "content_hash": "a74cae533a4743c8"
+  },
+  "app.py|app.py::do_fim_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_fim_baseline",
+   "start_line": 4147,
+   "end_line": 4159,
+   "type": "FUNCTION",
+   "content_hash": "2bdc179aaf5a78d7"
+  },
+  "app.py|app.py::do_fim_scan": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_fim_scan",
+   "start_line": 4160,
+   "end_line": 4183,
+   "type": "FUNCTION",
+   "content_hash": "56dd03d6b08a6151"
+  },
+  "app.py|app.py::do_log_analyze": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_log_analyze",
+   "start_line": 4184,
+   "end_line": 4220,
+   "type": "FUNCTION",
+   "content_hash": "ee3e10efa5cf567b"
+  },
+  "app.py|app.py::do_harden_audit_ssh": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_harden_audit_ssh",
+   "start_line": 4221,
+   "end_line": 4240,
+   "type": "FUNCTION",
+   "content_hash": "cfa32691de118392"
+  },
+  "app.py|app.py::do_resp_quarantine_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_resp_quarantine_file",
+   "start_line": 4241,
+   "end_line": 4256,
+   "type": "FUNCTION",
+   "content_hash": "8667f621d536795f"
+  },
+  "app.py|app.py::do_resp_block_ip": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_resp_block_ip",
+   "start_line": 4257,
+   "end_line": 4289,
+   "type": "FUNCTION",
+   "content_hash": "8b993c0358e7bfad"
+  },
+  "app.py|app.py::do_resp_kill_proc": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_resp_kill_proc",
+   "start_line": 4290,
+   "end_line": 4305,
+   "type": "FUNCTION",
+   "content_hash": "4252f350d2d62342"
+  },
+  "app.py|app.py::do_report_summary": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_report_summary",
+   "start_line": 4306,
+   "end_line": 4316,
+   "type": "FUNCTION",
+   "content_hash": "88bc1e94c8ab39f1"
+  },
+  "app.py|app.py::do_show_config": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_show_config",
+   "start_line": 4317,
+   "end_line": 4324,
+   "type": "FUNCTION",
+   "content_hash": "a2f6768ff4a2eca0"
+  },
+  "app.py|app.py::print_रात": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::print_रात",
+   "start_line": 4325,
+   "end_line": 4336,
+   "type": "FUNCTION",
+   "content_hash": "f8a7b2001c7a7d3a"
+  },
+  "app.py|app.py::do_system_info": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_system_info",
+   "start_line": 4337,
+   "end_line": 4341,
+   "type": "FUNCTION",
+   "content_hash": "378509aa9629c42a"
+  },
+  "app.py|app.py::do_scan_processes": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_scan_processes",
+   "start_line": 4342,
+   "end_line": 4353,
+   "type": "FUNCTION",
+   "content_hash": "e495cca23f017581"
+  },
+  "app.py|app.py::do_scan_network": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_scan_network",
+   "start_line": 4354,
+   "end_line": 4365,
+   "type": "FUNCTION",
+   "content_hash": "8ae1741c7a9dfe2e"
+  },
+  "app.py|app.py::do_create_network_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_create_network_baseline",
+   "start_line": 4366,
+   "end_line": 4370,
+   "type": "FUNCTION",
+   "content_hash": "de25f81f41e22d68"
+  },
+  "app.py|app.py::do_check_file_integrity": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_check_file_integrity",
+   "start_line": 4371,
+   "end_line": 4382,
+   "type": "FUNCTION",
+   "content_hash": "e77e8a9de3a1e1dd"
+  },
+  "app.py|app.py::do_init_file_baseline": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_init_file_baseline",
+   "start_line": 4383,
+   "end_line": 4387,
+   "type": "FUNCTION",
+   "content_hash": "fb793d00da317f74"
+  },
+  "app.py|app.py::do_analyze_logs": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_analyze_logs",
+   "start_line": 5209,
+   "end_line": 5228,
+   "type": "FUNCTION",
+   "content_hash": "1d0eab27608da652"
+  },
+  "app.py|app.py::do_check_security": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_check_security",
+   "start_line": 4400,
+   "end_line": 4411,
+   "type": "FUNCTION",
+   "content_hash": "17c3be40e5c2a115"
+  },
+  "app.py|app.py::do_harden_system": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_harden_system",
+   "start_line": 4412,
+   "end_line": 4423,
+   "type": "FUNCTION",
+   "content_hash": "25dc21cf62de299b"
+  },
+  "app.py|app.py::do_scan_memory": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_scan_memory",
+   "start_line": 4424,
+   "end_line": 4437,
+   "type": "FUNCTION",
+   "content_hash": "2bc4ddb7a12442b5"
+  },
+  "app.py|app.py::do_block_ip": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_block_ip",
+   "start_line": 4438,
+   "end_line": 4457,
+   "type": "FUNCTION",
+   "content_hash": "51bd93c728817f07"
+  },
+  "app.py|app.py::do_kill_process": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_kill_process",
+   "start_line": 4458,
+   "end_line": 4478,
+   "type": "FUNCTION",
+   "content_hash": "543f18c5fdb43c75"
+  },
+  "app.py|app.py::do_quit": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_quit",
+   "start_line": 4479,
+   "end_line": 4483,
+   "type": "FUNCTION",
+   "content_hash": "c49268a1a84d6542"
+  },
+  "app.py|app.py::do_debug": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_debug",
+   "start_line": 4484,
+   "end_line": 4491,
+   "type": "FUNCTION",
+   "content_hash": "c41930d41e4730f0"
+  },
+  "app.py|app.py::do_rag_query": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_query",
+   "start_line": 4492,
+   "end_line": 4501,
+   "type": "FUNCTION",
+   "content_hash": "7e8b64c7edd3dacf"
+  },
+  "app.py|app.py::do_rag_add": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_add",
+   "start_line": 4502,
+   "end_line": 4519,
+   "type": "FUNCTION",
+   "content_hash": "e2133f37b7b307c7"
+  },
+  "app.py|app.py::do_rag_status": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_status",
+   "start_line": 4520,
+   "end_line": 4528,
+   "type": "FUNCTION",
+   "content_hash": "4e0758b7e61241ff"
+  },
+  "app.py|app.py::do_rag_toggle": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_toggle",
+   "start_line": 4529,
+   "end_line": 4534,
+   "type": "FUNCTION",
+   "content_hash": "e1d3660f53b7a615"
+  },
+  "app.py|app.py::do_rag_bulk_add": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_bulk_add",
+   "start_line": 4535,
+   "end_line": 4557,
+   "type": "FUNCTION",
+   "content_hash": "173f532cce218fa0"
+  },
+  "app.py|app.py::do_rag_search": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_rag_search",
+   "start_line": 4558,
+   "end_line": 4584,
+   "type": "FUNCTION",
+   "content_hash": "cb03372aa828c009"
+  },
+  "app.py|app.py::complete_rag_add": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::complete_rag_add",
+   "start_line": 4585,
+   "end_line": 4592,
+   "type": "FUNCTION",
+   "content_hash": "e3c685bb7e6157ea"
+  },
+  "app.py|app.py::complete_rag_bulk_add": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::complete_rag_bulk_add",
+   "start_line": 4593,
+   "end_line": 4600,
+   "type": "FUNCTION",
+   "content_hash": "b7329938725b9864"
+  },
+  "app.py|app.py::do_quarantine_file": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_quarantine_file",
+   "start_line": 4601,
+   "end_line": 4626,
+   "type": "FUNCTION",
+   "content_hash": "25eb7e0df035ed79"
+  },
+  "app.py|app.py::do_audit_users": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_audit_users",
+   "start_line": 4627,
+   "end_line": 4657,
+   "type": "FUNCTION",
+   "content_hash": "bb5ad923787b6658"
+  },
+  "app.py|app.py::do_processes": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_processes",
+   "start_line": 4658,
+   "end_line": 4668,
+   "type": "FUNCTION",
+   "content_hash": "c9f057b3d6fe438c"
+  },
+  "app.py|app.py::do_network": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_network",
+   "start_line": 4669,
+   "end_line": 4680,
+   "type": "FUNCTION",
+   "content_hash": "aca277a73bcfd576"
+  },
+  "app.py|app.py::do_files": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_files",
+   "start_line": 4681,
+   "end_line": 4692,
+   "type": "FUNCTION",
+   "content_hash": "2397cd7a715e5dd4"
+  },
+  "app.py|app.py::do_logs": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_logs",
+   "start_line": 4693,
+   "end_line": 4700,
+   "type": "FUNCTION",
+   "content_hash": "5b312adea6194ada"
+  },
+  "app.py|app.py::do_memory": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_memory",
+   "start_line": 4701,
+   "end_line": 4709,
+   "type": "FUNCTION",
+   "content_hash": "4e0dfe623db60e99"
+  },
+  "app.py|app.py::do_hardening": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_hardening",
+   "start_line": 4710,
+   "end_line": 4726,
+   "type": "FUNCTION",
+   "content_hash": "38f66280160d0eba"
+  },
+  "app.py|app.py::confirm_action": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::confirm_action",
+   "start_line": 4727,
+   "end_line": 4739,
+   "type": "FUNCTION",
+   "content_hash": "ede62b95c63b52e6"
+  },
+  "app.py|app.py::do_analyze": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_analyze",
+   "start_line": 4786,
+   "end_line": 4868,
+   "type": "FUNCTION",
+   "content_hash": "a102abb1f711dd65"
+  },
+  "app.py|app.py::_display_findings_summary": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_display_findings_summary",
+   "start_line": 4869,
+   "end_line": 4904,
+   "type": "FUNCTION",
+   "content_hash": "a0da05a3bd94f4d8"
+  },
+  "app.py|app.py::_get_severity_color": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_get_severity_color",
+   "start_line": 4905,
+   "end_line": 4915,
+   "type": "FUNCTION",
+   "content_hash": "1ef3c83bc66c6695"
+  },
+  "app.py|app.py::do_monitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_monitor",
+   "start_line": 4916,
+   "end_line": 4990,
+   "type": "FUNCTION",
+   "content_hash": "1f79b4625500c452"
+  },
+  "app.py|app.py::_monitoring_loop": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::_monitoring_loop",
+   "start_line": 4991,
+   "end_line": 5037,
+   "type": "FUNCTION",
+   "content_hash": "042fd4317f744791"
+  },
+  "app.py|app.py::do_patterns": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_patterns",
+   "start_line": 5038,
+   "end_line": 5208,
+   "type": "FUNCTION",
+   "content_hash": "fb6f998462caa9c7"
+  },
+  "app.py|app.py::do_start_monitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_start_monitor",
+   "start_line": 5229,
+   "end_line": 5239,
+   "type": "FUNCTION",
+   "content_hash": "cee5326ae0ed2ce8"
+  },
+  "app.py|app.py::do_stop_monitor": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_stop_monitor",
+   "start_line": 5240,
+   "end_line": 5247,
+   "type": "FUNCTION",
+   "content_hash": "e685c9e2c8c1b612"
+  },
+  "app.py|app.py::do_monitor_status": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_monitor_status",
+   "start_line": 5248,
+   "end_line": 5257,
+   "type": "FUNCTION",
+   "content_hash": "6e0f7b832e2a8eb9"
+  },
+  "app.py|app.py::do_add_pattern": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_add_pattern",
+   "start_line": 5258,
+   "end_line": 5268,
+   "type": "FUNCTION",
+   "content_hash": "b1b79d14894223ec"
+  },
+  "app.py|app.py::do_redteam_hunt": {
+   "file_path": "app.py",
+   "qualified_name": "app.py::do_redteam_hunt",
+   "start_line": 5269,
+   "end_line": 5338,
+   "type": "FUNCTION",
+   "content_hash": "3dbb12f9c2c312db"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::ActionSpec": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::ActionSpec",
+   "start_line": 13,
+   "end_line": 23,
+   "type": "CLASS",
+   "content_hash": "45243dbac1b93537"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::ActionParseError": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::ActionParseError",
+   "start_line": 24,
+   "end_line": 27,
+   "type": "CLASS",
+   "content_hash": "51426c44f65ccd03"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::ActionRegistry": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::ActionRegistry",
+   "start_line": 28,
+   "end_line": 30,
+   "type": "CLASS",
+   "content_hash": "279dd83654bab501"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::__init__": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::__init__",
+   "start_line": 31,
+   "end_line": 34,
+   "type": "FUNCTION",
+   "content_hash": "229cba68e2ae8986"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::register": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::register",
+   "start_line": 35,
+   "end_line": 40,
+   "type": "FUNCTION",
+   "content_hash": "d3a4eb58d893d1fe"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::is_allowed": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::is_allowed",
+   "start_line": 41,
+   "end_line": 43,
+   "type": "FUNCTION",
+   "content_hash": "c783ee025fe8883e"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::spec": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::spec",
+   "start_line": 44,
+   "end_line": 46,
+   "type": "FUNCTION",
+   "content_hash": "865a9593c67de7f1"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::handler": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::handler",
+   "start_line": 47,
+   "end_line": 49,
+   "type": "FUNCTION",
+   "content_hash": "8a836b96f73ce507"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::names": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::names",
+   "start_line": 50,
+   "end_line": 52,
+   "type": "FUNCTION",
+   "content_hash": "5f132fb627c69e4a"
+  },
+  "lazyownbt/actions.py|lazyownbt/actions.py::validate_params": {
+   "file_path": "lazyownbt/actions.py",
+   "qualified_name": "lazyownbt/actions.py::validate_params",
+   "start_line": 53,
+   "end_line": 127,
+   "type": "FUNCTION",
+   "content_hash": "b254142b065de6ec"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::AuditRecord": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::AuditRecord",
+   "start_line": 23,
+   "end_line": 32,
+   "type": "CLASS",
+   "content_hash": "1403e56ba0dd8f2e"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::AuditLog": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::AuditLog",
+   "start_line": 33,
+   "end_line": 37,
+   "type": "CLASS",
+   "content_hash": "9988c1b4cf458774"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::__init__": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::__init__",
+   "start_line": 38,
+   "end_line": 42,
+   "type": "FUNCTION",
+   "content_hash": "2a231a4d8dced87e"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::_conn": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::_conn",
+   "start_line": 43,
+   "end_line": 52,
+   "type": "FUNCTION",
+   "content_hash": "cd1333a10c1fdfb2"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::_init_db": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::_init_db",
+   "start_line": 53,
+   "end_line": 76,
+   "type": "FUNCTION",
+   "content_hash": "e59fd57dadb8edee"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::record": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::record",
+   "start_line": 77,
+   "end_line": 112,
+   "type": "FUNCTION",
+   "content_hash": "55ef931fb1ee4005"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::track": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::track",
+   "start_line": 113,
+   "end_line": 132,
+   "type": "FUNCTION",
+   "content_hash": "9e7b4d6814092adc"
+  },
+  "lazyownbt/audit.py|lazyownbt/audit.py::fetch": {
+   "file_path": "lazyownbt/audit.py",
+   "qualified_name": "lazyownbt/audit.py::fetch",
+   "start_line": 133,
+   "end_line": 149,
+   "type": "FUNCTION",
+   "content_hash": "bfcaaa3a6256737c"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::ConfigError": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::ConfigError",
+   "start_line": 28,
+   "end_line": 31,
+   "type": "CLASS",
+   "content_hash": "f70b9532e6868afc"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::_load_dotenv": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::_load_dotenv",
+   "start_line": 32,
+   "end_line": 38,
+   "type": "FUNCTION",
+   "content_hash": "bdd89d76360da770"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::_resolve_jwt_secret": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::_resolve_jwt_secret",
+   "start_line": 39,
+   "end_line": 72,
+   "type": "FUNCTION",
+   "content_hash": "e07294c3eca7e96d"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::_resolve_admin_password_hash": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::_resolve_admin_password_hash",
+   "start_line": 73,
+   "end_line": 103,
+   "type": "FUNCTION",
+   "content_hash": "33f6d2397c7166a2"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::Settings": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::Settings",
+   "start_line": 104,
+   "end_line": 116,
+   "type": "CLASS",
+   "content_hash": "3327350f5ee56396"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::is_production": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::is_production",
+   "start_line": 117,
+   "end_line": 120,
+   "type": "FUNCTION",
+   "content_hash": "1905af42fd53eae3"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::is_development": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::is_development",
+   "start_line": 121,
+   "end_line": 124,
+   "type": "FUNCTION",
+   "content_hash": "a4e4436facc1c98e"
+  },
+  "lazyownbt/config.py|lazyownbt/config.py::load_settings": {
+   "file_path": "lazyownbt/config.py",
+   "qualified_name": "lazyownbt/config.py::load_settings",
+   "start_line": 125,
+   "end_line": 146,
+   "type": "FUNCTION",
+   "content_hash": "2067b4f646e9c694"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::_validate_ip": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::_validate_ip",
+   "start_line": 22,
+   "end_line": 31,
+   "type": "FUNCTION",
+   "content_hash": "cc424616b5bd700d"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_resp_block_ip": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_resp_block_ip",
+   "start_line": 32,
+   "end_line": 51,
+   "type": "FUNCTION",
+   "content_hash": "661188474d03ca40"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_resp_kill_proc": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_resp_kill_proc",
+   "start_line": 52,
+   "end_line": 63,
+   "type": "FUNCTION",
+   "content_hash": "99ae0624be72894b"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_net_scan": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_net_scan",
+   "start_line": 64,
+   "end_line": 67,
+   "type": "FUNCTION",
+   "content_hash": "5b00f061d4c5761a"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_fim_scan": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_fim_scan",
+   "start_line": 68,
+   "end_line": 71,
+   "type": "FUNCTION",
+   "content_hash": "49abc6f8fe5c9c0b"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_lazynmap": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_lazynmap",
+   "start_line": 72,
+   "end_line": 77,
+   "type": "FUNCTION",
+   "content_hash": "2a84bbb870ca0ce7"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::handle_ai_playbook": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::handle_ai_playbook",
+   "start_line": 78,
+   "end_line": 83,
+   "type": "FUNCTION",
+   "content_hash": "b616d16e4b8c0545"
+  },
+  "lazyownbt/handlers.py|lazyownbt/handlers.py::build_default_handlers": {
+   "file_path": "lazyownbt/handlers.py",
+   "qualified_name": "lazyownbt/handlers.py::build_default_handlers",
+   "start_line": 84,
+   "end_line": 104,
+   "type": "FUNCTION",
+   "content_hash": "00551816f09fed8c"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::SecretsFilter": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::SecretsFilter",
+   "start_line": 13,
+   "end_line": 20,
+   "type": "CLASS",
+   "content_hash": "125de48a74fc7ba7"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::__init__": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::__init__",
+   "start_line": 21,
+   "end_line": 24,
+   "type": "FUNCTION",
+   "content_hash": "171c5cd3ceb99118"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::_redact": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::_redact",
+   "start_line": 25,
+   "end_line": 34,
+   "type": "FUNCTION",
+   "content_hash": "7ff14601c6065478"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::filter": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::filter",
+   "start_line": 35,
+   "end_line": 50,
+   "type": "FUNCTION",
+   "content_hash": "db5093c83f095b07"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::install_secrets_filter": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::install_secrets_filter",
+   "start_line": 51,
+   "end_line": 58,
+   "type": "FUNCTION",
+   "content_hash": "580ded80f300219f"
+  },
+  "lazyownbt/security.py|lazyownbt/security.py::verify_password": {
+   "file_path": "lazyownbt/security.py",
+   "qualified_name": "lazyownbt/security.py::verify_password",
+   "start_line": 59,
+   "end_line": 66,
+   "type": "FUNCTION",
+   "content_hash": "94da0044a4a2dc86"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::_build_csp": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::_build_csp",
+   "start_line": 38,
+   "end_line": 54,
+   "type": "FUNCTION",
+   "content_hash": "b235dbc1858fda14"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::_register_default_actions": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::_register_default_actions",
+   "start_line": 55,
+   "end_line": 65,
+   "type": "FUNCTION",
+   "content_hash": "bc5d64fa322fe2f9"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::create_app": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::create_app",
+   "start_line": 66,
+   "end_line": 113,
+   "type": "FUNCTION",
+   "content_hash": "f22fb588981fc50f"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::_register_routes": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::_register_routes",
+   "start_line": 114,
+   "end_line": 116,
+   "type": "FUNCTION",
+   "content_hash": "38680c54edfe46f6"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::healthz": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::healthz",
+   "start_line": 117,
+   "end_line": 120,
+   "type": "FUNCTION",
+   "content_hash": "ac93ada99e6a2e7a"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::dashboard": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::dashboard",
+   "start_line": 121,
+   "end_line": 125,
+   "type": "FUNCTION",
+   "content_hash": "5ca88021db3b1690"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::api_dashboard": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::api_dashboard",
+   "start_line": 126,
+   "end_line": 144,
+   "type": "FUNCTION",
+   "content_hash": "422f0d4d7c578807"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::commands": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::commands",
+   "start_line": 145,
+   "end_line": 151,
+   "type": "FUNCTION",
+   "content_hash": "0e61522b711e7b00"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::login": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::login",
+   "start_line": 152,
+   "end_line": 169,
+   "type": "FUNCTION",
+   "content_hash": "45fe968302434e1d"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::api_audit": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::api_audit",
+   "start_line": 170,
+   "end_line": 175,
+   "type": "FUNCTION",
+   "content_hash": "a3428b82395f4cab"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::not_found": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::not_found",
+   "start_line": 176,
+   "end_line": 179,
+   "type": "FUNCTION",
+   "content_hash": "57d035b0fac78385"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::server_error": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::server_error",
+   "start_line": 180,
+   "end_line": 184,
+   "type": "FUNCTION",
+   "content_hash": "eacc499581738979"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::_handle_command": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::_handle_command",
+   "start_line": 185,
+   "end_line": 219,
+   "type": "FUNCTION",
+   "content_hash": "a4dd04017882f2fe"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::_default_flask_env_if_unset": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::_default_flask_env_if_unset",
+   "start_line": 220,
+   "end_line": 235,
+   "type": "FUNCTION",
+   "content_hash": "0eaa770996399d96"
+  },
+  "lazyownbt/web.py|lazyownbt/web.py::run": {
+   "file_path": "lazyownbt/web.py",
+   "qualified_name": "lazyownbt/web.py::run",
+   "start_line": 236,
+   "end_line": 259,
+   "type": "FUNCTION",
+   "content_hash": "8354a862855ceb37"
+  },
+  "main.py|main.py::Database": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::Database",
+   "start_line": 42,
+   "end_line": 56,
+   "type": "CLASS",
+   "content_hash": "50e6599f8db5a299"
+  },
+  "main.py|main.py::__init__": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::__init__",
+   "start_line": 57,
+   "end_line": 59,
+   "type": "FUNCTION",
+   "content_hash": "24bbbbfa658df75a"
+  },
+  "main.py|main.py::connect": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::connect",
+   "start_line": 60,
+   "end_line": 68,
+   "type": "FUNCTION",
+   "content_hash": "e3dedaa1560be994"
+  },
+  "main.py|main.py::_safe_fetch": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::_safe_fetch",
+   "start_line": 69,
+   "end_line": 105,
+   "type": "FUNCTION",
+   "content_hash": "f4c2a5b8f1341fb2"
+  },
+  "main.py|main.py::fetch_alerts": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::fetch_alerts",
+   "start_line": 106,
+   "end_line": 126,
+   "type": "FUNCTION",
+   "content_hash": "23aa6d23b5ed6e9a"
+  },
+  "main.py|main.py::fetch_events": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::fetch_events",
+   "start_line": 127,
+   "end_line": 140,
+   "type": "FUNCTION",
+   "content_hash": "864d6b95b4b2867d"
+  },
+  "main.py|main.py::fetch_network_baseline": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::fetch_network_baseline",
+   "start_line": 141,
+   "end_line": 147,
+   "type": "FUNCTION",
+   "content_hash": "60c1739742588f3d"
+  },
+  "main.py|main.py::fetch_file_hashes": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::fetch_file_hashes",
+   "start_line": 148,
+   "end_line": 154,
+   "type": "FUNCTION",
+   "content_hash": "97479487537de362"
+  },
+  "main.py|main.py::correlate_events": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::correlate_events",
+   "start_line": 155,
+   "end_line": 199,
+   "type": "FUNCTION",
+   "content_hash": "a06f918138565f48"
+  },
+  "main.py|main.py::_register_data_routes": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::_register_data_routes",
+   "start_line": 200,
+   "end_line": 207,
+   "type": "FUNCTION",
+   "content_hash": "0833c9a254e21fb5"
+  },
+  "main.py|main.py::alerts_view": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::alerts_view",
+   "start_line": 208,
+   "end_line": 217,
+   "type": "FUNCTION",
+   "content_hash": "8481dfa6131aad4d"
+  },
+  "main.py|main.py::events_view": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::events_view",
+   "start_line": 218,
+   "end_line": 226,
+   "type": "FUNCTION",
+   "content_hash": "21239b0585381332"
+  },
+  "main.py|main.py::api_correlate": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::api_correlate",
+   "start_line": 227,
+   "end_line": 230,
+   "type": "FUNCTION",
+   "content_hash": "2b3e1251ef4bd2eb"
+  },
+  "main.py|main.py::_populate_dashboard_metrics": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::_populate_dashboard_metrics",
+   "start_line": 231,
+   "end_line": 259,
+   "type": "FUNCTION",
+   "content_hash": "3c6a122453c46d49"
+  },
+  "main.py|main.py::build_app": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::build_app",
+   "start_line": 260,
+   "end_line": 271,
+   "type": "FUNCTION",
+   "content_hash": "e1b9736580bb08cc"
+  },
+  "main.py|main.py::_dashboard": {
+   "file_path": "main.py",
+   "qualified_name": "main.py::_dashboard",
+   "start_line": 272,
+   "end_line": 312,
+   "type": "FUNCTION",
+   "content_hash": "199eb1c0a2979559"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_load_config": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_load_config",
+   "start_line": 49,
+   "end_line": 57,
+   "type": "FUNCTION",
+   "content_hash": "8e681ad2df3b8782"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_save_config": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_save_config",
+   "start_line": 58,
+   "end_line": 66,
+   "type": "FUNCTION",
+   "content_hash": "2691874e649945cb"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_db_query": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_db_query",
+   "start_line": 67,
+   "end_line": 81,
+   "type": "FUNCTION",
+   "content_hash": "0da7d07f1130aa87"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_run_lazyownbt_command": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_run_lazyownbt_command",
+   "start_line": 82,
+   "end_line": 167,
+   "type": "FUNCTION",
+   "content_hash": "5d56f85dc81fd9c5"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::list_tools": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::list_tools",
+   "start_line": 168,
+   "end_line": 863,
+   "type": "FUNCTION",
+   "content_hash": "d0d72bb62f5a938b"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::call_tool": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::call_tool",
+   "start_line": 864,
+   "end_line": 865,
+   "type": "FUNCTION",
+   "content_hash": "fb5a0c164e62f65a"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::text": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::text",
+   "start_line": 866,
+   "end_line": 1222,
+   "type": "FUNCTION",
+   "content_hash": "8dff45022d66a381"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_query_alerts": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_query_alerts",
+   "start_line": 1223,
+   "end_line": 1256,
+   "type": "FUNCTION",
+   "content_hash": "18536db44722bb17"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_query_events": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_query_events",
+   "start_line": 1257,
+   "end_line": 1350,
+   "type": "FUNCTION",
+   "content_hash": "0fa4aca5b93b34d6"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_stats": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_stats",
+   "start_line": 1351,
+   "end_line": 1379,
+   "type": "FUNCTION",
+   "content_hash": "015974c9f0d30afc"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_list_reports": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_list_reports",
+   "start_line": 1380,
+   "end_line": 1422,
+   "type": "FUNCTION",
+   "content_hash": "add1696fe03bb6b4"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::_handle_sighup": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::_handle_sighup",
+   "start_line": 1423,
+   "end_line": 1430,
+   "type": "FUNCTION",
+   "content_hash": "c4c19aad1bc11c35"
+  },
+  "skills/lazyownbt_mcp.py|skills/lazyownbt_mcp.py::main": {
+   "file_path": "skills/lazyownbt_mcp.py",
+   "qualified_name": "skills/lazyownbt_mcp.py::main",
+   "start_line": 1431,
+   "end_line": 1437,
+   "type": "FUNCTION",
+   "content_hash": "3a2f0001940354c4"
+  },
+  "static/js/auth.js|static/js/auth.js::AUTH": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::AUTH",
+   "start_line": 6,
+   "end_line": 8,
+   "type": "FUNCTION",
+   "content_hash": "54b889f824f79f4a"
+  },
+  "static/js/auth.js|static/js/auth.js::get": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::get",
+   "start_line": 9,
+   "end_line": 9,
+   "type": "FUNCTION",
+   "content_hash": "bdbeae8a47e6e27f"
+  },
+  "static/js/auth.js|static/js/auth.js::set": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::set",
+   "start_line": 10,
+   "end_line": 10,
+   "type": "FUNCTION",
+   "content_hash": "7674b7cbbe7ea9e7"
+  },
+  "static/js/auth.js|static/js/auth.js::clear": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::clear",
+   "start_line": 11,
+   "end_line": 11,
+   "type": "FUNCTION",
+   "content_hash": "21965dcfb5fc6960"
+  },
+  "static/js/auth.js|static/js/auth.js::requireOrRedirect": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::requireOrRedirect",
+   "start_line": 12,
+   "end_line": 15,
+   "type": "FUNCTION",
+   "content_hash": "915dac9718b31013"
+  },
+  "static/js/auth.js|static/js/auth.js::fetch": {
+   "file_path": "static/js/auth.js",
+   "qualified_name": "static/js/auth.js::fetch",
+   "start_line": 16,
+   "end_line": 34,
+   "type": "FUNCTION",
+   "content_hash": "85be0c94d64086b9"
+  },
+  "static/js/commands.js|static/js/commands.js::renderParams": {
+   "file_path": "static/js/commands.js",
+   "qualified_name": "static/js/commands.js::renderParams",
+   "start_line": 34,
+   "end_line": 66,
+   "type": "FUNCTION",
+   "content_hash": "cdde657325c7dfe3"
+  },
+  "static/js/commands.js|static/js/commands.js::collectParams": {
+   "file_path": "static/js/commands.js",
+   "qualified_name": "static/js/commands.js::collectParams",
+   "start_line": 67,
+   "end_line": 79,
+   "type": "FUNCTION",
+   "content_hash": "0f9d0b1c899e70a0"
+  },
+  "static/js/commands.js|static/js/commands.js::submitCommand": {
+   "file_path": "static/js/commands.js",
+   "qualified_name": "static/js/commands.js::submitCommand",
+   "start_line": 80,
+   "end_line": 120,
+   "type": "FUNCTION",
+   "content_hash": "87871b5ebd7c34de"
+  },
+  "static/js/table-filter.js|static/js/table-filter.js::tableFilter": {
+   "file_path": "static/js/table-filter.js",
+   "qualified_name": "static/js/table-filter.js::tableFilter",
+   "start_line": 6,
+   "end_line": 14,
+   "type": "FUNCTION",
+   "content_hash": "312104b6ecf3dc45"
+  },
+  "static/js/table-filter.js|static/js/table-filter.js::apply": {
+   "file_path": "static/js/table-filter.js",
+   "qualified_name": "static/js/table-filter.js::apply",
+   "start_line": 15,
+   "end_line": 28,
+   "type": "FUNCTION",
+   "content_hash": "5b05ebf5c9831bf3"
+  },
+  "tests/conftest.py|tests/conftest.py::_make_jwt_secret": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::_make_jwt_secret",
+   "start_line": 35,
+   "end_line": 39,
+   "type": "FUNCTION",
+   "content_hash": "c46a84d4573f7969"
+  },
+  "tests/conftest.py|tests/conftest.py::jwt_secret": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::jwt_secret",
+   "start_line": 40,
+   "end_line": 44,
+   "type": "FUNCTION",
+   "content_hash": "8253ba1498b25860"
+  },
+  "tests/conftest.py|tests/conftest.py::dev_env": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::dev_env",
+   "start_line": 45,
+   "end_line": 51,
+   "type": "FUNCTION",
+   "content_hash": "002a31961cefce57"
+  },
+  "tests/conftest.py|tests/conftest.py::prod_env": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::prod_env",
+   "start_line": 52,
+   "end_line": 59,
+   "type": "FUNCTION",
+   "content_hash": "613191d4ec41c64f"
+  },
+  "tests/conftest.py|tests/conftest.py::app": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::app",
+   "start_line": 60,
+   "end_line": 68,
+   "type": "FUNCTION",
+   "content_hash": "7faf0f8e55499e55"
+  },
+  "tests/conftest.py|tests/conftest.py::client": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::client",
+   "start_line": 69,
+   "end_line": 73,
+   "type": "FUNCTION",
+   "content_hash": "62673e248582edb2"
+  },
+  "tests/conftest.py|tests/conftest.py::auth_client": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::auth_client",
+   "start_line": 74,
+   "end_line": 91,
+   "type": "FUNCTION",
+   "content_hash": "8e1942f592c44b55"
+  },
+  "tests/conftest.py|tests/conftest.py::_iter_source_files": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::_iter_source_files",
+   "start_line": 92,
+   "end_line": 99,
+   "type": "FUNCTION",
+   "content_hash": "4a6c9a9601637d7e"
+  },
+  "tests/conftest.py|tests/conftest.py::_read_text": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::_read_text",
+   "start_line": 100,
+   "end_line": 111,
+   "type": "FUNCTION",
+   "content_hash": "7a1159ab5dabad89"
+  },
+  "tests/conftest.py|tests/conftest.py::clean_env": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::clean_env",
+   "start_line": 112,
+   "end_line": 120,
+   "type": "FUNCTION",
+   "content_hash": "575692936eaa89c5"
+  },
+  "tests/conftest.py|tests/conftest.py::flask_env": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::flask_env",
+   "start_line": 121,
+   "end_line": 126,
+   "type": "FUNCTION",
+   "content_hash": "0f9c421920a9574a"
+  },
+  "tests/conftest.py|tests/conftest.py::flask_env_quoted": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::flask_env_quoted",
+   "start_line": 127,
+   "end_line": 132,
+   "type": "FUNCTION",
+   "content_hash": "0e61183eb05f7d3a"
+  },
+  "tests/conftest.py|tests/conftest.py::jwt_no_secret": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::jwt_no_secret",
+   "start_line": 133,
+   "end_line": 137,
+   "type": "FUNCTION",
+   "content_hash": "27b835e2b7a9b656"
+  },
+  "tests/conftest.py|tests/conftest.py::jwt_secret_value": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::jwt_secret_value",
+   "start_line": 138,
+   "end_line": 142,
+   "type": "FUNCTION",
+   "content_hash": "f3b0358de44bc9dd"
+  },
+  "tests/conftest.py|tests/conftest.py::jwt_secret_with_length": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::jwt_secret_with_length",
+   "start_line": 143,
+   "end_line": 147,
+   "type": "FUNCTION",
+   "content_hash": "1a91ea5b1a705fc7"
+  },
+  "tests/conftest.py|tests/conftest.py::admin_password_with_length": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::admin_password_with_length",
+   "start_line": 148,
+   "end_line": 152,
+   "type": "FUNCTION",
+   "content_hash": "c8ac14875360e9f4"
+  },
+  "tests/conftest.py|tests/conftest.py::admin_hash": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::admin_hash",
+   "start_line": 153,
+   "end_line": 157,
+   "type": "FUNCTION",
+   "content_hash": "9014ea296035b48e"
+  },
+  "tests/conftest.py|tests/conftest.py::bdd_app": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::bdd_app",
+   "start_line": 158,
+   "end_line": 168,
+   "type": "FUNCTION",
+   "content_hash": "c357895c01aacf03"
+  },
+  "tests/conftest.py|tests/conftest.py::bdd_client": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::bdd_client",
+   "start_line": 169,
+   "end_line": 177,
+   "type": "FUNCTION",
+   "content_hash": "f813e1c5b51773f5"
+  },
+  "tests/conftest.py|tests/conftest.py::bdd_anon": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::bdd_anon",
+   "start_line": 178,
+   "end_line": 182,
+   "type": "FUNCTION",
+   "content_hash": "1b2b2fd439e48f28"
+  },
+  "tests/conftest.py|tests/conftest.py::fake_failing_handler": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::fake_failing_handler",
+   "start_line": 183,
+   "end_line": 186,
+   "type": "FUNCTION",
+   "content_hash": "c8021758484ff7a3"
+  },
+  "tests/conftest.py|tests/conftest.py::failing": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::failing",
+   "start_line": 187,
+   "end_line": 195,
+   "type": "FUNCTION",
+   "content_hash": "ee4c871b8ea2c0bb"
+  },
+  "tests/conftest.py|tests/conftest.py::no_bind": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::no_bind",
+   "start_line": 196,
+   "end_line": 200,
+   "type": "FUNCTION",
+   "content_hash": "017f33a1e617000d"
+  },
+  "tests/conftest.py|tests/conftest.py::bind_value": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::bind_value",
+   "start_line": 201,
+   "end_line": 205,
+   "type": "FUNCTION",
+   "content_hash": "2b1ffca201e215c3"
+  },
+  "tests/conftest.py|tests/conftest.py::logger_with_filter": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::logger_with_filter",
+   "start_line": 206,
+   "end_line": 214,
+   "type": "FUNCTION",
+   "content_hash": "176213edee6bc3d3"
+  },
+  "tests/conftest.py|tests/conftest.py::code_tree": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::code_tree",
+   "start_line": 215,
+   "end_line": 219,
+   "type": "FUNCTION",
+   "content_hash": "665663026146513a"
+  },
+  "tests/conftest.py|tests/conftest.py::extract_imports": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::extract_imports",
+   "start_line": 220,
+   "end_line": 246,
+   "type": "FUNCTION",
+   "content_hash": "de62955c1c2bf3d5"
+  },
+  "tests/conftest.py|tests/conftest.py::scan_repo": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::scan_repo",
+   "start_line": 247,
+   "end_line": 251,
+   "type": "FUNCTION",
+   "content_hash": "912d940e80235806"
+  },
+  "tests/conftest.py|tests/conftest.py::scan_repo_subprocess": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::scan_repo_subprocess",
+   "start_line": 252,
+   "end_line": 256,
+   "type": "FUNCTION",
+   "content_hash": "d192667c5a0b80c7"
+  },
+  "tests/conftest.py|tests/conftest.py::scan_repo_eval": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::scan_repo_eval",
+   "start_line": 257,
+   "end_line": 261,
+   "type": "FUNCTION",
+   "content_hash": "e106020c87c50ac2"
+  },
+  "tests/conftest.py|tests/conftest.py::scan_repo_sha": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::scan_repo_sha",
+   "start_line": 262,
+   "end_line": 270,
+   "type": "FUNCTION",
+   "content_hash": "b16b588da0961744"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_no_subprocess_python": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_no_subprocess_python",
+   "start_line": 271,
+   "end_line": 279,
+   "type": "FUNCTION",
+   "content_hash": "fe31c6b9e9cf1990"
+  },
+  "tests/conftest.py|tests/conftest.py::try_create_app": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::try_create_app",
+   "start_line": 280,
+   "end_line": 289,
+   "type": "FUNCTION",
+   "content_hash": "15f9140b8c783506"
+  },
+  "tests/conftest.py|tests/conftest.py::load_config": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::load_config",
+   "start_line": 290,
+   "end_line": 297,
+   "type": "FUNCTION",
+   "content_hash": "51a5a7d4cb746bb4"
+  },
+  "tests/conftest.py|tests/conftest.py::login_ok": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::login_ok",
+   "start_line": 298,
+   "end_line": 311,
+   "type": "FUNCTION",
+   "content_hash": "9fa24f6776b3ce33"
+  },
+  "tests/conftest.py|tests/conftest.py::login_bad": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::login_bad",
+   "start_line": 312,
+   "end_line": 322,
+   "type": "FUNCTION",
+   "content_hash": "f35da0e1aa683146"
+  },
+  "tests/conftest.py|tests/conftest.py::invoke_action": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::invoke_action",
+   "start_line": 323,
+   "end_line": 332,
+   "type": "FUNCTION",
+   "content_hash": "899bd3a7f85212cc"
+  },
+  "tests/conftest.py|tests/conftest.py::invoke_action_anon": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::invoke_action_anon",
+   "start_line": 333,
+   "end_line": 341,
+   "type": "FUNCTION",
+   "content_hash": "7091f19a0d3835c9"
+  },
+  "tests/conftest.py|tests/conftest.py::query_audit": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::query_audit",
+   "start_line": 342,
+   "end_line": 346,
+   "type": "FUNCTION",
+   "content_hash": "122ece04c7c46fee"
+  },
+  "tests/conftest.py|tests/conftest.py::load_default": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::load_default",
+   "start_line": 347,
+   "end_line": 352,
+   "type": "FUNCTION",
+   "content_hash": "a0f872c87df3cc10"
+  },
+  "tests/conftest.py|tests/conftest.py::load_cfg": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::load_cfg",
+   "start_line": 353,
+   "end_line": 362,
+   "type": "FUNCTION",
+   "content_hash": "b0a9cb26a884d50f"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_dev_warning": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_dev_warning",
+   "start_line": 429,
+   "end_line": 438,
+   "type": "FUNCTION",
+   "content_hash": "ede415e59f31942a"
+  },
+  "tests/conftest.py|tests/conftest.py::cli_with_debug": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::cli_with_debug",
+   "start_line": 373,
+   "end_line": 383,
+   "type": "FUNCTION",
+   "content_hash": "35ef163c586b8b7d"
+  },
+  "tests/conftest.py|tests/conftest.py::create_the_app": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::create_the_app",
+   "start_line": 384,
+   "end_line": 389,
+   "type": "FUNCTION",
+   "content_hash": "84c6bf81b5e40927"
+  },
+  "tests/conftest.py|tests/conftest.py::get_csp": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::get_csp",
+   "start_line": 390,
+   "end_line": 395,
+   "type": "FUNCTION",
+   "content_hash": "75b780f70efe4f44"
+  },
+  "tests/conftest.py|tests/conftest.py::log_msg": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::log_msg",
+   "start_line": 396,
+   "end_line": 406,
+   "type": "FUNCTION",
+   "content_hash": "b9a03f435b18bdc5"
+  },
+  "tests/conftest.py|tests/conftest.py::no_your_secret_key": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::no_your_secret_key",
+   "start_line": 407,
+   "end_line": 411,
+   "type": "FUNCTION",
+   "content_hash": "c062263bb4636b42"
+  },
+  "tests/conftest.py|tests/conftest.py::no_admin_password": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::no_admin_password",
+   "start_line": 412,
+   "end_line": 417,
+   "type": "FUNCTION",
+   "content_hash": "b0b02e28881f903d"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_config_error_code": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_config_error_code",
+   "start_line": 418,
+   "end_line": 423,
+   "type": "FUNCTION",
+   "content_hash": "6259f1a7ab194df5"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_ephemeral_secret_loaded": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_ephemeral_secret_loaded",
+   "start_line": 424,
+   "end_line": 428,
+   "type": "FUNCTION",
+   "content_hash": "f83e88227b2415ed"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_debug_value": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_debug_value",
+   "start_line": 439,
+   "end_line": 443,
+   "type": "FUNCTION",
+   "content_hash": "143ab9608d6b054f"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_cli_abort": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_cli_abort",
+   "start_line": 444,
+   "end_line": 449,
+   "type": "FUNCTION",
+   "content_hash": "a0189b525824c504"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_host": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_host",
+   "start_line": 450,
+   "end_line": 454,
+   "type": "FUNCTION",
+   "content_hash": "36d6ab761f9c7724"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_bind_warning": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_bind_warning",
+   "start_line": 455,
+   "end_line": 459,
+   "type": "FUNCTION",
+   "content_hash": "ef8ac3d9a5176ede"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_talisman_https": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_talisman_https",
+   "start_line": 460,
+   "end_line": 464,
+   "type": "FUNCTION",
+   "content_hash": "c95638d00b7abf22"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_talisman_no_https": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_talisman_no_https",
+   "start_line": 465,
+   "end_line": 470,
+   "type": "FUNCTION",
+   "content_hash": "3bc6b65a6a68f8e1"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_login_ok": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_login_ok",
+   "start_line": 471,
+   "end_line": 477,
+   "type": "FUNCTION",
+   "content_hash": "91ba230b036d9f06"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_status": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_status",
+   "start_line": 478,
+   "end_line": 482,
+   "type": "FUNCTION",
+   "content_hash": "16a56f5c5b347ad0"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_body_contains_quoted": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_body_contains_quoted",
+   "start_line": 483,
+   "end_line": 488,
+   "type": "FUNCTION",
+   "content_hash": "e3280ad63611c718"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_body_contains": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_body_contains",
+   "start_line": 489,
+   "end_line": 494,
+   "type": "FUNCTION",
+   "content_hash": "a6099b58dd437f15"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_body_mentions_param": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_body_mentions_param",
+   "start_line": 495,
+   "end_line": 500,
+   "type": "FUNCTION",
+   "content_hash": "4be137c9e20397aa"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_body_mentions_quoted": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_body_mentions_quoted",
+   "start_line": 501,
+   "end_line": 506,
+   "type": "FUNCTION",
+   "content_hash": "a95c483ba78bacd1"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_body_mentions": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_body_mentions",
+   "start_line": 507,
+   "end_line": 512,
+   "type": "FUNCTION",
+   "content_hash": "5f469941719c262a"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_output": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_output",
+   "start_line": 513,
+   "end_line": 519,
+   "type": "FUNCTION",
+   "content_hash": "484fe5dc0f0f2e6a"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_audit_record": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_audit_record",
+   "start_line": 520,
+   "end_line": 526,
+   "type": "FUNCTION",
+   "content_hash": "18a3598a0b101d04"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_audit_list": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_audit_list",
+   "start_line": 527,
+   "end_line": 532,
+   "type": "FUNCTION",
+   "content_hash": "b42c59d4e96a91bb"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_jwt_value": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_jwt_value",
+   "start_line": 533,
+   "end_line": 537,
+   "type": "FUNCTION",
+   "content_hash": "a4ae5ba990a62b54"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_config_error": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_config_error",
+   "start_line": 538,
+   "end_line": 542,
+   "type": "FUNCTION",
+   "content_hash": "1947085ba1bf1d09"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_gitignore_env": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_gitignore_env",
+   "start_line": 543,
+   "end_line": 548,
+   "type": "FUNCTION",
+   "content_hash": "0f05dd9ba88291ad"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_env_example": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_env_example",
+   "start_line": 549,
+   "end_line": 553,
+   "type": "FUNCTION",
+   "content_hash": "21400a81729d1ab5"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_redacted_in_message": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_redacted_in_message",
+   "start_line": 554,
+   "end_line": 558,
+   "type": "FUNCTION",
+   "content_hash": "2e3503e7b7355d50"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_no_sha256": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_no_sha256",
+   "start_line": 559,
+   "end_line": 564,
+   "type": "FUNCTION",
+   "content_hash": "37cdf1dc7da8fabd"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_not_contains_quoted": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_not_contains_quoted",
+   "start_line": 565,
+   "end_line": 569,
+   "type": "FUNCTION",
+   "content_hash": "b2dfa46ec9a102e8"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_not_contains": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_not_contains",
+   "start_line": 570,
+   "end_line": 574,
+   "type": "FUNCTION",
+   "content_hash": "b06bca149ad04d14"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_imports_covered": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_imports_covered",
+   "start_line": 575,
+   "end_line": 602,
+   "type": "FUNCTION",
+   "content_hash": "76c4f6170163fc3b"
+  },
+  "tests/conftest.py|tests/conftest.py::assert_no_unused_deps": {
+   "file_path": "tests/conftest.py",
+   "qualified_name": "tests/conftest.py::assert_no_unused_deps",
+   "start_line": 603,
+   "end_line": 608,
+   "type": "FUNCTION",
+   "content_hash": "18fc2b0cfaf5472a"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::_read": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::_read",
+   "start_line": 16,
+   "end_line": 22,
+   "type": "FUNCTION",
+   "content_hash": "e1cbe33f11690f5d"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_subprocess_dynamic_python_is_gone": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_subprocess_dynamic_python_is_gone",
+   "start_line": 23,
+   "end_line": 38,
+   "type": "FUNCTION",
+   "content_hash": "79767eaa7ab24b54"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_no_eval_on_user_input": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_no_eval_on_user_input",
+   "start_line": 39,
+   "end_line": 54,
+   "type": "FUNCTION",
+   "content_hash": "d92f89639fdbcace"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_not_in_allowlist_is_rejected": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_not_in_allowlist_is_rejected",
+   "start_line": 55,
+   "end_line": 64,
+   "type": "FUNCTION",
+   "content_hash": "f36b0d83bab86d64"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_not_in_allowlist_returns_403": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_not_in_allowlist_returns_403",
+   "start_line": 65,
+   "end_line": 76,
+   "type": "FUNCTION",
+   "content_hash": "c4c94c0306163396"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_validates_params": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_validates_params",
+   "start_line": 77,
+   "end_line": 86,
+   "type": "FUNCTION",
+   "content_hash": "5ab968a2f72fcf74"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_missing_required_param": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_missing_required_param",
+   "start_line": 87,
+   "end_line": 96,
+   "type": "FUNCTION",
+   "content_hash": "873f294c3f042084"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_rejects_unknown_params": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_rejects_unknown_params",
+   "start_line": 97,
+   "end_line": 108,
+   "type": "FUNCTION",
+   "content_hash": "3912e9529e244ae5"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_requires_jwt": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_requires_jwt",
+   "start_line": 109,
+   "end_line": 119,
+   "type": "FUNCTION",
+   "content_hash": "41724f2fc643b0c6"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_audit_recorded": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_audit_recorded",
+   "start_line": 120,
+   "end_line": 132,
+   "type": "FUNCTION",
+   "content_hash": "8da961bf0c146f3d"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_audit_records_error": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_audit_records_error",
+   "start_line": 133,
+   "end_line": 145,
+   "type": "FUNCTION",
+   "content_hash": "b290a66a727430d2"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_audit_endpoint_returns_records": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_audit_endpoint_returns_records",
+   "start_line": 146,
+   "end_line": 160,
+   "type": "FUNCTION",
+   "content_hash": "81db96795c078aee"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::test_command_executes_via_python_call": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::test_command_executes_via_python_call",
+   "start_line": 161,
+   "end_line": 164,
+   "type": "FUNCTION",
+   "content_hash": "168aa13d18caad99"
+  },
+  "tests/test_command_execution.py|tests/test_command_execution.py::fake_handler": {
+   "file_path": "tests/test_command_execution.py",
+   "qualified_name": "tests/test_command_execution.py::fake_handler",
+   "start_line": 165,
+   "end_line": 192,
+   "type": "FUNCTION",
+   "content_hash": "41a9154c80d50e4a"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::test_config_loads_from_env": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::test_config_loads_from_env",
+   "start_line": 18,
+   "end_line": 26,
+   "type": "FUNCTION",
+   "content_hash": "3d58fd2a648695fb"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::test_config_fails_loudly_on_missing_var": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::test_config_fails_loudly_on_missing_var",
+   "start_line": 27,
+   "end_line": 35,
+   "type": "FUNCTION",
+   "content_hash": "d2f3b38a62001e01"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::_extract_top_level_imports": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::_extract_top_level_imports",
+   "start_line": 36,
+   "end_line": 57,
+   "type": "FUNCTION",
+   "content_hash": "46e86cade065285e"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::_declared_deps": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::_declared_deps",
+   "start_line": 58,
+   "end_line": 84,
+   "type": "FUNCTION",
+   "content_hash": "0c3488382e42ff8a"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::_canonical": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::_canonical",
+   "start_line": 85,
+   "end_line": 93,
+   "type": "FUNCTION",
+   "content_hash": "ffb2b1d84bac650a"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::test_requirements_contains_all_imports": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::test_requirements_contains_all_imports",
+   "start_line": 94,
+   "end_line": 117,
+   "type": "FUNCTION",
+   "content_hash": "17dca0b335950ddb"
+  },
+  "tests/test_configuration.py|tests/test_configuration.py::test_pyproject_extras_declared": {
+   "file_path": "tests/test_configuration.py",
+   "qualified_name": "tests/test_configuration.py::test_pyproject_extras_declared",
+   "start_line": 118,
+   "end_line": 125,
+   "type": "FUNCTION",
+   "content_hash": "f15f6d005225a923"
+  },
+  "tests/test_production.py|tests/test_production.py::test_debug_flag_default_false": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_debug_flag_default_false",
+   "start_line": 13,
+   "end_line": 22,
+   "type": "FUNCTION",
+   "content_hash": "0dcf958db7922dc4"
+  },
+  "tests/test_production.py|tests/test_production.py::test_debug_only_with_explicit_flag": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_debug_only_with_explicit_flag",
+   "start_line": 23,
+   "end_line": 33,
+   "type": "FUNCTION",
+   "content_hash": "2f10a298d19f1fee"
+  },
+  "tests/test_production.py|tests/test_production.py::test_bind_default_loopback": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_bind_default_loopback",
+   "start_line": 34,
+   "end_line": 44,
+   "type": "FUNCTION",
+   "content_hash": "1e50e6d5d6051ae4"
+  },
+  "tests/test_production.py|tests/test_production.py::test_bind_warns_when_public": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_bind_warns_when_public",
+   "start_line": 45,
+   "end_line": 57,
+   "type": "FUNCTION",
+   "content_hash": "cfad3e854dbccbf9"
+  },
+  "tests/test_production.py|tests/test_production.py::test_talisman_https_in_production": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_talisman_https_in_production",
+   "start_line": 58,
+   "end_line": 71,
+   "type": "FUNCTION",
+   "content_hash": "e0b912e18b27763d"
+  },
+  "tests/test_production.py|tests/test_production.py::test_talisman_no_https_in_development": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_talisman_no_https_in_development",
+   "start_line": 72,
+   "end_line": 81,
+   "type": "FUNCTION",
+   "content_hash": "04f3d8ecc54cf9b7"
+  },
+  "tests/test_production.py|tests/test_production.py::test_csp_has_no_hardcoded_inline_hash": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_csp_has_no_hardcoded_inline_hash",
+   "start_line": 82,
+   "end_line": 88,
+   "type": "FUNCTION",
+   "content_hash": "8fbb89300184bd95"
+  },
+  "tests/test_production.py|tests/test_production.py::test_cli_rejects_debug_in_production": {
+   "file_path": "tests/test_production.py",
+   "qualified_name": "tests/test_production.py::test_cli_rejects_debug_in_production",
+   "start_line": 89,
+   "end_line": 99,
+   "type": "FUNCTION",
+   "content_hash": "45077b242861fefd"
+  },
+  "tests/test_security.py|tests/test_security.py::_iter_source_files": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::_iter_source_files",
+   "start_line": 20,
+   "end_line": 26,
+   "type": "FUNCTION",
+   "content_hash": "6a4d4b93e5ffba13"
+  },
+  "tests/test_security.py|tests/test_security.py::test_no_hardcoded_jwt_secret": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_no_hardcoded_jwt_secret",
+   "start_line": 27,
+   "end_line": 39,
+   "type": "FUNCTION",
+   "content_hash": "31eacb31c1dab8f1"
+  },
+  "tests/test_security.py|tests/test_security.py::test_no_hardcoded_admin_password": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_no_hardcoded_admin_password",
+   "start_line": 40,
+   "end_line": 55,
+   "type": "FUNCTION",
+   "content_hash": "11eb6980e3ad154e"
+  },
+  "tests/test_security.py|tests/test_security.py::test_app_aborts_when_jwt_secret_missing_in_prod": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_app_aborts_when_jwt_secret_missing_in_prod",
+   "start_line": 56,
+   "end_line": 65,
+   "type": "FUNCTION",
+   "content_hash": "e88fa7bbb62db4ad"
+  },
+  "tests/test_security.py|tests/test_security.py::test_app_generates_ephemeral_secret_in_dev": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_app_generates_ephemeral_secret_in_dev",
+   "start_line": 66,
+   "end_line": 78,
+   "type": "FUNCTION",
+   "content_hash": "4e6340b9d0713307"
+  },
+  "tests/test_security.py|tests/test_security.py::test_jwt_secret_below_minimum_length_aborts": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_jwt_secret_below_minimum_length_aborts",
+   "start_line": 79,
+   "end_line": 87,
+   "type": "FUNCTION",
+   "content_hash": "739a59ad71e9b424"
+  },
+  "tests/test_security.py|tests/test_security.py::test_empty_jwt_secret_triggers_absence_rule": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_empty_jwt_secret_triggers_absence_rule",
+   "start_line": 88,
+   "end_line": 99,
+   "type": "FUNCTION",
+   "content_hash": "a66d1ccb13924e3d"
+  },
+  "tests/test_security.py|tests/test_security.py::test_password_is_hashed_not_plain": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_password_is_hashed_not_plain",
+   "start_line": 100,
+   "end_line": 114,
+   "type": "FUNCTION",
+   "content_hash": "c5a9e3c26da6d8ea"
+  },
+  "tests/test_security.py|tests/test_security.py::test_env_file_is_gitignored": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_env_file_is_gitignored",
+   "start_line": 115,
+   "end_line": 124,
+   "type": "FUNCTION",
+   "content_hash": "3a9056e7da0d6c95"
+  },
+  "tests/test_security.py|tests/test_security.py::test_env_example_exists": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_env_example_exists",
+   "start_line": 125,
+   "end_line": 130,
+   "type": "FUNCTION",
+   "content_hash": "164425102eb976f5"
+  },
+  "tests/test_security.py|tests/test_security.py::test_secrets_filter_redacts_values": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_secrets_filter_redacts_values",
+   "start_line": 131,
+   "end_line": 139,
+   "type": "FUNCTION",
+   "content_hash": "4f81db5698104456"
+  },
+  "tests/test_security.py|tests/test_security.py::test_secrets_filter_redacts_in_args": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_secrets_filter_redacts_in_args",
+   "start_line": 140,
+   "end_line": 146,
+   "type": "FUNCTION",
+   "content_hash": "8c91f1869a801640"
+  },
+  "tests/test_security.py|tests/test_security.py::test_secrets_filter_redacts_in_dict_args": {
+   "file_path": "tests/test_security.py",
+   "qualified_name": "tests/test_security.py::test_secrets_filter_redacts_in_dict_args",
+   "start_line": 147,
+   "end_line": 151,
+   "type": "FUNCTION",
+   "content_hash": "7eb4daf47689961a"
+  }
+ },
+ "components": [
+  {
+   "name": "lazyownbt: web",
+   "description": "lazyownbt: web groups 5 files (py) around ActionSpec, ActionParseError, ActionRegistry, __init__, register. Registro cerrado de acciones permitidas y parser de parámetros.",
+   "key_entities": [
+    {
+     "qualified_name": "lazyownbt/actions.py::ActionSpec",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 13,
+     "reference_end_line": 23
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::ActionParseError",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 24,
+     "reference_end_line": 27
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::ActionRegistry",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 28,
+     "reference_end_line": 30
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::__init__",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 31,
+     "reference_end_line": 34
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::register",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 35,
+     "reference_end_line": 40
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::is_allowed",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 41,
+     "reference_end_line": 43
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::spec",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 44,
+     "reference_end_line": 46
+    },
+    {
+     "qualified_name": "lazyownbt/actions.py::handler",
+     "reference_file": "lazyownbt/actions.py",
+     "reference_start_line": 47,
+     "reference_end_line": 49
+    }
+   ],
+   "source_cluster_ids": [],
+   "file_methods": [
+    {
+     "file_path": "lazyownbt/actions.py",
+     "methods": [
+      "lazyownbt/actions.py::ActionSpec",
+      "lazyownbt/actions.py::ActionParseError",
+      "lazyownbt/actions.py::ActionRegistry",
+      "lazyownbt/actions.py::__init__",
+      "lazyownbt/actions.py::register",
+      "lazyownbt/actions.py::is_allowed",
+      "lazyownbt/actions.py::spec",
+      "lazyownbt/actions.py::handler",
+      "lazyownbt/actions.py::names",
+      "lazyownbt/actions.py::validate_params"
+     ]
+    },
+    {
+     "file_path": "lazyownbt/audit.py",
+     "methods": [
+      "lazyownbt/audit.py::AuditRecord",
+      "lazyownbt/audit.py::AuditLog",
+      "lazyownbt/audit.py::__init__",
+      "lazyownbt/audit.py::_conn",
+      "lazyownbt/audit.py::_init_db",
+      "lazyownbt/audit.py::record",
+      "lazyownbt/audit.py::track",
+      "lazyownbt/audit.py::fetch"
+     ]
+    },
+    {
+     "file_path": "lazyownbt/handlers.py",
+     "methods": [
+      "lazyownbt/handlers.py::_validate_ip",
+      "lazyownbt/handlers.py::handle_resp_block_ip",
+      "lazyownbt/handlers.py::handle_resp_kill_proc",
+      "lazyownbt/handlers.py::handle_net_scan",
+      "lazyownbt/handlers.py::handle_fim_scan",
+      "lazyownbt/handlers.py::handle_lazynmap",
+      "lazyownbt/handlers.py::handle_ai_playbook",
+      "lazyownbt/handlers.py::build_default_handlers"
+     ]
+    },
+    {
+     "file_path": "lazyownbt/web.py",
+     "methods": [
+      "lazyownbt/web.py::_build_csp",
+      "lazyownbt/web.py::_register_default_actions",
+      "lazyownbt/web.py::create_app",
+      "lazyownbt/web.py::_register_routes",
+      "lazyownbt/web.py::healthz",
+      "lazyownbt/web.py::dashboard",
+      "lazyownbt/web.py::api_dashboard",
+      "lazyownbt/web.py::commands",
+      "lazyownbt/web.py::login",
+      "lazyownbt/web.py::api_audit",
+      "lazyownbt/web.py::not_found",
+      "lazyownbt/web.py::server_error",
+      "lazyownbt/web.py::_handle_command",
+      "lazyownbt/web.py::_default_flask_env_if_unset",
+      "lazyownbt/web.py::run"
+     ]
+    },
+    {
+     "file_path": "tests/test_command_execution.py",
+     "methods": [
+      "tests/test_command_execution.py::_read",
+      "tests/test_command_execution.py::test_subprocess_dynamic_python_is_gone",
+      "tests/test_command_execution.py::test_no_eval_on_user_input",
+      "tests/test_command_execution.py::test_command_not_in_allowlist_is_rejected",
+      "tests/test_command_execution.py::test_command_not_in_allowlist_returns_403",
+      "tests/test_command_execution.py::test_command_validates_params",
+      "tests/test_command_execution.py::test_command_missing_required_param",
+      "tests/test_command_execution.py::test_command_rejects_unknown_params",
+      "tests/test_command_execution.py::test_command_requires_jwt",
+      "tests/test_command_execution.py::test_command_audit_recorded",
+      "tests/test_command_execution.py::test_command_audit_records_error",
+      "tests/test_command_execution.py::test_audit_endpoint_returns_records",
+      "tests/test_command_execution.py::test_command_executes_via_python_call",
+      "tests/test_command_execution.py::fake_handler"
+     ]
+    }
+   ],
+   "component_id": "1",
+   "can_expand": false,
+   "components": [],
+   "components_relations": [],
+   "layer": "presentation",
+   "symbol_count": 55,
+   "top_symbols": [
+    {
+     "n": "ActionSpec",
+     "k": "class"
+    },
+    {
+     "n": "ActionParseError",
+     "k": "class"
+    },
+    {
+     "n": "ActionRegistry",
+     "k": "class"
+    }
+   ],
+   "top_symbols_more": 51,
+   "hub": true
+  },
+  {
+   "name": "lazyownbt: main",
+   "description": "lazyownbt: main groups 4 files (py) around ConfigError, _load_dotenv, _resolve_jwt_secret, _resolve_admin_password_hash, Settings. Carga de configuración desde variables de entorno y .env.",
+   "key_entities": [
+    {
+     "qualified_name": "lazyownbt/config.py::ConfigError",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 28,
+     "reference_end_line": 31
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::_load_dotenv",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 32,
+     "reference_end_line": 38
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::_resolve_jwt_secret",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 39,
+     "reference_end_line": 72
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::_resolve_admin_password_hash",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 73,
+     "reference_end_line": 103
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::Settings",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 104,
+     "reference_end_line": 116
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::is_production",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 117,
+     "reference_end_line": 120
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::is_development",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 121,
+     "reference_end_line": 124
+    },
+    {
+     "qualified_name": "lazyownbt/config.py::load_settings",
+     "reference_file": "lazyownbt/config.py",
+     "reference_start_line": 125,
+     "reference_end_line": 146
+    }
+   ],
+   "source_cluster_ids": [],
+   "file_methods": [
+    {
+     "file_path": "lazyownbt/config.py",
+     "methods": [
+      "lazyownbt/config.py::ConfigError",
+      "lazyownbt/config.py::_load_dotenv",
+      "lazyownbt/config.py::_resolve_jwt_secret",
+      "lazyownbt/config.py::_resolve_admin_password_hash",
+      "lazyownbt/config.py::Settings",
+      "lazyownbt/config.py::is_production",
+      "lazyownbt/config.py::is_development",
+      "lazyownbt/config.py::load_settings"
+     ]
+    },
+    {
+     "file_path": "main.py",
+     "methods": [
+      "main.py::Database",
+      "main.py::__init__",
+      "main.py::connect",
+      "main.py::_safe_fetch",
+      "main.py::fetch_alerts",
+      "main.py::fetch_events",
+      "main.py::fetch_network_baseline",
+      "main.py::fetch_file_hashes",
+      "main.py::correlate_events",
+      "main.py::_register_data_routes",
+      "main.py::alerts_view",
+      "main.py::events_view",
+      "main.py::api_correlate",
+      "main.py::_populate_dashboard_metrics",
+      "main.py::build_app",
+      "main.py::_dashboard"
+     ]
+    },
+    {
+     "file_path": "tests/test_configuration.py",
+     "methods": [
+      "tests/test_configuration.py::test_config_loads_from_env",
+      "tests/test_configuration.py::test_config_fails_loudly_on_missing_var",
+      "tests/test_configuration.py::_extract_top_level_imports",
+      "tests/test_configuration.py::_declared_deps",
+      "tests/test_configuration.py::_canonical",
+      "tests/test_configuration.py::test_requirements_contains_all_imports",
+      "tests/test_configuration.py::test_pyproject_extras_declared"
+     ]
+    },
+    {
+     "file_path": "tests/test_production.py",
+     "methods": [
+      "tests/test_production.py::test_debug_flag_default_false",
+      "tests/test_production.py::test_debug_only_with_explicit_flag",
+      "tests/test_production.py::test_bind_default_loopback",
+      "tests/test_production.py::test_bind_warns_when_public",
+      "tests/test_production.py::test_talisman_https_in_production",
+      "tests/test_production.py::test_talisman_no_https_in_development",
+      "tests/test_production.py::test_csp_has_no_hardcoded_inline_hash",
+      "tests/test_production.py::test_cli_rejects_debug_in_production"
+     ]
+    }
+   ],
+   "component_id": "2",
+   "can_expand": false,
+   "components": [],
+   "components_relations": [],
+   "layer": "testing",
+   "symbol_count": 39,
+   "top_symbols": [
+    {
+     "n": "ConfigError",
+     "k": "class"
+    },
+    {
+     "n": "_load_dotenv",
+     "k": "function"
+    },
+    {
+     "n": "_resolve_jwt_secret",
+     "k": "function"
+    }
+   ],
+   "top_symbols_more": 36,
+   "hub": false
+  },
+  {
+   "name": "lazyownbt: security",
+   "description": "lazyownbt: security groups 3 files (py) around SecretsFilter, __init__, _redact, filter, install_secrets_filter. Filtros de seguridad y helpers criptográficos.",
+   "key_entities": [
+    {
+     "qualified_name": "lazyownbt/security.py::SecretsFilter",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 13,
+     "reference_end_line": 20
+    },
+    {
+     "qualified_name": "lazyownbt/security.py::__init__",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 21,
+     "reference_end_line": 24
+    },
+    {
+     "qualified_name": "lazyownbt/security.py::_redact",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 25,
+     "reference_end_line": 34
+    },
+    {
+     "qualified_name": "lazyownbt/security.py::filter",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 35,
+     "reference_end_line": 50
+    },
+    {
+     "qualified_name": "lazyownbt/security.py::install_secrets_filter",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 51,
+     "reference_end_line": 58
+    },
+    {
+     "qualified_name": "lazyownbt/security.py::verify_password",
+     "reference_file": "lazyownbt/security.py",
+     "reference_start_line": 59,
+     "reference_end_line": 66
+    },
+    {
+     "qualified_name": "tests/conftest.py::_make_jwt_secret",
+     "reference_file": "tests/conftest.py",
+     "reference_start_line": 35,
+     "reference_end_line": 39
+    },
+    {
+     "qualified_name": "tests/conftest.py::jwt_secret",
+     "reference_file": "tests/conftest.py",
+     "reference_start_line": 40,
+     "reference_end_line": 44
+    }
+   ],
+   "source_cluster_ids": [],
+   "file_methods": [
+    {
+     "file_path": "lazyownbt/security.py",
+     "methods": [
+      "lazyownbt/security.py::SecretsFilter",
+      "lazyownbt/security.py::__init__",
+      "lazyownbt/security.py::_redact",
+      "lazyownbt/security.py::filter",
+      "lazyownbt/security.py::install_secrets_filter",
+      "lazyownbt/security.py::verify_password"
+     ]
+    },
+    {
+     "file_path": "tests/conftest.py",
+     "methods": [
+      "tests/conftest.py::_make_jwt_secret",
+      "tests/conftest.py::jwt_secret",
+      "tests/conftest.py::dev_env",
+      "tests/conftest.py::prod_env",
+      "tests/conftest.py::app",
+      "tests/conftest.py::client",
+      "tests/conftest.py::auth_client",
+      "tests/conftest.py::_iter_source_files",
+      "tests/conftest.py::_read_text",
+      "tests/conftest.py::clean_env",
+      "tests/conftest.py::flask_env",
+      "tests/conftest.py::flask_env_quoted",
+      "tests/conftest.py::jwt_no_secret",
+      "tests/conftest.py::jwt_secret_value",
+      "tests/conftest.py::jwt_secret_with_length",
+      "tests/conftest.py::admin_password_with_length",
+      "tests/conftest.py::admin_hash",
+      "tests/conftest.py::bdd_app",
+      "tests/conftest.py::bdd_client",
+      "tests/conftest.py::bdd_anon",
+      "tests/conftest.py::fake_failing_handler",
+      "tests/conftest.py::failing",
+      "tests/conftest.py::no_bind",
+      "tests/conftest.py::bind_value",
+      "tests/conftest.py::logger_with_filter",
+      "tests/conftest.py::code_tree",
+      "tests/conftest.py::extract_imports",
+      "tests/conftest.py::scan_repo",
+      "tests/conftest.py::scan_repo_subprocess",
+      "tests/conftest.py::scan_repo_eval",
+      "tests/conftest.py::scan_repo_sha",
+      "tests/conftest.py::assert_no_subprocess_python",
+      "tests/conftest.py::try_create_app",
+      "tests/conftest.py::load_config",
+      "tests/conftest.py::login_ok",
+      "tests/conftest.py::login_bad",
+      "tests/conftest.py::invoke_action",
+      "tests/conftest.py::invoke_action_anon",
+      "tests/conftest.py::query_audit",
+      "tests/conftest.py::load_default",
+      "tests/conftest.py::load_cfg",
+      "tests/conftest.py::assert_dev_warning",
+      "tests/conftest.py::cli_with_debug",
+      "tests/conftest.py::create_the_app",
+      "tests/conftest.py::get_csp",
+      "tests/conftest.py::log_msg",
+      "tests/conftest.py::no_your_secret_key",
+      "tests/conftest.py::no_admin_password",
+      "tests/conftest.py::assert_config_error_code",
+      "tests/conftest.py::assert_ephemeral_secret_loaded",
+      "tests/conftest.py::assert_dev_warning",
+      "tests/conftest.py::assert_debug_value",
+      "tests/conftest.py::assert_cli_abort",
+      "tests/conftest.py::assert_host",
+      "tests/conftest.py::assert_bind_warning",
+      "tests/conftest.py::assert_talisman_https",
+      "tests/conftest.py::assert_talisman_no_https",
+      "tests/conftest.py::assert_login_ok",
+      "tests/conftest.py::assert_status",
+      "tests/conftest.py::assert_body_contains_quoted",
+      "tests/conftest.py::assert_body_contains",
+      "tests/conftest.py::assert_body_mentions_param",
+      "tests/conftest.py::assert_body_mentions_quoted",
+      "tests/conftest.py::assert_body_mentions",
+      "tests/conftest.py::assert_output",
+      "tests/conftest.py::assert_audit_record",
+      "tests/conftest.py::assert_audit_list",
+      "tests/conftest.py::assert_jwt_value",
+      "tests/conftest.py::assert_config_error",
+      "tests/conftest.py::assert_gitignore_env",
+      "tests/conftest.py::assert_env_example",
+      "tests/conftest.py::assert_redacted_in_message",
+      "tests/conftest.py::assert_no_sha256",
+      "tests/conftest.py::assert_not_contains_quoted",
+      "tests/conftest.py::assert_not_contains",
+      "tests/conftest.py::assert_imports_covered",
+      "tests/conftest.py::assert_no_unused_deps"
+     ]
+    },
+    {
+     "file_path": "tests/test_security.py",
+     "methods": [
+      "tests/test_security.py::_iter_source_files",
+      "tests/test_security.py::test_no_hardcoded_jwt_secret",
+      "tests/test_security.py::test_no_hardcoded_admin_password",
+      "tests/test_security.py::test_app_aborts_when_jwt_secret_missing_in_prod",
+      "tests/test_security.py::test_app_generates_ephemeral_secret_in_dev",
+      "tests/test_security.py::test_jwt_secret_below_minimum_length_aborts",
+      "tests/test_security.py::test_empty_jwt_secret_triggers_absence_rule",
+      "tests/test_security.py::test_password_is_hashed_not_plain",
+      "tests/test_security.py::test_env_file_is_gitignored",
+      "tests/test_security.py::test_env_example_exists",
+      "tests/test_security.py::test_secrets_filter_redacts_values",
+      "tests/test_security.py::test_secrets_filter_redacts_in_args",
+      "tests/test_security.py::test_secrets_filter_redacts_in_dict_args"
+     ]
+    }
+   ],
+   "component_id": "3",
+   "can_expand": false,
+   "components": [],
+   "components_relations": [],
+   "layer": "testing",
+   "symbol_count": 96,
+   "top_symbols": [
+    {
+     "n": "SecretsFilter",
+     "k": "class"
+    },
+    {
+     "n": "__init__",
+     "k": "method"
+    },
+    {
+     "n": "_redact",
+     "k": "method"
+    }
+   ],
+   "top_symbols_more": 91,
+   "hub": false
+  }
+ ],
+ "components_relations": [
+  {
+   "relation": "calls into",
+   "src_name": "lazyownbt: web",
+   "dst_name": "lazyownbt: main",
+   "evidence": "1 imports, 3 calls across the boundary",
+   "import_count": 1,
+   "call_count": 3,
+   "key_edges": [
+    {
+     "source": "lazyownbt/audit.py|lazyownbt/audit.py::_conn",
+     "target": "main.py|main.py::connect",
+     "call_sites": [
+      {
+       "line": 45,
+       "column": 19
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 74,
+       "column": 27
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 247,
+       "column": 15
+      }
+     ],
+     "description": ""
+    }
+   ],
+   "src_id": "1",
+   "dst_id": "2",
+   "is_static": true,
+   "all_edges": [
+    {
+     "source": "lazyownbt/audit.py|lazyownbt/audit.py::_conn",
+     "target": "main.py|main.py::connect",
+     "call_sites": [
+      {
+       "line": 45,
+       "column": 19
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 74,
+       "column": 27
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 247,
+       "column": 15
+      }
+     ],
+     "description": ""
+    }
+   ]
+  },
+  {
+   "relation": "calls into",
+   "src_name": "lazyownbt: web",
+   "dst_name": "lazyownbt: security",
+   "evidence": "1 imports, 2 calls across the boundary",
+   "import_count": 1,
+   "call_count": 2,
+   "key_edges": [
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "target": "lazyownbt/security.py|lazyownbt/security.py::install_secrets_filter",
+     "call_sites": [
+      {
+       "line": 100,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::login",
+     "target": "lazyownbt/security.py|lazyownbt/security.py::verify_password",
+     "call_sites": [
+      {
+       "line": 161,
+       "column": 38
+      }
+     ],
+     "description": ""
+    }
+   ],
+   "src_id": "1",
+   "dst_id": "3",
+   "is_static": true,
+   "all_edges": [
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "target": "lazyownbt/security.py|lazyownbt/security.py::install_secrets_filter",
+     "call_sites": [
+      {
+       "line": 100,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "lazyownbt/web.py|lazyownbt/web.py::login",
+     "target": "lazyownbt/security.py|lazyownbt/security.py::verify_password",
+     "call_sites": [
+      {
+       "line": 161,
+       "column": 38
+      }
+     ],
+     "description": ""
+    }
+   ]
+  },
+  {
+   "relation": "calls into",
+   "src_name": "lazyownbt: main",
+   "dst_name": "lazyownbt: web",
+   "evidence": "8 imports, 9 calls across the boundary",
+   "import_count": 8,
+   "call_count": 9,
+   "key_edges": [
+    {
+     "source": "main.py|main.py::build_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 263,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "main.py|main.py",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::_default_flask_env_if_unset",
+     "call_sites": [
+      {
+       "line": 300,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "main.py|main.py",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "call_sites": [
+      {
+       "line": 312,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_debug_flag_default_false",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 19,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_debug_only_with_explicit_flag",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 30,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_bind_warns_when_public",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 54,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_talisman_https_in_production",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 64,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_talisman_no_https_in_development",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 78,
+       "column": 10
+      }
+     ],
+     "description": ""
+    }
+   ],
+   "src_id": "2",
+   "dst_id": "1",
+   "is_static": true,
+   "all_edges": [
+    {
+     "source": "main.py|main.py::build_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 263,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "main.py|main.py",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::_default_flask_env_if_unset",
+     "call_sites": [
+      {
+       "line": 300,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "main.py|main.py",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "call_sites": [
+      {
+       "line": 312,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_debug_flag_default_false",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 19,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_debug_only_with_explicit_flag",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 30,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_bind_warns_when_public",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 54,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_talisman_https_in_production",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 64,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_talisman_no_https_in_development",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 78,
+       "column": 10
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_production.py|tests/test_production.py::test_cli_rejects_debug_in_production",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "call_sites": [
+      {
+       "line": 98,
+       "column": 8
+      }
+     ],
+     "description": ""
+    }
+   ]
+  },
+  {
+   "relation": "calls into",
+   "src_name": "lazyownbt: security",
+   "dst_name": "lazyownbt: web",
+   "evidence": "6 imports, 8 calls across the boundary",
+   "import_count": 6,
+   "call_count": 8,
+   "key_edges": [
+    {
+     "source": "tests/conftest.py|tests/conftest.py::app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 63,
+       "column": 16
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::bdd_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 163,
+       "column": 16
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::fake_failing_handler",
+     "target": "lazyownbt/actions.py|lazyownbt/actions.py::spec",
+     "call_sites": [
+      {
+       "line": 185,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::fake_failing_handler",
+     "target": "lazyownbt/actions.py|lazyownbt/actions.py::register",
+     "call_sites": [
+      {
+       "line": 192,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::try_create_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 283,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::cli_with_debug",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "call_sites": [
+      {
+       "line": 377,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::create_the_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 386,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::get_csp",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::_build_csp",
+     "call_sites": [
+      {
+       "line": 392,
+       "column": 11
+      }
+     ],
+     "description": ""
+    }
+   ],
+   "src_id": "3",
+   "dst_id": "1",
+   "is_static": true,
+   "all_edges": [
+    {
+     "source": "tests/conftest.py|tests/conftest.py::app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 63,
+       "column": 16
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::bdd_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 163,
+       "column": 16
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::fake_failing_handler",
+     "target": "lazyownbt/actions.py|lazyownbt/actions.py::spec",
+     "call_sites": [
+      {
+       "line": 185,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::fake_failing_handler",
+     "target": "lazyownbt/actions.py|lazyownbt/actions.py::register",
+     "call_sites": [
+      {
+       "line": 192,
+       "column": 4
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::try_create_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 283,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::cli_with_debug",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::run",
+     "call_sites": [
+      {
+       "line": 377,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::create_the_app",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::create_app",
+     "call_sites": [
+      {
+       "line": 386,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::get_csp",
+     "target": "lazyownbt/web.py|lazyownbt/web.py::_build_csp",
+     "call_sites": [
+      {
+       "line": 392,
+       "column": 11
+      }
+     ],
+     "description": ""
+    }
+   ]
+  },
+  {
+   "relation": "calls into",
+   "src_name": "lazyownbt: security",
+   "dst_name": "lazyownbt: main",
+   "evidence": "2 imports, 8 calls across the boundary",
+   "import_count": 2,
+   "call_count": 8,
+   "key_edges": [
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_config",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 292,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_default",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 349,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_cfg",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 355,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_app_aborts_when_jwt_secret_missing_in_prod",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 62,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_app_generates_ephemeral_secret_in_dev",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 70,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_jwt_secret_below_minimum_length_aborts",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 84,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_empty_jwt_secret_triggers_absence_rule",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 94,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_password_is_hashed_not_plain",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 107,
+       "column": 15
+      }
+     ],
+     "description": ""
+    }
+   ],
+   "src_id": "3",
+   "dst_id": "2",
+   "is_static": true,
+   "all_edges": [
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_config",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 292,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_default",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 349,
+       "column": 11
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/conftest.py|tests/conftest.py::load_cfg",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 355,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_app_aborts_when_jwt_secret_missing_in_prod",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 62,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_app_generates_ephemeral_secret_in_dev",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 70,
+       "column": 15
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_jwt_secret_below_minimum_length_aborts",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 84,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_empty_jwt_secret_triggers_absence_rule",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 94,
+       "column": 8
+      }
+     ],
+     "description": ""
+    },
+    {
+     "source": "tests/test_security.py|tests/test_security.py::test_password_is_hashed_not_plain",
+     "target": "lazyownbt/config.py|lazyownbt/config.py::load_settings",
+     "call_sites": [
+      {
+       "line": 107,
+       "column": 15
+      }
+     ],
+     "description": ""
+    }
+   ]
+  }
+ ]
+}

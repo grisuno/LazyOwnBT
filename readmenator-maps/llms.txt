@@ -1,0 +1,56 @@
+# LazyOwnBT
+
+> Static analysis knowledge base for LazyOwnBT: 3 communities, 23 files, 213 imports, 3 languages, 407 symbols.
+
+Generated offline by readmenator (zero LLM tokens). Start with the wiki index for the big picture, then the agent INDEX for file lookup.
+
+## Wiki
+
+- [readmenator-wiki/index.md](md/readmenator-wiki/index.md): The codebase centres on web.py, app.py, conftest.py. Architecturally it is 4 layers, dominant utility (9 files) across 4 import-based communities. Recorded...
+- [readmenator-wiki/REPORT.md](md/readmenator-wiki/REPORT.md): Project: LazyOwnBT | 2026-10-16 | offline, deterministic
+- [readmenator-wiki/community_0_lazyownbt_web.md](md/readmenator-wiki/community_0_lazyownbt_web.md): Community 0 | 5 files | cohesion 0.55
+- [readmenator-wiki/community_1_lazyownbt_main.md](md/readmenator-wiki/community_1_lazyownbt_main.md): Community 1 | 4 files | cohesion 0.38
+- [readmenator-wiki/community_2_lazyownbt_security.md](md/readmenator-wiki/community_2_lazyownbt_security.md): Community 2 | 3 files | cohesion 0.33
+- [readmenator-wiki/community_3_orphans.md](md/readmenator-wiki/community_3_orphans.md): Community 3 | 11 files | cohesion 0.00
+- [readmenator-wiki/concepts.md](md/readmenator-wiki/concepts.md): Second-brain semantic layer: nouns map atomically to file sets (EXTRACTED); verbs aggregate structural edges (INFERRED).
+- [readmenator-wiki/queries.md](md/readmenator-wiki/queries.md): Log each answered question here so the wiki compounds. Format: question, answer, cited files.
+
+## GraphRAG
+
+- [readmenator-graphrag/REPORTS.md](md/readmenator-graphrag/REPORTS.md): Entities: 550 | Relationships: 1449 | Communities: 4 | Themes: 2 | Text units: 429
+
+## Agent Docs
+
+- [readmenator-agent/INDEX.md](md/readmenator-agent/INDEX.md)
+- [readmenator-agent/GOTCHAS.md](md/readmenator-agent/GOTCHAS.md): These files have the most connections. Changes here have high blast radius.
+- [readmenator-agent/API.md](md/readmenator-agent/API.md): style (function) app.py:75 def style(text, fg, bold) -- Equivalente funcional de la antigua cmd2.style(text, fg=..., bold=...).
+- [readmenator-agent/ARCHITECTURE.md](md/readmenator-agent/ARCHITECTURE.md): lazyownbt/handlers.py -> lazyownbt/actions.py
+- [readmenator-agent/CONCEPTS.md](md/readmenator-agent/CONCEPTS.md): Nouns map atomically to file sets (EXTRACTED); verbs aggregate structural edges (INFERRED).
+- [readmenator-agent/KB_js.md](md/readmenator-agent/KB_js.md): Doc: LazyOwnBT — helpers comunes de autenticación en el cliente.
+- [readmenator-agent/KB_lazyownbt.md](md/readmenator-agent/KB_lazyownbt.md): Doc: LazyOwnBT — Blue Team defensive framework for Linux.
+- [readmenator-agent/KB_misc.md](md/readmenator-agent/KB_misc.md): Doc: LazyOwnBT MCP Server Exposes LazyOwnBT Blue Team framework capabilities as MCP tools for Claude...
+- [readmenator-agent/KB_root.md](md/readmenator-agent/KB_root.md): Doc: LazyOwn BlueTeam Framework Una herramienta monolítica de seguridad defensiva para detección de...
+- [readmenator-agent/KB_tests.md](md/readmenator-agent/KB_tests.md): Doc: Configuración común para pytest + pytest-bdd.
+- [readmenator-agent/MEMORY.md](md/readmenator-agent/MEMORY.md): Generated from 23 files at commit fcaae06e5f8f. Read this first, then readmenator-wiki/index.md, then readmenator . ask "<question>" for anything specific.
+- [readmenator-agent/SECURITY.md](md/readmenator-agent/SECURITY.md)
+- [readmenator-agent/SYMBOLS.md](md/readmenator-agent/SYMBOLS.md)
+- [readmenator-agent/recipes/add-function.md](md/readmenator-agent/recipes/add-function.md): Find the target file by purpose: grep -in '<topic>' readmenator-agent/INDEX.md
+- [readmenator-agent/recipes/change-impact.md](md/readmenator-agent/recipes/change-impact.md): Riskiest file: lazyownbt/config.py (7 dependents)
+- [readmenator-agent/recipes/fix-cycle.md](md/readmenator-agent/recipes/fix-cycle.md): Read cycles: grep -A5 'Dependency Cycles' readmenator-agent/GOTCHAS.md
+- [readmenator-agent/recipes/fix-security.md](md/readmenator-agent/recipes/fix-security.md): Read findings: grep -n '<file>' readmenator-agent/SECURITY.md
+- [readmenator-agent/recipes/reduce-complexity.md](md/readmenator-agent/recipes/reduce-complexity.md): (complexity 1.0, centrality 1.0)
+
+## Project Docs
+
+- [KNOWLEDGE_BASE.md](md/KNOWLEDGE_BASE.md): Start here: Statistics Dashboard for scope, God Nodes for blast radius, Architecture Reference for per-file API. Agents: prefer readmenator-agent/INDEX.md +...
+- [README.md](md/README.md): LazyOwnBT es una herramienta de seguridad defensiva (Blue Team) diseñada para la detección de amenazas, análisis de logs, monitoreo de procesos y redes...
+- [SECURITY.md](md/SECURITY.md): Use this section to tell people about which versions of your project are
+- [readmenator-diagrams/overview.md](md/readmenator-diagrams/overview.md): Static architecture map of 23 files (js, py, sh) in 3 components: lazyownbt: web, lazyownbt: main, lazyownbt: security. Structure is extracted statically...
+
+## Optional
+
+- [Runtime Architecture](architecture.html): Components, services, storage, and boundaries across layers. (interactive HTML)
+- [Data Flow](dataflow.html): Movement of data from sources through transforms to stores. (interactive HTML)
+- [Change Lifecycle](lifecycle.html): States, transitions, waits, and retry paths of change. (interactive HTML)
+- [Request Sequence](sequence.html): Ordered interaction between top participants over time. (interactive HTML)
+- [Delivery Workflow](workflow.html): Delivery path across lanes from entry to terminal outcomes. (interactive HTML)

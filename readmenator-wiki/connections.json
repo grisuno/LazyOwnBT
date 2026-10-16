@@ -1,0 +1,90 @@
+[
+  {
+    "community_a": 0,
+    "community_b": 1,
+    "connection_type": "depends_on",
+    "explanation": "Extracted import edge crosses communities: lazyownbt/web.py imports lazyownbt/config.py.",
+    "strength": 0.9,
+    "confidence": "EXTRACTED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 2,
+    "connection_type": "depends_on",
+    "explanation": "Extracted import edge crosses communities: lazyownbt/web.py imports lazyownbt/security.py.",
+    "strength": 0.9,
+    "confidence": "EXTRACTED"
+  },
+  {
+    "community_a": 2,
+    "community_b": 1,
+    "connection_type": "depends_on",
+    "explanation": "Extracted import edge crosses communities: tests/conftest.py imports lazyownbt/config.py.",
+    "strength": 0.9,
+    "confidence": "EXTRACTED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 1,
+    "connection_type": "bridges",
+    "explanation": "Inferred cross-community bridge: lazyownbt/actions.py reaches tests/test_configuration.py in 3 hops.",
+    "strength": 0.7,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 2,
+    "connection_type": "bridges",
+    "explanation": "Inferred cross-community bridge: lazyownbt/actions.py reaches tests/test_security.py in 3 hops.",
+    "strength": 0.7,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 1,
+    "connection_type": "bridges",
+    "explanation": "Inferred cross-community bridge: lazyownbt/audit.py reaches tests/test_configuration.py in 3 hops.",
+    "strength": 0.7,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 2,
+    "connection_type": "bridges",
+    "explanation": "Inferred cross-community bridge: lazyownbt/audit.py reaches tests/test_security.py in 3 hops.",
+    "strength": 0.7,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 1,
+    "connection_type": "bridges",
+    "explanation": "Inferred cross-community bridge: lazyownbt/handlers.py reaches tests/test_configuration.py in 3 hops.",
+    "strength": 0.7,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 0,
+    "community_b": 3,
+    "connection_type": "shares_context",
+    "explanation": "Inferred shared context (language py) with no import path between community 0 (lazyownbt: web) and community 3 (orphans).",
+    "strength": 0.5,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 1,
+    "community_b": 3,
+    "connection_type": "shares_context",
+    "explanation": "Inferred shared context (language py) with no import path between community 1 (lazyownbt: main) and community 3 (orphans).",
+    "strength": 0.5,
+    "confidence": "INFERRED"
+  },
+  {
+    "community_a": 2,
+    "community_b": 3,
+    "connection_type": "shares_context",
+    "explanation": "Inferred shared context (language py) with no import path between community 2 (lazyownbt: security) and community 3 (orphans).",
+    "strength": 0.5,
+    "confidence": "INFERRED"
+  }
+]
